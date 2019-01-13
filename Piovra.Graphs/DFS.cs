@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Piovra.Graphs {
     public class DFS<V> where V : IEquatable<V> {
