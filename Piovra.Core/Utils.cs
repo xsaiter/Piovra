@@ -87,6 +87,27 @@ namespace Piovra {
 
         public static int Rows<T>(this T[,] a) => a.GetLength(0);
         public static int Cols<T>(this T[,] a) => a.GetLength(1);
+
+        public static byte[] AsBytes(this IEnumerable<int> nums) {
+            return nums.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
+        }
+
+        public static byte[] AsBytes(this int num) {
+            return BitConverter.GetBytes(num);
+        }
+
+        public static int AsNum(this byte[] bytes) {
+            return BitConverter.ToInt32(bytes);
+        }
+
+        public static int[] AsNums(this byte[] bytes) {
+            var size = bytes.Length / sizeof(int);
+            var res = new int[size];
+            for (var i = 0; i < size; ++i) {
+                res[i] = BitConverter.ToInt32(bytes, i * sizeof(int));
+            }
+            return res;
+        }
     }
 
     public class Asserts {
@@ -105,10 +126,10 @@ namespace Piovra {
         public static Result<T> Of(T value) => new Result<T> { Value = value };
     }
 
-    public class AutoClean<T> : IDisposable where T : IDisposable {
-        readonly IEnumerable<T> _items;
-        AutoClean(IEnumerable<T> items) => _items = items;
-        public static AutoClean<T> New(IEnumerable<T> items) => new AutoClean<T>(items);
-        public void Dispose() => _items.Foreach(x => x.Dispose());        
+    public class Batch<T> : IDisposable where T : IDisposable {
+        public IEnumerable<T> Items { get; }
+        Batch(IEnumerable<T> items) => Items = items;        
+        public void Dispose() => Items.Foreach(x => x.Dispose());
+        public static Batch<T> New(IEnumerable<T> items) => new Batch<T>(items);
     }
 }
