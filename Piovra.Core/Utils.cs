@@ -104,4 +104,11 @@ namespace Piovra {
         public T Value { get; set; }
         public static Result<T> Of(T value) => new Result<T> { Value = value };
     }
+
+    public class AutoClean<T> : IDisposable where T : IDisposable {
+        readonly IEnumerable<T> _items;
+        AutoClean(IEnumerable<T> items) => _items = items;
+        public static AutoClean<T> New(IEnumerable<T> items) => new AutoClean<T>(items);
+        public void Dispose() => _items.Foreach(x => x.Dispose());        
+    }
 }
