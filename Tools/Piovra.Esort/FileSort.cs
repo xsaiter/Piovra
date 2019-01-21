@@ -7,40 +7,34 @@ using System.Threading.Tasks;
 
 namespace Piovra.Esort {
     public class FileSort {
-        readonly Cfg _cfg;
-
-        public FileSort(Cfg cfg) {
-            _cfg = cfg;
-        }
-
         public class Cfg {
             public int MemorySize { get; set; }
             public string SrcFile { get; set; }
             public string DestFile { get; set; }
+            public string OutDir { get; set; } = "Tmp";
         }
 
-        const int NUM_SIZE = sizeof(int);        
-        static string TmpDir => "Tmp";
+        const int NUM_SIZE = sizeof(int);
 
-        public async Task Sort() {
-            var files = await SplitFile();
+        public static async Task Sort(Cfg cfg) {
+            var files = await SplitFile(cfg.SrcFile, cfg.MemorySize, cfg.OutDir);
             using (Batch<Stream>.New(files)) {
-                await Merge(files);
+                await Merge(files, cfg.DestFile);
             }
         }
 
-        async Task<List<Stream>> SplitFile() {
-            EnsureTmpDir();
+        static async Task<List<Stream>> SplitFile(string srcFile, int memorySize, string outDir) {
+            EnsureDir(outDir);
             var res = new List<Stream>();
-            using (var src = new FileStream(_cfg.SrcFile, FileMode.Open, FileAccess.Read)) {
-                var bufferSize = _cfg.MemorySize - _cfg.MemorySize % NUM_SIZE;
+            using (var src = new FileStream(srcFile, FileMode.Open, FileAccess.Read)) {
+                var bufferSize = memorySize - memorySize % NUM_SIZE;
                 var buffer = new byte[bufferSize];
                 var n = 0;
                 var i = 0;
                 while ((n = await src.ReadAsync(buffer, 0, buffer.Length)) > 0) {
                     var nums = buffer.AsNums();
                     Array.Sort(nums);
-                    var destName = $"{TmpDir}/{i++}_{_cfg.SrcFile}";
+                    var destName = $"{outDir}/{i++}_{srcFile}";
                     var dest = new FileStream(destName, FileMode.CreateNew, FileAccess.ReadWrite);
                     await dest.WriteAsync(nums.AsBytes(), 0, n);
                     if (dest.CanSeek) {
@@ -52,32 +46,31 @@ namespace Piovra.Esort {
             return res;
         }
 
-        static void EnsureTmpDir() {
-            var path = TmpDir;
-            if (Directory.Exists(path)) {
-                Directory.Delete(path);
+        static void EnsureDir(string dir) {
+            if (Directory.Exists(dir)) {
+                Directory.Delete(dir);
             }
-            Directory.CreateDirectory(path);
+            Directory.CreateDirectory(dir);
         }
 
-        async Task Merge(List<Stream> streams) {
-            using (var writer = new BinaryWriter(new FileStream(_cfg.DestFile, FileMode.CreateNew, FileAccess.Write))) {
+        static async Task Merge(List<Stream> streams, string destFile) {
+            using (var writer = new BinaryWriter(new FileStream(destFile, FileMode.CreateNew, FileAccess.Write))) {
                 var pq = PriorityQueue<FileItem>.Min();
                 foreach (var stream in streams) {
-                    var item = new FileItem(stream);
-                    await item.Read();
-                    if (item.HasNum) {
-                        pq.Enqueue(item);
+                    var x = new FileItem(stream);
+                    await x.Read();
+                    if (x.HasNum) {
+                        pq.Enqueue(x);
                     }
                 }
                 while (!pq.IsEmpty()) {
-                    var item = pq.Peek();
-                    if (item != null) {
-                        writer.Write(item.Num);
+                    var x = pq.Peek();
+                    if (x != null) {
+                        writer.Write(x.Num);
                         pq.Dequeue();
-                        await item.Read();
-                        if (item.HasNum) {
-                            pq.Enqueue(item);
+                        await x.Read();
+                        if (x.HasNum) {
+                            pq.Enqueue(x);
                         }
                     }
                 }
@@ -90,8 +83,7 @@ namespace Piovra.Esort {
             var buffer = new byte[NUM_SIZE];
             using (var stream = new FileStream(name, FileMode.Open, FileAccess.Read)) {
                 while ((n = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0) {
-                    var num = buffer.AsNum();
-                    Console.WriteLine($"{i++}. {num}");
+                    Console.WriteLine($"{i++}. {buffer.AsNum()}");
                 }
             }
         }
@@ -126,8 +118,9 @@ namespace Piovra.Esort {
             public int Num { get; private set; }
             public bool HasNum { get; private set; }
 
+            readonly byte[] buffer = new byte[NUM_SIZE];
+
             public async Task Read() {
-                var buffer = new byte[NUM_SIZE];
                 var n = await Stream.ReadAsync(buffer, 0, buffer.Length);
                 HasNum = n == buffer.Length;
                 if (HasNum) {

@@ -48,9 +48,8 @@ namespace Piovra.Esort {
                             throw new Exception($"unexpected arg: {s}");
                         }
                         ++i;
-                    }
-                    var sort = new FileSort(cfg);
-                    await sort.Sort();
+                    }                    
+                    await FileSort.Sort(cfg);
                 }
                 Console.WriteLine("OK");
             } catch (Exception e) {
