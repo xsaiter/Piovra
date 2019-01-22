@@ -55,9 +55,9 @@ namespace Piovra.Esort {
 
         static async Task Merge(List<Stream> streams, string destFile) {
             using (var writer = new BinaryWriter(new FileStream(destFile, FileMode.CreateNew, FileAccess.Write))) {
-                var pq = PriorityQueue<FileItem>.Min();
+                var pq = PriorityQueue<Feed>.Min();
                 foreach (var stream in streams) {
-                    var x = new FileItem(stream);
+                    var x = new Feed(stream);
                     await x.Read();
                     if (x.HasNum) {
                         pq.Enqueue(x);
@@ -111,8 +111,8 @@ namespace Piovra.Esort {
             public int Max { get; set; } = 1 << 10;
         }
 
-        class FileItem : IComparable<FileItem> {
-            public FileItem(Stream stream) => Stream = stream;
+        class Feed : IComparable<Feed> {
+            public Feed(Stream stream) => Stream = stream;
 
             Stream Stream { get; }
             public int Num { get; private set; }
@@ -128,7 +128,7 @@ namespace Piovra.Esort {
                 }
             }
 
-            public int CompareTo(FileItem other) {
+            public int CompareTo(Feed other) {
                 return Num.CompareTo(other.Num);
             }
         }
