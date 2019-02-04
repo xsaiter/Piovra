@@ -14,7 +14,7 @@ namespace Piovra.Problems.Mesh {
             var m = n - pos;
             if (m == 2) {
                 res.Add(s);
-                res.Add(s.Substring(0, pos) + s.Substring(pos, m).ReverseCopy());
+                res.Add(s.Substring(0, pos) + s.Substring(pos, m).Mirror());
             } else {
                 Permut(s, pos + 1, res);
             }
