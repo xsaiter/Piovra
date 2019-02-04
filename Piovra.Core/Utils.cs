@@ -32,6 +32,8 @@ namespace Piovra {
 
         public static bool EqIgnoreCase(this string s, string t) => string.Equals(s, t, StringComparison.OrdinalIgnoreCase);
 
+        public static string ReverseCopy(this string s) => new string(s.ToCharArray().Reverse().ToArray());        
+
         public static int ComputeHash(this IEnumerable<object> items) =>
             items.Select(x => x == null ? 0 : x.GetHashCode()).Aggregate(23, (hash, itemHash) => hash * 31 + itemHash);
 

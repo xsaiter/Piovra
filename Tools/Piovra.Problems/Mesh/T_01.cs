@@ -6,7 +6,7 @@ namespace Piovra.Problems.Mesh {
     public class T_01_A_Primes {
         public List<int> Execute(int m, int n) {
             var res = new List<int>();
-            for(var i = m; i <= n; ++i) {
+            for (var i = m; i <= n; ++i) {
                 if (Numeric.IsPrime(i)) {
                     res.Add(i);
                 }
@@ -15,6 +15,6 @@ namespace Piovra.Problems.Mesh {
         }
     }
 
-    public class T_01_A_Expr {        
+    public class T_01_A_Expr {
     }
 }
