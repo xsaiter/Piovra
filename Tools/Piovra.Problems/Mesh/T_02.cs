@@ -29,7 +29,7 @@ namespace Piovra.Problems.Mesh {
             var n = s.Length;
             var i = 0;
             var ns = s;
-            while(i < n) {
+            while (i < n) {
                 Permut(ns, i, res);
                 ns = Shift(s);
                 ++i;

@@ -10,8 +10,4 @@
     <ProjectReference Include="..\..\Piovra.Core\Piovra.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Doly\" />
-  </ItemGroup>
-
 </Project>
