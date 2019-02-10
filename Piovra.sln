@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.Graphs", "Piovra.Gra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.Json", "Piovra.Json\Piovra.Json.csproj", "{C2B8B4D8-032E-4B4A-8488-D257979E1473}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.Geo", "Piovra.Geo\Piovra.Geo.csproj", "{302E1C83-4DDA-499C-B98F-58F2C16AA026}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.Core", "Piovra.Core\Piovra.Core.csproj", "{9C06AB74-D9AC-46E9-BF2A-FEADA83113AC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.Lia", "Piovra.Lia\Piovra.Lia.csproj", "{8D3D90F3-F2BE-4E3D-98D4-57A7588E1C50}"
@@ -51,10 +49,6 @@ Global
 		{C2B8B4D8-032E-4B4A-8488-D257979E1473}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2B8B4D8-032E-4B4A-8488-D257979E1473}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2B8B4D8-032E-4B4A-8488-D257979E1473}.Release|Any CPU.Build.0 = Release|Any CPU
-		{302E1C83-4DDA-499C-B98F-58F2C16AA026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{302E1C83-4DDA-499C-B98F-58F2C16AA026}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{302E1C83-4DDA-499C-B98F-58F2C16AA026}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{302E1C83-4DDA-499C-B98F-58F2C16AA026}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C06AB74-D9AC-46E9-BF2A-FEADA83113AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C06AB74-D9AC-46E9-BF2A-FEADA83113AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C06AB74-D9AC-46E9-BF2A-FEADA83113AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
