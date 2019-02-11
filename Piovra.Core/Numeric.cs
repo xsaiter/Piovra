@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Piovra {
-    public class Numeric {
+﻿namespace Piovra {
+    public static class Numeric {
         public static bool IsPrime(int n) {
             for (var i = 2; i * i <= n; ++i) {
                 if (n % i == 0) {
@@ -11,6 +7,10 @@ namespace Piovra {
                 }
             }
             return true;
-        }        
+        }
+
+        public static bool IsKthBit(int x, int k) {
+            return (x & (1 << (k - 1))) > 0;
+        }
     }
 }
