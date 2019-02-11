@@ -1,4 +1,4 @@
-﻿namespace Piovra {
+﻿namespace Piovra.Numerics {
     public static class Numeric {
         public static bool IsPrime(int n) {
             for (var i = 2; i * i <= n; ++i) {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Piovra.Numerics;
 
 namespace Piovra.Problems.Msh {
     public class T_01_A {
