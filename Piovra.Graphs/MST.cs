@@ -20,7 +20,7 @@ namespace Piovra.Graphs {
 
             var orderedEdges = _g.AllEdges().OrderBy(e => e.Weight);
 
-            var ds = new DisjointSet<Node<V>>();
+            var ds = new DisjointSets<Node<V>>();
 
             //foreach (var edge in orderedEdges) {
             //    ds.Add(edge.Head);

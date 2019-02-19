@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace Piovra.Ds {
-    public class DisjointSet<T> where T : IEquatable<T> {
+    public class DisjointSets<T> where T : IEquatable<T> {
         readonly Dictionary<T, Node> _nodes = new Dictionary<T, Node>();
 
         public void Union(T x, T y) {
