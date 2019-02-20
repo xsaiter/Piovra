@@ -62,7 +62,9 @@ namespace Piovra {
             return res;
         }
 
-        public static T Coalesce<T>(params T[] items) where T : class => items.FirstOrDefault(x => x != null);        
+        public static T Coalesce<T>(params T[] items) where T : class => items.FirstOrDefault(x => x != null);
+
+        public static bool IsKthBit(int x, int k) => (x & (1 << (k - 1))) > 0;
 
         public static async Task StepByStep<T>(this IEnumerable<T> way, Func<IEnumerable<T>, int, Task> processStep, int stepSize) {
             var number = 0;
