@@ -1,8 +1,7 @@
 ﻿using System;
 
 namespace Piovra.Graphs {
-    public interface IEdge<V> : IEquatable<IEdge<V>>
-        where V : IEquatable<V> {
+    public interface IEdge<V> : IEquatable<IEdge<V>> where V : IEquatable<V> {
         Node<V> Head { get; }
         Node<V> Tail { get; }
     }

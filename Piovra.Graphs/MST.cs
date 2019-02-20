@@ -8,10 +8,10 @@ namespace Piovra.Graphs {
         public List<WeightedEdge<V>> Edges { get; } = new List<WeightedEdge<V>>();
     }
 
-    public class KruskalMST<V> where V : IEquatable<V> {
-        readonly WeightedDirectedGraph<V> _g;
+    public class KruskalMST<V> where V : IEquatable<V> {        
+        readonly IWeightedGraph<V> _g;
 
-        public KruskalMST(WeightedDirectedGraph<V> g) {
+        public KruskalMST(IWeightedGraph<V> g) {
             _g = g;
         }
 
@@ -20,12 +20,7 @@ namespace Piovra.Graphs {
 
             var orderedEdges = _g.AllEdges().OrderBy(e => e.Weight);
 
-            var ds = new DisjointSets<Node<V>>();
-
-            //foreach (var edge in orderedEdges) {
-            //    ds.Add(edge.Head);
-            //    ds.Add(edge.Tail);
-            //}
+            var ds = new DisjointSets<Node<V>>();            
 
             foreach (var edge in orderedEdges) {
                 var head = ds.Find(edge.Head);
@@ -42,9 +37,9 @@ namespace Piovra.Graphs {
     }
 
     public class PrimMST<V> where V : IEquatable<V> {
-        readonly WeightedDirectedGraph<V> _g;
+        readonly IWeightedGraph<V> _g;
 
-        public PrimMST(WeightedDirectedGraph<V> g) {
+        public PrimMST(IWeightedGraph<V> g) {
             _g = g;
         }
 

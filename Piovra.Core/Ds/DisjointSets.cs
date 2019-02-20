@@ -12,7 +12,8 @@ namespace Piovra.Ds {
         }
 
         public T Find(T x) {
-            var root = FindRoot(GetOrCreate(x));
+            var node = GetOrCreate(x);
+            var root = FindRoot(node);
             return root.Item;
         }
 

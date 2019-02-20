@@ -39,11 +39,14 @@ namespace Piovra.Graphs {
         int NE { get; }
         Node<V> NodeOf(V vertex);
         IEnumerable<Node<V>> AllNodes();
-        IEnumerable<Node<V>> Neighbors(Node<V> node);        
+        IEnumerable<Node<V>> Neighbors(Node<V> node);
     }
 
-    public abstract class Graph<V, E> : IGraph<V>
-        where E : IEdge<V> where V : IEquatable<V> {
+    public interface IGraph<V, E> where V : IEquatable<V> where E : IEdge<V> {
+        IEnumerable<E> AllEdges();
+    }
+
+    public abstract class Graph<V, E> : IGraph<V> where V : IEquatable<V> where E : IEdge<V> {
         readonly Dictionary<Node<V>, HashSet<E>> _adj = new Dictionary<Node<V>, HashSet<E>>();
         readonly Dictionary<V, Node<V>> _map = new Dictionary<V, Node<V>>();
         int _nodeId;
@@ -63,7 +66,7 @@ namespace Piovra.Graphs {
 
         public IEnumerable<Node<V>> Neighbors(Node<V> node) {
             return _adj[node].Select(x => x.Tail);
-        }        
+        }
 
         public Node<V> NodeOf(V vertex) {
             if (!_map.ContainsKey(vertex)) {
@@ -81,7 +84,7 @@ namespace Piovra.Graphs {
             foreach (var node in AllNodes()) {
                 var incidentEdges = IncidentEdges(node);
                 res.Extend(incidentEdges);
-            }            
+            }
             return res;
         }
 
@@ -122,34 +125,37 @@ namespace Piovra.Graphs {
         }
     }
 
-    public interface IUnweightedGraph<V> where V : IEquatable<V> { }
-    public interface IWeightedGraph<V> where V : IEquatable<V> { }
-    public interface IDirectedGraph<V> where V : IEquatable<V> { }
-    public interface IUndirectedGraph<V> where V : IEquatable<V> {}
+    public interface IUnweightedGraph<V> : IGraph<V, Edge<V>> where V : IEquatable<V> { }
 
-    public class UnweightedUndirectedGraph<V> : Graph<V, Edge<V>>, IUnweightedGraph<V>, IUndirectedGraph<V>
-        where V : IEquatable<V> {
+    public interface IWeightedGraph<V> : IGraph<V, WeightedEdge<V>> where V : IEquatable<V> { }
+
+    public interface IDirectedGraph<V> : IGraph<V> where V : IEquatable<V> { }
+
+    public interface IUndirectedGraph<V> : IGraph<V> where V : IEquatable<V> { }
+
+    public abstract class UnweightedGraph<V> : Graph<V, Edge<V>> where V : IEquatable<V> { }
+
+    public abstract class WeightedGraph<V> : Graph<V, WeightedEdge<V>> where V : IEquatable<V> { }
+
+    public class UnweightedUndirectedGraph<V> : UnweightedGraph<V>, IUndirectedGraph<V> where V : IEquatable<V> {
         public override void AddEdge(Edge<V> edge) {
             AddEdgeForUndirected(edge);
         }
     }
 
-    public class UnweightedDirectedGraph<V> : Graph<V, Edge<V>>, IUnweightedGraph<V>, IDirectedGraph<V>
-        where V : IEquatable<V> {
+    public class UnweightedDirectedGraph<V> : UnweightedGraph<V>, IDirectedGraph<V> where V : IEquatable<V> {
         public override void AddEdge(Edge<V> edge) {
             AddEdgeForDirected(edge);
         }
     }
 
-    public class WeightedUndirectedGraph<V> : Graph<V, WeightedEdge<V>>, IWeightedGraph<V>, IUndirectedGraph<V>
-        where V : IEquatable<V> {
+    public class WeightedUndirectedGraph<V> : WeightedGraph<V>, IUndirectedGraph<V> where V : IEquatable<V> {
         public override void AddEdge(WeightedEdge<V> edge) {
             AddEdgeForUndirected(edge);
         }
     }
 
-    public class WeightedDirectedGraph<V> : Graph<V, WeightedEdge<V>>, IWeightedGraph<V>, IDirectedGraph<V>
-        where V : IEquatable<V> {
+    public class WeightedDirectedGraph<V> : WeightedGraph<V>, IDirectedGraph<V> where V : IEquatable<V> {
         public override void AddEdge(WeightedEdge<V> edge) {
             AddEdgeForDirected(edge);
         }
