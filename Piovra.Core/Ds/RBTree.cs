@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Piovra.Ds {
-    public class RBTree<TKey, TValue> where TKey : IComparable<TKey> {
+    public class RBTree<K, V> where K : IComparable<K> {
         readonly Node _nil;
         Node _root;        
 
@@ -10,7 +10,7 @@ namespace Piovra.Ds {
             _root = _nil;
         }
 
-        public Result<TValue> GetValue(TKey key) {
+        public Result<V> GetValue(K key) {
             var x = _root;
 
             while (x != _nil) {
@@ -27,10 +27,10 @@ namespace Piovra.Ds {
                 }
             }
 
-            return x != null ? Result<TValue>.Of(x.Value) : null;
+            return x != null ? Result<V>.Of(x.Value) : null;
         }        
 
-        public void Add(TKey key, TValue value) {
+        public void Add(K key, V value) {
             var cmp = 0;
 
             var z = new Node { Key = key, Value = value, Color = RED };
@@ -153,8 +153,8 @@ namespace Piovra.Ds {
         }
 
         class Node {
-            public TKey Key { get; set; }
-            public TValue Value { get; set; }
+            public K Key { get; set; }
+            public V Value { get; set; }
             public Colors Color { get; set; }
             public Node P { get; set; }
             public Node L { get; set; }
