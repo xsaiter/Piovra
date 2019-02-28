@@ -14,7 +14,7 @@ namespace Piovra {
         TEvent GetOrCreateEvent<TEvent>() where TEvent : IEvent, new() {
             var key = Key<TEvent>();
             if (_events.ContainsKey(key)) {
-                return (TEvent)_events[key];
+                return (TEvent) _events[key];
             }
             var newEvent = new TEvent();
             _events.Add(key, newEvent);
@@ -67,8 +67,8 @@ namespace Piovra {
                     OrigAction = origAction;
                     Action = action;
                 }
-                public static Act From<T>(Action<T> action) => new Act(action, _ => action((T)_));
-                public Action<T> To<T>() => (Action<T>)OrigAction;
+                public static Act From<T>(Action<T> action) => new Act(action, _ => action((T) _));
+                public Action<T> To<T>() => (Action<T>) OrigAction;
             }
         }
     }

@@ -2,9 +2,9 @@
 
 namespace Piovra.Lia {
     public class Matrix {
-        readonly double[,] _a;
+        readonly double[, ] _a;
 
-        public Matrix(double[,] a) {
+        public Matrix(double[, ] a) {
             _a = a;
             M = a.Rows();
             N = a.Cols();
@@ -56,7 +56,7 @@ namespace Piovra.Lia {
         public static Matrix operator *(Matrix a, double v) => a.Copy().Transform(x => x * v);
         public static Matrix operator /(Matrix a, double v) => a.Copy().Transform(x => x / v);
 
-        public static bool Eq(double[,] a, double[,] b) {
+        public static bool Eq(double[, ] a, double[, ] b) {
             var ra = a.Rows();
             var ca = a.Cols();
             var rb = b.Rows();
@@ -78,8 +78,8 @@ namespace Piovra.Lia {
             return new Matrix(CopyArray());
         }
 
-        double[,] CopyArray() {
-            return _a.Clone() as double[,];
+        double[, ] CopyArray() {
+            return _a.Clone() as double[, ];
         }
     }
 }

@@ -6,6 +6,6 @@ namespace Piovra.Lia {
 
         public static bool Eq(this double x, double y, double espilon = EPSILON) {
             return Math.Abs(x - y) <= espilon;
-        }        
+        }
     }
 }

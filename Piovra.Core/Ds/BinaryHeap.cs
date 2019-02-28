@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Piovra.Ds {
     public class BinaryHeap<T> where T : IComparable<T> {
-        readonly List<T> _a;        
+        readonly List<T> _a;
 
         public BinaryHeap(int capacity = 1, bool nonIncreasing = true) {
-            if(capacity < 1) {
+            if (capacity < 1) {
                 throw new ArgumentOutOfRangeException(nameof(capacity));
             }
             _a = Utils.AllocateList<T>(capacity + 1, () => default);

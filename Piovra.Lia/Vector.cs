@@ -9,10 +9,10 @@ namespace Piovra.Lia {
             _a = a;
         }
 
-        public Vector(int length) : this(new double[length]) { }        
+        public Vector(int length) : this(new double[length]) { }
 
         public static Vector Create(int lenght, double initialValue) {
-            var v = new Vector(lenght);            
+            var v = new Vector(lenght);
             v.SetForAll(initialValue);
             return v;
         }

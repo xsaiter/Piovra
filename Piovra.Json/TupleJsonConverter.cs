@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Piovra.Json {
     public class TupleJsonConverter : JsonConverter {
@@ -19,7 +19,7 @@ namespace Piovra.Json {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
             var t = JToken.FromObject(value);
             if (t.Type == JTokenType.Object) {
-                Prepare((JObject)t, value);
+                Prepare((JObject) t, value);
             }
             t.WriteTo(writer);
         }
@@ -96,7 +96,7 @@ namespace Piovra.Json {
                 var children = p.Value.Children().ToList();
                 for (var i = 0; i < Nodes.Count; ++i) {
                     var node = Nodes[i];
-                    node.Property = (JProperty)children[i];
+                    node.Property = (JProperty) children[i];
                     node.Visit(node.Property);
                 }
             }

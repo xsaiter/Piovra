@@ -8,7 +8,7 @@
     }
 
     public interface IVisitable { }
-    
+
     public interface IVisitable<T> : IVisitable {
         void Accept(IVisitor<T> visitor);
     }
@@ -22,10 +22,10 @@
     }
 
     public abstract class Visitable<T> : VisitableBase<T>, IVisitable<T> where T : class, IVisitable {
-        public void Accept(IVisitor<T> visitor) => visitor.Visit(Self);        
+        public void Accept(IVisitor<T> visitor) => visitor.Visit(Self);
     }
 
     public abstract class Visitable<T, R> : VisitableBase<T>, IVisitable<T, R> where T : class, IVisitable {
-        public R Accept(IVisitor<T, R> visitor) => visitor.Visit(Self);        
+        public R Accept(IVisitor<T, R> visitor) => visitor.Visit(Self);
     }
 }

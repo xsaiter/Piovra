@@ -47,7 +47,7 @@ namespace Piovra.Graphs {
 
     public class WeightedEdge<V> : IEdge<V> where V : IEquatable<V> {
         public static WeightedEdge<V> Of(V head, V tail, double weight) =>
-            new WeightedEdge<V>(Edge<V>.Of(head, tail), weight);
+        new WeightedEdge<V>(Edge<V>.Of(head, tail), weight);
 
         WeightedEdge(Edge<V> edge, double weight) {
             Edge = edge;
@@ -66,7 +66,7 @@ namespace Piovra.Graphs {
             if (ReferenceEquals(this, other)) {
                 return true;
             }
-            var otherObj = (WeightedEdge<V>)other;
+            var otherObj = (WeightedEdge<V>) other;
             return Edge.Equals(otherObj.Edge);
         }
 

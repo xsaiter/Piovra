@@ -1,33 +1,33 @@
-﻿using Npgsql;
-using System;
+﻿using System;
 using System.Data;
 using System.Threading;
+using Npgsql;
 
 namespace Piovra.Pgsql {
     public class LiveConn : IDisposable {
         NpgsqlConnection _conn;
-        readonly Config _cfg;        
+        readonly Config _cfg;
 
         public LiveConn(Config cfg) {
-            _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));
+            _cfg = cfg ??
+                throw new ArgumentNullException(nameof(cfg));
         }
 
-        public LiveConn(string connString) : this(Config.Default(connString)) {
-        }
+        public LiveConn(string connString) : this(Config.Default(connString)) { }
 
         public NpgsqlConnection Get() {
             if (!OK) {
                 CleanUp();
                 _conn = New(_cfg);
-            }            
+            }
             return _conn;
         }
 
         public bool OK => _conn != null && _conn.State == ConnectionState.Open;
 
-        public void Dispose() => CleanUp();        
+        public void Dispose() => CleanUp();
 
-        public static NpgsqlConnection New(Config cfg) {            
+        public static NpgsqlConnection New(Config cfg) {
             var attempts = 0;
             var opened = false;
             NpgsqlConnection conn = null;

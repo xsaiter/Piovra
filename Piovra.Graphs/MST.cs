@@ -1,14 +1,14 @@
-﻿using Piovra.Ds;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Piovra.Ds;
 
 namespace Piovra.Graphs {
     public class MST<V> where V : IEquatable<V> {
         public List<WeightedEdge<V>> Edges { get; } = new List<WeightedEdge<V>>();
     }
 
-    public class KruskalMST<V> where V : IEquatable<V> {        
+    public class KruskalMST<V> where V : IEquatable<V> {
         readonly IWeightedGraph<V> _g;
 
         public KruskalMST(IWeightedGraph<V> g) {
@@ -20,7 +20,7 @@ namespace Piovra.Graphs {
 
             var orderedEdges = _g.AllEdges().OrderBy(e => e.Weight);
 
-            var ds = new DisjointSets<Node<V>>();            
+            var ds = new DisjointSets<Node<V>>();
 
             foreach (var edge in orderedEdges) {
                 var head = ds.Find(edge.Head);

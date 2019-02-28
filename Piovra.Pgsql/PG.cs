@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Data;
 using System.Data.Common;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using NpgsqlTypes;
 
-namespace Piovra.Pgsql {    
+namespace Piovra.Pgsql {
     public static class PG {
         public static async Task<int> PerformNonQuery(this NpgsqlConnection conn, string sql, object param = null) {
-            using (var cmd = conn.CreateCommand()) {
+            using(var cmd = conn.CreateCommand()) {
                 PrepareCmd(cmd, sql, param);
                 var result = await cmd.ExecuteNonQueryAsync();
                 return result;
@@ -22,21 +22,21 @@ namespace Piovra.Pgsql {
         }
 
         public static async Task<T> PerformScalar<T>(this NpgsqlConnection conn, string sql, object param = null) {
-            using (var cmd = conn.CreateCommand()) {
+            using(var cmd = conn.CreateCommand()) {
                 PrepareCmd(cmd, sql, param);
                 var result = await cmd.ExecuteScalarAsync();
-                return (T)result;
+                return (T) result;
             }
         }
 
         public static async Task<List<T>> PerformQuery<T>(this NpgsqlConnection conn, string sql, object param = null)
-            where T : new() {
+        where T : new() {
             var result = new List<T>();
 
-            using (var cmd = conn.CreateCommand()) {
+            using(var cmd = conn.CreateCommand()) {
                 PrepareCmd(cmd, sql, param);
 
-                using (var r = await cmd.ExecuteReaderAsync()) {
+                using(var r = await cmd.ExecuteReaderAsync()) {
                     if (r.HasRows) {
                         var properties = typeof(T).GetProperties();
                         var columns = r.GetColumnSchema();
@@ -101,7 +101,7 @@ namespace Piovra.Pgsql {
         public static async Task RunAllSqlFilesInDirectory(string path, int timeout, string connString, int step = 100) {
             var files = Directory.GetFiles(path);
 
-            using (var conn = LiveConn.New(connString)) {
+            using(var conn = LiveConn.New(connString)) {
                 foreach (var file in files) {
                     var lines = File.ReadAllLines(file);
 
@@ -115,7 +115,7 @@ namespace Piovra.Pgsql {
 
                         cc.ForEach(c => sb.AppendLine(c));
 
-                        using (var cmd = conn.CreateCommand()) {
+                        using(var cmd = conn.CreateCommand()) {
                             cmd.CommandText = sb.ToString();
                             cmd.CommandType = CommandType.Text;
                             cmd.CommandTimeout = timeout;
@@ -128,9 +128,9 @@ namespace Piovra.Pgsql {
         }
 
         public static async Task CopyFromFile(NpgsqlConnection conn, FileInfo file, string copyFromCommand) {
-            using (var stream = file.OpenRead()) {
-                using (var writer = conn.BeginTextImport(copyFromCommand)) {
-                    using (var reader = new StreamReader(stream)) {
+            using(var stream = file.OpenRead()) {
+                using(var writer = conn.BeginTextImport(copyFromCommand)) {
+                    using(var reader = new StreamReader(stream)) {
                         while (!reader.EndOfStream) {
                             var line = await reader.ReadLineAsync();
                             await writer.WriteLineAsync(line);
@@ -140,18 +140,17 @@ namespace Piovra.Pgsql {
             }
         }
 
-        static readonly Dictionary<Type, NpgsqlDbType> mapTypes = new Dictionary<Type, NpgsqlDbType> {
-                { typeof(int), NpgsqlDbType.Integer },
-                { typeof(int?), NpgsqlDbType.Integer },
-                { typeof(long), NpgsqlDbType.Bigint },
-                { typeof(long?), NpgsqlDbType.Bigint },
-                { typeof(double), NpgsqlDbType.Double },
-                { typeof(double?), NpgsqlDbType.Double },
-                { typeof(bool), NpgsqlDbType.Boolean },
-                { typeof(bool?), NpgsqlDbType.Boolean },
-                { typeof(DateTime), NpgsqlDbType.Date },
-                { typeof(DateTime?), NpgsqlDbType.Date },
-                { typeof(string), NpgsqlDbType.Text }
-            };
+        static readonly Dictionary<Type, NpgsqlDbType> mapTypes = new Dictionary<Type, NpgsqlDbType> { { typeof(int), NpgsqlDbType.Integer },
+            { typeof(int?), NpgsqlDbType.Integer },
+            { typeof(long), NpgsqlDbType.Bigint },
+            { typeof(long?), NpgsqlDbType.Bigint },
+            { typeof(double), NpgsqlDbType.Double },
+            { typeof(double?), NpgsqlDbType.Double },
+            { typeof(bool), NpgsqlDbType.Boolean },
+            { typeof(bool?), NpgsqlDbType.Boolean },
+            { typeof(DateTime), NpgsqlDbType.Date },
+            { typeof(DateTime?), NpgsqlDbType.Date },
+            { typeof(string), NpgsqlDbType.Text }
+        };
     }
 }

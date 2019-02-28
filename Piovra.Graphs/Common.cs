@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace Piovra.Graphs {
     public enum Colors {
-        White, Black, Gray
+        White,
+        Black,
+        Gray
     }
 
     public class Item {
@@ -14,7 +16,7 @@ namespace Piovra.Graphs {
 
     public class Result<V> where V : IEquatable<V> {
         public Result(Node<V> source) {
-            Source = source;            
+            Source = source;
         }
         public Node<V> Source { get; set; }
         public List<Item> Items { get; set; }
