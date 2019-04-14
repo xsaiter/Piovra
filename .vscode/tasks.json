@@ -10,6 +10,16 @@
                 "${workspaceFolder}/Tests/Piovra.Demo/Piovra.Demo.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Tools/Piovra.Problems/Piovra.Problems.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }
