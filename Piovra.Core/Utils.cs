@@ -15,12 +15,12 @@ namespace Piovra {
 
         public static List<T> AsList<T>(this T obj) => new List<T> { obj };
 
-        public static bool EqSeq<T, TKey>(this IEnumerable<T> items, IEnumerable<T> other, Func<T, TKey> keySelector)
+        public static bool EqSequences<T, TKey>(this IEnumerable<T> items, IEnumerable<T> other, Func<T, TKey> keySelector)
         where TKey : IComparable<TKey> =>
             items.OrderBy(keySelector).SequenceEqual(other.OrderBy(keySelector));
 
         public static bool EqSeq<T>(this IEnumerable<T> items, IEnumerable<T> other)
-        where T : IComparable<T> => items.EqSeq(other, x => x);
+        where T : IComparable<T> => items.EqSequences(other, x => x);
 
         public static bool Eq(this string s, string t) {
             if (s == null || t == null) {
@@ -89,8 +89,8 @@ namespace Piovra {
         public static bool Eq<T>(this T x, T y) where T : IComparable<T> => x.CompareTo(y) == 0;
         public static bool Ne<T>(this T x, T y) where T : IComparable<T> => x.CompareTo(y) != 0;
 
-        public static int Rows<T>(this T[, ] a) => a.GetLength(0);
-        public static int Cols<T>(this T[, ] a) => a.GetLength(1);
+        public static int Rows<T>(this T[,] a) => a.GetLength(0);
+        public static int Cols<T>(this T[,] a) => a.GetLength(1);
 
         public static byte[] AsBytes(this IEnumerable<int> nums) {
             return nums.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
