@@ -13,7 +13,22 @@ namespace Piovra.Problems.Mesh {
         }
     }
 
-    public class _01_B {
+    public class _01_B {        
+    }
+
+    public class _01_C {
+
+    }
+
+    public class _01_D {
+
+    }
+
+    public class _01_E {
+
+    }
+
+    public class _01_F {
 
     }
 }

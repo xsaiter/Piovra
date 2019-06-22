@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Piovra.Ds;
 
 namespace Piovra.Esort {
-    public class FileSort {
+    public static class FileSort {
         public class Cfg {
             public int MemorySize { get; set; }
             public string SrcFile { get; set; }
@@ -18,7 +18,7 @@ namespace Piovra.Esort {
 
         public static async Task Sort(Cfg cfg) {
             var files = await SplitFile(cfg.SrcFile, cfg.MemorySize, cfg.OutDir);
-            using(Batch<Stream>.New(files)) {
+            using (Batch<Stream>.New(files)) {
                 await Merge(files, cfg.DestFile);
             }
         }
@@ -26,7 +26,7 @@ namespace Piovra.Esort {
         static async Task<List<Stream>> SplitFile(string srcFile, int memorySize, string outDir) {
             EnsureDir(outDir);
             var res = new List<Stream>();
-            using(var src = new FileStream(srcFile, FileMode.Open, FileAccess.Read)) {
+            using (var src = new FileStream(srcFile, FileMode.Open, FileAccess.Read)) {
                 var bufferSize = memorySize - memorySize % NUM_SIZE;
                 var buffer = new byte[bufferSize];
                 var n = 0;
@@ -54,7 +54,7 @@ namespace Piovra.Esort {
         }
 
         static async Task Merge(List<Stream> streams, string destFile) {
-            using(var writer = new BinaryWriter(new FileStream(destFile, FileMode.CreateNew, FileAccess.Write))) {
+            using (var writer = new BinaryWriter(new FileStream(destFile, FileMode.CreateNew, FileAccess.Write))) {
                 var pq = PriorityQueue<Feed>.Min();
                 foreach (var stream in streams) {
                     var x = new Feed(stream);
@@ -78,11 +78,10 @@ namespace Piovra.Esort {
         }
 
         public static async Task PrintFile(string name) {
-            var n = 0;
             var i = 0;
             var buffer = new byte[NUM_SIZE];
-            using(var stream = new FileStream(name, FileMode.Open, FileAccess.Read)) {
-                while ((n = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0) {
+            using (var stream = new FileStream(name, FileMode.Open, FileAccess.Read)) {
+                while ((await stream.ReadAsync(buffer, 0, buffer.Length)) > 0) {
                     Console.WriteLine($"{i++}. {buffer.AsNum()}");
                 }
             }
@@ -97,7 +96,7 @@ namespace Piovra.Esort {
 
         public static void GenerateSourceFile(GenerateCfg cfg) {
             var random = new Random(Guid.NewGuid().GetHashCode());
-            using(var writer = new BinaryWriter(new FileStream(cfg.Name, FileMode.Create))) {
+            using (var writer = new BinaryWriter(new FileStream(cfg.Name, FileMode.Create))) {
                 var nNums = cfg.Size / NUM_SIZE;
                 var nums = Enumerable.Range(0, nNums).Select(x => random.Next(cfg.Min, cfg.Max)).ToArray();
                 writer.Write(nums.AsBytes());

@@ -19,7 +19,7 @@ namespace Piovra {
         where TKey : IComparable<TKey> =>
             items.OrderBy(keySelector).SequenceEqual(other.OrderBy(keySelector));
 
-        public static bool EqSeq<T>(this IEnumerable<T> items, IEnumerable<T> other)
+        public static bool EqSequences<T>(this IEnumerable<T> items, IEnumerable<T> other)
         where T : IComparable<T> => items.EqSequences(other, x => x);
 
         public static bool Eq(this string s, string t) {

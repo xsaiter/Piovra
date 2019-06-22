@@ -3,7 +3,7 @@
 namespace Piovra.Ds {
     public class RBTree<K, V> where K : IComparable<K> {
         readonly Node _nil;
-        Node _root;        
+        Node _root;
 
         public RBTree() {
             _nil = new Node { Color = BLACK };
@@ -14,7 +14,7 @@ namespace Piovra.Ds {
             var x = _root;
 
             while (x != _nil) {
-                int cmp = key.CompareTo(x.Key);
+                var cmp = key.CompareTo(x.Key);
 
                 if (cmp == 0) {
                     break;
@@ -28,16 +28,15 @@ namespace Piovra.Ds {
             }
 
             return x != null ? Result<V>.Of(x.Value) : null;
-        }        
+        }
 
         public void Add(K key, V value) {
-            var cmp = 0;
-
             var z = new Node { Key = key, Value = value, Color = RED };
 
             var y = _nil;
             var x = _root;
 
+            int cmp;
             while (x != _nil) {
                 y = x;
                 cmp = z.Key.CompareTo(x.Key);
@@ -161,8 +160,8 @@ namespace Piovra.Ds {
             public Node R { get; set; }
         }
 
-        static Colors RED = Colors.RED;
-        static Colors BLACK = Colors.BLACK;
+        const Colors RED = Colors.RED;
+        const Colors BLACK = Colors.BLACK;
 
         enum Colors {
             RED, BLACK

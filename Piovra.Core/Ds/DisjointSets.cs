@@ -22,7 +22,7 @@ namespace Piovra.Ds {
                 return node;
             }
             return FindRoot(node.Parent);
-        }             
+        }
 
         Node GetOrCreate(T x) {
             if (_nodes.ContainsKey(x)) {

@@ -32,7 +32,7 @@ namespace Piovra {
             public I Get<I>() where I : class {
                 var type = typeof(I);
                 if (_map.ContainsKey(type)) {
-                    return (I) _map[type]();
+                    return (I)_map[type]();
                 }
                 throw new Exception($"not found: {type}");
             }

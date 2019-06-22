@@ -2,6 +2,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Piovra.Core\Piovra.Core.csproj" />
+    <ProjectReference Include="..\..\Piovra.Geo\Piovra.Geo.csproj" />
+    <ProjectReference Include="..\..\Piovra.Graphs\Piovra.Graphs.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
