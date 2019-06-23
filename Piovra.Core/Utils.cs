@@ -68,7 +68,7 @@ namespace Piovra {
 
         public static async Task StepByStep<T>(this IEnumerable<T> way, Func<IEnumerable<T>, int, Task> processStep, int stepSize) {
             var number = 0;
-            var nextStepSize = 0;
+            int nextStepSize;
             do {
                 var items = way.Skip(number * stepSize).Take(stepSize).ToList();
                 nextStepSize = items.Count;
