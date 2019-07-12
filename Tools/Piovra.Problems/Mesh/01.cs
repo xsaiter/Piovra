@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Piovra.Problems.Mesh {
-    public class _01_A {
+namespace Piovra.Problems.Mesh._01 {
+    public class A {
         public List<long> GetPrimes(Range<long> range) {
             var res = new List<long>();
             for (var i = range.L; i < range.R; ++i) {
@@ -13,22 +13,22 @@ namespace Piovra.Problems.Mesh {
         }
     }
 
-    public class _01_B {        
+    public class B {        
     }
 
-    public class _01_C {
-
-    }
-
-    public class _01_D {
+    public class C {
 
     }
 
-    public class _01_E {
+    public class D {
 
     }
 
-    public class _01_F {
+    public class E {
+
+    }
+
+    public class F {
 
     }
 }

@@ -41,9 +41,5 @@
         public Point A { get; }
         public Point B { get; }
         public Point C { get; }
-    }
-
-    public class Rect {
-
-    }
+    }    
 }

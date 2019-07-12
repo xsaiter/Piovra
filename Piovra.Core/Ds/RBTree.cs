@@ -15,11 +15,9 @@ namespace Piovra.Ds {
 
             while (x != _nil) {
                 var cmp = key.CompareTo(x.Key);
-
                 if (cmp == 0) {
                     break;
                 }
-
                 if (cmp < 0) {
                     x = x.L;
                 } else {

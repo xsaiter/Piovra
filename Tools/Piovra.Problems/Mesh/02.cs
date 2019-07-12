@@ -1,4 +1,4 @@
-﻿namespace Piovra.Problems.Mesh {
-    public class _02 {
+﻿namespace Piovra.Problems.Mesh._02 {
+    public class A {
     }
 }
