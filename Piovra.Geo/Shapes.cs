@@ -21,20 +21,13 @@
     }
 
     public class Segment {
-        public Segment(Point a, Point b) {
-            A = a;
-            B = b;
-        }
+        public Segment(Point a, Point b) => (A, B) = (a, b);
         public Point A { get; }
         public Point B { get; }
     }
 
     public class Triangle {
-        public Triangle(Point a, Point b, Point c) {
-            A = a;
-            B = b;
-            C = c;
-        }
+        public Triangle(Point a, Point b, Point c) => (A, B, C) = (a, b, c);
         public Point A { get; }
         public Point B { get; }
         public Point C { get; }

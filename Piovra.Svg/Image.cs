@@ -11,11 +11,7 @@ namespace Piovra.Svg {
                 Xml = new XDocument(new XDeclaration("1.0", "utf-8", "no"), root.ToSvg())
             };
         }
-
-        Image(SVG root) {
-            Root = root;
-        }
-
+        Image(SVG root) => Root = root;        
         public SVG Root { get; }
         public XDocument Xml { get; private set; }
     }

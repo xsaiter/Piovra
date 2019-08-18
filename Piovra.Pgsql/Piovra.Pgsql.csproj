@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Piovra.Core\Piovra.Core.csproj" />
+    <ProjectReference Include="..\Piovra.Sql.Core\Piovra.Sql.Core.csproj" />
   </ItemGroup>
 
 </Project>

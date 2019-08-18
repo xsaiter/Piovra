@@ -50,7 +50,7 @@ namespace Piovra.Lia {
         public static Vector operator *(Vector a, double v) => a.Copy().Transform(x => x * v);
         public static Vector operator /(Vector a, double v) => a.Copy().Transform(x => x / v);
 
-        void AssertEqLengths(Vector other) {
+        public void AssertSameLengths(Vector other) {
             if (N != other.N) {
                 throw new ArgumentException("lengths not equal");
             }

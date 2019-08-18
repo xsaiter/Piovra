@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using System.Threading;
-using Npgsql;
 
-namespace Piovra.Pgsql {
-    public class LiveConn : IDisposable {
-        NpgsqlConnection _conn;
+namespace Piovra.Sql.Core {
+    public class SmartConn<C> : IDisposable where C : DbConnection, new() {
+        C _conn;
         readonly Config _cfg;
+        public SmartConn(Config cfg) => _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));        
+        public SmartConn(string connString) : this(new Config(connString)) { }
 
-        public LiveConn(Config cfg) {
-            _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));
-        }
-
-        public LiveConn(string connString) : this(new Config { ConnString = connString }) { }
-
-        public NpgsqlConnection Get() {
+        public C Get() {
             if (!OK) {
                 CleanUp();
                 _conn = New(_cfg);
@@ -22,16 +18,17 @@ namespace Piovra.Pgsql {
             return _conn;
         }
 
-        public bool OK => _conn != null && _conn.State == ConnectionState.Open;        
+        public bool OK => _conn != null && _conn.State == ConnectionState.Open;
 
-        public static NpgsqlConnection New(Config cfg) {
+        public static C New(Config cfg) {
             var attempts = 0;
             var opened = false;
-            NpgsqlConnection conn = null;
+            C conn = null;
 
             while (!opened) {
                 try {
-                    conn = new NpgsqlConnection(cfg.ConnString);
+                    conn = cfg.CreateConn();
+                    conn.ConnectionString = cfg.ConnString;
                     conn.Open();
                     opened = true;
                 } catch (Exception e) {
@@ -50,7 +47,7 @@ namespace Piovra.Pgsql {
             return conn;
         }
 
-        public static NpgsqlConnection New(string connString) => New(new Config { ConnString = connString });
+        public static C New(string connString) => New(new Config(connString));
 
         public void Dispose() => CleanUp();
         void CleanUp() {
@@ -63,6 +60,8 @@ namespace Piovra.Pgsql {
         public class Config {
             public const int DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS = 5000;
             public const int DEFAULT_MAX_ATTEMPTS = 10;
+            public Config(string connString) => ConnString = connString;
+            public Func<C> CreateConn { get; set; } = () => new C();
             public string ConnString { get; set; }
             public int MaxAttempts { get; set; } = DEFAULT_MAX_ATTEMPTS;
             public int TimeBetweenAttemptsInMs { get; set; } = DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS;

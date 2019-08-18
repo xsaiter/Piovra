@@ -13,7 +13,7 @@ using NpgsqlTypes;
 namespace Piovra.Pgsql {
     public static class PG {
         public static async Task<int> PerformNonQuery(this NpgsqlConnection conn, string sql, object param = null) {
-            using(var cmd = conn.CreateCommand()) {
+            using (var cmd = conn.CreateCommand()) {
                 PrepareCmd(cmd, sql, param);
                 var result = await cmd.ExecuteNonQueryAsync();
                 return result;
@@ -22,10 +22,10 @@ namespace Piovra.Pgsql {
         }
 
         public static async Task<T> PerformScalar<T>(this NpgsqlConnection conn, string sql, object param = null) {
-            using(var cmd = conn.CreateCommand()) {
+            using (var cmd = conn.CreateCommand()) {
                 PrepareCmd(cmd, sql, param);
                 var result = await cmd.ExecuteScalarAsync();
-                return (T) result;
+                return (T)result;
             }
         }
 
@@ -33,10 +33,10 @@ namespace Piovra.Pgsql {
         where T : new() {
             var result = new List<T>();
 
-            using(var cmd = conn.CreateCommand()) {
+            using (var cmd = conn.CreateCommand()) {
                 PrepareCmd(cmd, sql, param);
 
-                using(var r = await cmd.ExecuteReaderAsync()) {
+                using (var r = await cmd.ExecuteReaderAsync()) {
                     if (r.HasRows) {
                         var properties = typeof(T).GetProperties();
                         var columns = r.GetColumnSchema();
@@ -101,7 +101,7 @@ namespace Piovra.Pgsql {
         public static async Task RunAllSqlFilesInDirectory(string path, int timeout, string connString, int step = 100) {
             var files = Directory.GetFiles(path);
 
-            using(var conn = LiveConn.New(connString)) {
+            using (var conn = SmartConn.New(connString)) {
                 foreach (var file in files) {
                     var lines = File.ReadAllLines(file);
 
@@ -115,7 +115,7 @@ namespace Piovra.Pgsql {
 
                         cc.ForEach(c => sb.AppendLine(c));
 
-                        using(var cmd = conn.CreateCommand()) {
+                        using (var cmd = conn.CreateCommand()) {
                             cmd.CommandText = sb.ToString();
                             cmd.CommandType = CommandType.Text;
                             cmd.CommandTimeout = timeout;
@@ -128,9 +128,9 @@ namespace Piovra.Pgsql {
         }
 
         public static async Task CopyFromFile(NpgsqlConnection conn, FileInfo file, string copyFromCommand) {
-            using(var stream = file.OpenRead()) {
-                using(var writer = conn.BeginTextImport(copyFromCommand)) {
-                    using(var reader = new StreamReader(stream)) {
+            using (var stream = file.OpenRead()) {
+                using (var writer = conn.BeginTextImport(copyFromCommand)) {
+                    using (var reader = new StreamReader(stream)) {
                         while (!reader.EndOfStream) {
                             var line = await reader.ReadLineAsync();
                             await writer.WriteLineAsync(line);
@@ -152,5 +152,9 @@ namespace Piovra.Pgsql {
             { typeof(DateTime?), NpgsqlDbType.Date },
             { typeof(string), NpgsqlDbType.Text }
         };
+
+        public class SmartConn : Sql.Core.SmartConn<NpgsqlConnection> {
+            public SmartConn(Config cfg) : base(cfg) { }
+        }
     }
 }
