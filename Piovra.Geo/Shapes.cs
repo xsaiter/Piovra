@@ -1,9 +1,6 @@
 ﻿namespace Piovra.Geo {
     public class Point {
-        public Point(double x, double y) {
-            X = x;
-            Y = y;
-        }
+        public Point(double x, double y) => (X, Y) = (x, y);
         public double X { get; }
         public double Y { get; }
 
@@ -41,5 +38,5 @@
         public Point A { get; }
         public Point B { get; }
         public Point C { get; }
-    }    
+    }
 }

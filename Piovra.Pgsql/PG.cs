@@ -46,7 +46,7 @@ namespace Piovra.Pgsql {
 
                             foreach (var column in columns) {
                                 var name = column.ColumnName;
-                                var property = properties.FirstOrDefault(x => x.Name.EqIgnoreCase(name));
+                                var property = properties.FirstOrDefault(x => x.Name.SameIgnoreCase(name));
                                 if (property != null) {
                                     var i = r.GetOrdinal(name);
                                     if (!r.IsDBNull(i)) {

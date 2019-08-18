@@ -15,14 +15,14 @@ namespace Piovra {
 
         public static List<T> AsList<T>(this T obj) => new List<T> { obj };
 
-        public static bool EqSequences<T, TKey>(this IEnumerable<T> items, IEnumerable<T> other, Func<T, TKey> keySelector)
+        public static bool SameSequences<T, TKey>(this IEnumerable<T> items, IEnumerable<T> other, Func<T, TKey> keySelector)
         where TKey : IComparable<TKey> =>
             items.OrderBy(keySelector).SequenceEqual(other.OrderBy(keySelector));
 
-        public static bool EqSequences<T>(this IEnumerable<T> items, IEnumerable<T> other)
-        where T : IComparable<T> => items.EqSequences(other, x => x);
+        public static bool SameSequences<T>(this IEnumerable<T> items, IEnumerable<T> other)
+        where T : IComparable<T> => items.SameSequences(other, x => x);
 
-        public static bool Eq(this string s, string t) {
+        public static bool Same(this string s, string t) {
             if (s == null || t == null) {
                 return false;
             }
@@ -30,7 +30,7 @@ namespace Piovra {
             return s.Substring(0, n).Equals(s.Substring(0, n));
         }
 
-        public static bool EqIgnoreCase(this string s, string t) => string.Equals(s, t, StringComparison.OrdinalIgnoreCase);
+        public static bool SameIgnoreCase(this string s, string t) => string.Equals(s, t, StringComparison.OrdinalIgnoreCase);
 
         public static string Mirror(this string s) => new string(s.ToCharArray().Reverse().ToArray());
 

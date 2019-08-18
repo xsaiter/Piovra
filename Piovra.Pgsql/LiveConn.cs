@@ -9,11 +9,10 @@ namespace Piovra.Pgsql {
         readonly Config _cfg;
 
         public LiveConn(Config cfg) {
-            _cfg = cfg ??
-                throw new ArgumentNullException(nameof(cfg));
+            _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));
         }
 
-        public LiveConn(string connString) : this(Config.Default(connString)) { }
+        public LiveConn(string connString) : this(new Config { ConnString = connString }) { }
 
         public NpgsqlConnection Get() {
             if (!OK) {
@@ -23,9 +22,7 @@ namespace Piovra.Pgsql {
             return _conn;
         }
 
-        public bool OK => _conn != null && _conn.State == ConnectionState.Open;
-
-        public void Dispose() => CleanUp();
+        public bool OK => _conn != null && _conn.State == ConnectionState.Open;        
 
         public static NpgsqlConnection New(Config cfg) {
             var attempts = 0;
@@ -53,8 +50,9 @@ namespace Piovra.Pgsql {
             return conn;
         }
 
-        public static NpgsqlConnection New(string connString) => New(Config.Default(connString));
+        public static NpgsqlConnection New(string connString) => New(new Config { ConnString = connString });
 
+        public void Dispose() => CleanUp();
         void CleanUp() {
             if (_conn != null) {
                 _conn.Dispose();
@@ -63,19 +61,11 @@ namespace Piovra.Pgsql {
         }
 
         public class Config {
-            public string ConnString { get; set; }
-            public int MaxAttempts { get; set; }
-            public int TimeBetweenAttemptsInMs { get; set; }
-
             public const int DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS = 5000;
             public const int DEFAULT_MAX_ATTEMPTS = 10;
-
-            public static Config Default(string connString) =>
-                new Config {
-                    ConnString = connString,
-                    MaxAttempts = DEFAULT_MAX_ATTEMPTS,
-                    TimeBetweenAttemptsInMs = DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS
-                };
+            public string ConnString { get; set; }
+            public int MaxAttempts { get; set; } = DEFAULT_MAX_ATTEMPTS;
+            public int TimeBetweenAttemptsInMs { get; set; } = DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS;
         }
     }
 }
