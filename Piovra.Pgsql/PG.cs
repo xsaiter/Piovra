@@ -101,7 +101,7 @@ namespace Piovra.Pgsql {
         public static async Task RunAllSqlFilesInDirectory(string path, int timeout, string connString, int step = 100) {
             var files = Directory.GetFiles(path);
 
-            using (var conn = SmartConn.New(connString)) {
+            using (var conn = await SmartConn.New(connString)) {
                 foreach (var file in files) {
                     var lines = File.ReadAllLines(file);
 

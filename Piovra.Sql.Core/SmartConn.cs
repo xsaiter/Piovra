@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Piovra.Sql.Core {
     public class SmartConn<C> : IDisposable where C : DbConnection, new() {
@@ -10,17 +11,17 @@ namespace Piovra.Sql.Core {
         public SmartConn(Config cfg) => _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));        
         public SmartConn(string connString) : this(new Config(connString)) { }
 
-        public C Get() {
+        public async Task<C> Get() {
             if (!OK) {
                 CleanUp();
-                _conn = New(_cfg);
+                _conn = await New(_cfg);
             }
             return _conn;
         }
 
         public bool OK => _conn != null && _conn.State == ConnectionState.Open;
 
-        public static C New(Config cfg) {
+        public static async Task<C> New(Config cfg) {
             var attempts = 0;
             var opened = false;
             C conn = null;
@@ -29,7 +30,7 @@ namespace Piovra.Sql.Core {
                 try {
                     conn = cfg.CreateConn();
                     conn.ConnectionString = cfg.ConnString;
-                    conn.Open();
+                    await conn.OpenAsync();
                     opened = true;
                 } catch (Exception e) {
                     if (conn != null) {
@@ -47,7 +48,7 @@ namespace Piovra.Sql.Core {
             return conn;
         }
 
-        public static C New(string connString) => New(new Config(connString));
+        public static Task<C> New(string connString) => New(new Config(connString));
 
         public void Dispose() => CleanUp();
         void CleanUp() {
@@ -61,7 +62,7 @@ namespace Piovra.Sql.Core {
             public const int DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS = 5000;
             public const int DEFAULT_MAX_ATTEMPTS = 10;
             public Config(string connString) => ConnString = connString;
-            public Func<C> CreateConn { get; set; } = () => new C();
+            public Func<C> CreateConn { get; set; } = () => new C();            
             public string ConnString { get; set; }
             public int MaxAttempts { get; set; } = DEFAULT_MAX_ATTEMPTS;
             public int TimeBetweenAttemptsInMs { get; set; } = DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS;

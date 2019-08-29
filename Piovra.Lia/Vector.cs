@@ -11,8 +11,8 @@ namespace Piovra.Lia {
 
         public Vector(int length) : this(new double[length]) { }
 
-        public static Vector Create(int lenght, double initialValue) {
-            var v = new Vector(lenght);
+        public static Vector Create(int length, double initialValue) {
+            var v = new Vector(length);
             v.SetForAll(initialValue);
             return v;
         }
