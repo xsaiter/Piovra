@@ -20,12 +20,8 @@ namespace Piovra.Lia {
         public int N { get; }
 
         public double this[int i] {
-            get {
-                return _a[i];
-            }
-            set {
-                _a[i] = value;
-            }
+            get => _a[i];
+            set => _a[i] = value;            
         }
 
         public void SetForAll(double value) {

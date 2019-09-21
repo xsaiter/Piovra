@@ -16,8 +16,7 @@ namespace Piovra {
         public static List<T> AsList<T>(this T obj) => new List<T> { obj };
 
         public static bool SameSequences<T, TKey>(this IEnumerable<T> items, IEnumerable<T> other, Func<T, TKey> keySelector)
-        where TKey : IComparable<TKey> =>
-            items.OrderBy(keySelector).SequenceEqual(other.OrderBy(keySelector));
+        where TKey : IComparable<TKey> => items.OrderBy(keySelector).SequenceEqual(other.OrderBy(keySelector));
 
         public static bool SameSequences<T>(this IEnumerable<T> items, IEnumerable<T> other)
         where T : IComparable<T> => items.SameSequences(other, x => x);
@@ -133,7 +132,7 @@ namespace Piovra {
     public class Batch<T> : IDisposable where T : IDisposable {
         public IEnumerable<T> Items { get; }
         Batch(IEnumerable<T> items) => Items = items;
-        public void Dispose() => Items.Foreach(x => x.Dispose());
+        public void Dispose() => Items.Foreach(x => x?.Dispose());
         public static Batch<T> New(IEnumerable<T> items) => new Batch<T>(items);
     }
 }

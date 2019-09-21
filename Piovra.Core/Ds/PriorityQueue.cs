@@ -5,8 +5,7 @@ namespace Piovra.Ds {
         readonly BinaryHeap<T> _heap;
 
         PriorityQueue(BinaryHeap<T> heap) {
-            _heap = heap ??
-                throw new ArgumentNullException(nameof(heap));
+            _heap = heap ?? throw new ArgumentNullException(nameof(heap));
         }
 
         public static PriorityQueue<T> Max(int capacity = INITIAL_CAPACITY) {
