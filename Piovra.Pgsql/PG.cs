@@ -13,20 +13,17 @@ using NpgsqlTypes;
 namespace Piovra.Pgsql {
     public static class PG {
         public static async Task<int> PerformNonQuery(this NpgsqlConnection conn, string sql, object param = null) {
-            using (var cmd = conn.CreateCommand()) {
-                PrepareCmd(cmd, sql, param);
-                var result = await cmd.ExecuteNonQueryAsync();
-                return result;
-
-            }
+            using var cmd = conn.CreateCommand();
+            PrepareCmd(cmd, sql, param);
+            var result = await cmd.ExecuteNonQueryAsync();
+            return result;
         }
 
         public static async Task<T> PerformScalar<T>(this NpgsqlConnection conn, string sql, object param = null) {
-            using (var cmd = conn.CreateCommand()) {
-                PrepareCmd(cmd, sql, param);
-                var result = await cmd.ExecuteScalarAsync();
-                return (T)result;
-            }
+            using var cmd = conn.CreateCommand();
+            PrepareCmd(cmd, sql, param);
+            var result = await cmd.ExecuteScalarAsync();
+            return (T)result;
         }
 
         public static async Task<List<T>> PerformQuery<T>(this NpgsqlConnection conn, string sql, object param = null)
@@ -36,28 +33,27 @@ namespace Piovra.Pgsql {
             using (var cmd = conn.CreateCommand()) {
                 PrepareCmd(cmd, sql, param);
 
-                using (var r = await cmd.ExecuteReaderAsync()) {
-                    if (r.HasRows) {
-                        var properties = typeof(T).GetProperties();
-                        var columns = r.GetColumnSchema();
+                using var r = await cmd.ExecuteReaderAsync();
+                if (r.HasRows) {
+                    var properties = typeof(T).GetProperties();
+                    var columns = r.GetColumnSchema();
 
-                        while (r.Read()) {
-                            var obj = new T();
+                    while (r.Read()) {
+                        var obj = new T();
 
-                            foreach (var column in columns) {
-                                var name = column.ColumnName;
-                                var property = properties.FirstOrDefault(x => x.Name.SameIgnoreCase(name));
-                                if (property != null) {
-                                    var i = r.GetOrdinal(name);
-                                    if (!r.IsDBNull(i)) {
-                                        var value = r.GetValue(i);
-                                        property.SetValue(obj, value);
-                                    }
+                        foreach (var column in columns) {
+                            var name = column.ColumnName;
+                            var property = properties.FirstOrDefault(x => x.Name.SameIgnoreCase(name));
+                            if (property != null) {
+                                var i = r.GetOrdinal(name);
+                                if (!r.IsDBNull(i)) {
+                                    var value = r.GetValue(i);
+                                    property.SetValue(obj, value);
                                 }
                             }
-
-                            result.Add(obj);
                         }
+
+                        result.Add(obj);
                     }
                 }
             }
@@ -101,42 +97,38 @@ namespace Piovra.Pgsql {
         public static async Task RunAllSqlFilesInDirectory(string path, int timeout, string connString, int step = 100) {
             var files = Directory.GetFiles(path);
 
-            using (var conn = await SmartConn.New(connString)) {
-                foreach (var file in files) {
-                    var lines = File.ReadAllLines(file);
+            using var conn = await SmartConn.New(connString);
+            foreach (var file in files) {
+                var lines = File.ReadAllLines(file);
 
-                    var skip = 0;
-                    List<string> cc;
+                var skip = 0;
+                List<string> cc;
 
-                    while ((cc = lines.Skip(skip).Take(step).ToList()).Any()) {
-                        skip += cc.Count;
+                while ((cc = lines.Skip(skip).Take(step).ToList()).Any()) {
+                    skip += cc.Count;
 
-                        var sb = new StringBuilder();
+                    var sb = new StringBuilder();
 
-                        cc.ForEach(c => sb.AppendLine(c));
+                    cc.ForEach(c => sb.AppendLine(c));
 
-                        using (var cmd = conn.CreateCommand()) {
-                            cmd.CommandText = sb.ToString();
-                            cmd.CommandType = CommandType.Text;
-                            cmd.CommandTimeout = timeout;
+                    using (var cmd = conn.CreateCommand()) {
+                        cmd.CommandText = sb.ToString();
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandTimeout = timeout;
 
-                            await cmd.ExecuteNonQueryAsync();
-                        }
+                        await cmd.ExecuteNonQueryAsync();
                     }
                 }
             }
         }
 
         public static async Task CopyFromFile(NpgsqlConnection conn, FileInfo file, string copyFromCommand) {
-            using (var stream = file.OpenRead()) {
-                using (var writer = conn.BeginTextImport(copyFromCommand)) {
-                    using (var reader = new StreamReader(stream)) {
-                        while (!reader.EndOfStream) {
-                            var line = await reader.ReadLineAsync();
-                            await writer.WriteLineAsync(line);
-                        }
-                    }
-                }
+            using var stream = file.OpenRead();
+            using var writer = conn.BeginTextImport(copyFromCommand);
+            using var reader = new StreamReader(stream);
+            while (!reader.EndOfStream) {
+                var line = await reader.ReadLineAsync();
+                await writer.WriteLineAsync(line);
             }
         }
 
