@@ -25,7 +25,7 @@ namespace Piovra.Data {
         }
 
         public Task<T> GetById(TIdentity id) {
-            return Set().FindAsync(id);
+            return Set().FindAsync(id).AsTask();
         }
 
         public Task<List<T>> GetAllList() {
@@ -41,7 +41,7 @@ namespace Piovra.Data {
         }
 
         public Task Add(T entity) {
-            return Set().AddAsync(entity);
+            return Set().AddAsync(entity).AsTask();
         }
 
         public async Task Remove(T entity) {
