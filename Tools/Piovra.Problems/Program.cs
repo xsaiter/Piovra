@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using Piovra;
 
-namespace Piovra.Problems {    
+namespace Piovra.Problems {
     class Program {
         static void Main(string[] args) {
-            var s = "asd";            
-            var empty = s.Empty();
+            long x = 1;
+            var nn = 1 << 24;
+            var tmp = nn;
         }
     }
 }

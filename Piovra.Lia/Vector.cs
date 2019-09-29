@@ -21,7 +21,7 @@ namespace Piovra.Lia {
 
         public double this[int i] {
             get => _a[i];
-            set => _a[i] = value;            
+            set => _a[i] = value;
         }
 
         public void SetForAll(double value) {
@@ -52,12 +52,7 @@ namespace Piovra.Lia {
             }
         }
 
-        public Vector Copy() {
-            return new Vector(CopyArray());
-        }
-
-        double[] CopyArray() {
-            return _a.Clone() as double[];
-        }
+        public Vector Copy() => new Vector(CopyArray());
+        double[] CopyArray() => _a.Clone() as double[];
     }
 }

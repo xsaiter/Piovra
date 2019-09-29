@@ -14,7 +14,7 @@ namespace Piovra.Graphs {
             var s = _g.NodeOf(source);
 
             var res = new Result<V>(s);
-
+            
             var items = Utils.AllocateList(_g.NV, () => new Item());
 
             foreach (var node in _g.AllNodes()) {
@@ -29,7 +29,7 @@ namespace Piovra.Graphs {
             si.Color = Colors.Gray;
             si.Distance = 0;
 
-            var q = new Queue<Node<V>>();
+            var q = new Queue<Node<V>>();            
             q.Enqueue(s);
 
             while (q.Any()) {

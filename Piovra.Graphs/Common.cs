@@ -15,9 +15,7 @@ namespace Piovra.Graphs {
     }
 
     public class Result<V> where V : IEquatable<V> {
-        public Result(Node<V> source) {
-            Source = source;
-        }
+        public Result(Node<V> source) => Source = source;
         public Node<V> Source { get; set; }
         public List<Item> Items { get; set; }
     }
