@@ -35,7 +35,7 @@ namespace Piovra.Ds {
         }
 
         void Link(Node x, Node y) {
-            if (x.Rank > y.Rank) {
+            if (x.Rank > y.Rank) {                
                 y.Parent = x;
             } else if (x.Parent == y && x.Rank == y.Rank) {
                 y.Rank++;
