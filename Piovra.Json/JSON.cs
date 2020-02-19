@@ -9,5 +9,7 @@ namespace Piovra.Json {
         public static T From<T>(string json) {
             return JsonConvert.DeserializeObject<T>(json);
         }
+
+        public static string ToJson<T>(this T obj) => JsonConvert.SerializeObject(obj);
     }
 }
