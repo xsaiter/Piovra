@@ -4,8 +4,8 @@ using System.Text;
 namespace Piovra.Problems.Mesh._01 {
     public class A_Primes {
         public List<long> Run(Range<long> range) {
-            var res = new List<long>();
-            for (var i = range.L; i < range.R; ++i) {
+            var res = new List<long>();            
+            for (var i = range.L; i < range.R; ++i) {                
                 if (Arithmetic.IsPrime(i)) {
                     res.Add(i);
                 }

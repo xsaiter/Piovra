@@ -8,7 +8,9 @@ namespace Piovra.Sql.Core {
     public class SmartConn<C> : IDisposable where C : DbConnection, new() {
         C _conn;
         readonly Config _cfg;
+
         public SmartConn(Config cfg) => _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));        
+        
         public SmartConn(string connString) : this(new Config(connString)) { }
 
         public async Task<C> Get() {
@@ -51,6 +53,7 @@ namespace Piovra.Sql.Core {
         public static Task<C> New(string connString) => New(new Config(connString));
 
         public void Dispose() => CleanUp();
+
         void CleanUp() {
             if (_conn != null) {
                 _conn.Dispose();

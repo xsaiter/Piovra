@@ -111,13 +111,12 @@ namespace Piovra.Pgsql {
 
                     cc.ForEach(c => sb.AppendLine(c));
 
-                    using (var cmd = conn.CreateCommand()) {
-                        cmd.CommandText = sb.ToString();
-                        cmd.CommandType = CommandType.Text;
-                        cmd.CommandTimeout = timeout;
+                    using var cmd = conn.CreateCommand();
+                    cmd.CommandText = sb.ToString();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandTimeout = timeout;
 
-                        await cmd.ExecuteNonQueryAsync();
-                    }
+                    await cmd.ExecuteNonQueryAsync();
                 }
             }
         }
