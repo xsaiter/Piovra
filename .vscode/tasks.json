@@ -1,25 +1,25 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "build",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/Tests/Piovra.Demo/Piovra.Demo.csproj"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "build",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/Tools/Piovra.Problems/Piovra.Problems.csproj"
-            ],
-            "problemMatcher": "$msCompile"
-        }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build demo",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/Tests/Piovra.Demo/Piovra.Demo.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build problems",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/Tools/Piovra.Problems/Piovra.Problems.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    }
+  ]
 }
