@@ -91,17 +91,11 @@ namespace Piovra {
         public static int Rows<T>(this T[,] a) => a.GetLength(0);
         public static int Cols<T>(this T[,] a) => a.GetLength(1);
 
-        public static byte[] AsBytes(this IEnumerable<int> nums) {
-            return nums.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
-        }
+        public static byte[] AsBytes(this IEnumerable<int> nums) => nums.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
 
-        public static byte[] AsBytes(this int num) {
-            return BitConverter.GetBytes(num);
-        }
+        public static byte[] AsBytes(this int num) => BitConverter.GetBytes(num);        
 
-        public static int AsNum(this byte[] bytes) {
-            return BitConverter.ToInt32(bytes);
-        }
+        public static int AsNum(this byte[] bytes) => BitConverter.ToInt32(bytes);        
 
         public static int[] AsNums(this byte[] bytes) {
             var size = bytes.Length / sizeof(int);
