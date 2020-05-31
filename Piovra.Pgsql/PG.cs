@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,8 +25,13 @@ namespace Piovra.Pgsql {
             return (T)result;
         }
 
-        public static async Task<List<T>> PerformQuery<T>(this NpgsqlConnection conn, string sql, object param = null) where T : new() {
-            var result = new List<T>();
+        public static Task<List<T>> PerformQuery<T>(this NpgsqlConnection conn, string sql, object param = null)
+            where T : new() =>
+            PerformQuery<T, List<T>>(conn, sql, param);
+
+        public static async Task<R> PerformQuery<T, R>(this NpgsqlConnection conn, string sql, object param = null)
+            where T : new() where R : ICollection<T>, new() {
+            var result = new R();
             using var cmd = conn.CreateCommand();
             PrepareCmd(cmd, sql, param);
             using var r = await cmd.ExecuteReaderAsync();

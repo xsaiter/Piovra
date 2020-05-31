@@ -21,7 +21,7 @@ namespace Piovra.Sql.Core {
             return _conn;
         }
 
-        public bool OK => _conn != null && _conn.State == ConnectionState.Open;
+        public bool OK => _conn?.State == ConnectionState.Open;
 
         public static async Task<C> New(Config cfg) {
             var attempts = 0;

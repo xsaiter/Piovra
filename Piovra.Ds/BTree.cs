@@ -18,15 +18,15 @@ namespace Piovra.Ds {
         public int H { get; set; }
 
         public Entry Search(K key) {
-            return Search(Root, key);
+            return SearchRec(Root, key);
         }
 
-        Entry Search(Node x, K key) {
+        Entry SearchRec(Node x, K key) {
             var pos = x.Entries.TakeWhile(_ => key.Ge(_.Key)).Count();
             if (pos < x.NEntries && x.Entries[pos].Key.Eq(key)) {
                 return x.Entries[pos];
             }
-            return x.IsLeaf ? null : Search(x.Children[pos], key);
+            return x.IsLeaf ? null : SearchRec(x.Children[pos], key);
         }
 
         public void Add(K key, V value) {

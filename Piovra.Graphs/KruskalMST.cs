@@ -11,7 +11,7 @@ namespace Piovra.Graphs {
         }
 
         public MST<V> Execute() {
-            var res = new MST<V>();
+            var mst = new MST<V>();
 
             var orderedEdges = _g.AllEdges().OrderBy(e => e.Weight);
 
@@ -22,12 +22,12 @@ namespace Piovra.Graphs {
                 var tail = ds.Find(edge.Tail);
 
                 if (!head.Equals(tail)) {
-                    res.Edges.Add(edge);
+                    mst.Edges.Add(edge);
                     ds.Union(head, tail);
                 }
             }
 
-            return res;
+            return mst;
         }
     }
 }

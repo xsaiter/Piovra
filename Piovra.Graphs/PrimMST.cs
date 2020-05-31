@@ -9,8 +9,8 @@ namespace Piovra.Graphs {
         }
 
         public MST<V> Execute() {
-            var res = new MST<V>();
-            return res;
+            var mst = new MST<V>();
+            return mst;
         }
     }
 }
