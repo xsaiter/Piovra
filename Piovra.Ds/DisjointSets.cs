@@ -18,10 +18,7 @@ namespace Piovra.Ds {
         }
 
         Node FindRoot(Node node) {
-            if (node == node.Parent) {
-                return node;
-            }
-            return FindRoot(node.Parent);
+            return node == node.Parent ? node : FindRoot(node.Parent);
         }
 
         Node GetOrCreate(T x) {
@@ -71,9 +68,7 @@ namespace Piovra.Ds {
                 return Equals(obj as Node);
             }
 
-            public override int GetHashCode() {
-                return Item.GetHashCode();
-            }
+            public override int GetHashCode() => HashCode.Combine(Item);            
         }
     }
 }

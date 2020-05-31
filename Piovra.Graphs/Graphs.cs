@@ -29,9 +29,7 @@ namespace Piovra.Graphs {
             return Equals(obj as Node<V>);
         }
 
-        public override int GetHashCode() {
-            return Vertex.GetHashCode();
-        }
+        public override int GetHashCode() => HashCode.Combine(Vertex);        
     }
 
     public interface IGraph<V> where V : IEquatable<V> {

@@ -6,9 +6,7 @@ namespace Piovra.Ds {
         readonly List<T> _a;
 
         public BinaryHeap(int capacity = 1, bool nonIncreasing = true) {
-            if (capacity < 1) {
-                throw new ArgumentOutOfRangeException(nameof(capacity));
-            }
+            ARG.EnsureOutOfRange(() => capacity < 1, nameof(capacity));
             _a = Utils.AllocateList<T>(capacity + 1, () => default);
             NonIncreasing = nonIncreasing;
             Size = 0;
@@ -81,9 +79,7 @@ namespace Piovra.Ds {
             _a[j] = t;
         }
 
-        bool StrictInequality(int i, int j) {
-            return NonIncreasing ? _a[i].Lt(_a[j]) : _a[i].Gt(_a[j]);
-        }
+        bool StrictInequality(int i, int j) => NonIncreasing ? _a[i].Lt(_a[j]) : _a[i].Gt(_a[j]);        
 
         static int Left(int i) => 2 * i;
         static int Right(int i) => 2 * i + 1;
