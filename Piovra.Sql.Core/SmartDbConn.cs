@@ -5,13 +5,13 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Piovra.Sql.Core {
-    public class SmartConn<C> : IDisposable where C : DbConnection, new() {
-        C _conn;
+    public class SmartDbConn<C> : IDisposable where C : DbConnection, new() {        
         readonly Config _cfg;
+        C _conn;
 
-        public SmartConn(Config cfg) => _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));        
-        
-        public SmartConn(string connString) : this(new Config(connString)) { }
+        public SmartDbConn(Config cfg) => _cfg = ARG.NotNull(cfg, nameof(cfg));
+
+        public SmartDbConn(string connString) : this(new Config(connString)) { }
 
         public async Task<C> Get() {
             if (!OK) {
@@ -25,15 +25,15 @@ namespace Piovra.Sql.Core {
 
         public static async Task<C> New(Config cfg) {
             var attempts = 0;
-            var opened = false;
+            var isOpened = false;
             C conn = null;
 
-            while (!opened) {
+            while (!isOpened) {
                 try {
                     conn = cfg.CreateConn();
                     conn.ConnectionString = cfg.ConnString;
                     await conn.OpenAsync();
-                    opened = true;
+                    isOpened = true;
                 } catch (Exception e) {
                     if (conn != null) {
                         conn.Dispose();
@@ -65,7 +65,7 @@ namespace Piovra.Sql.Core {
             public const int DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS = 5000;
             public const int DEFAULT_MAX_ATTEMPTS = 10;
             public Config(string connString) => ConnString = connString;
-            public Func<C> CreateConn { get; set; } = () => new C();            
+            public Func<C> CreateConn { get; set; } = () => new C();
             public string ConnString { get; set; }
             public int MaxAttempts { get; set; } = DEFAULT_MAX_ATTEMPTS;
             public int TimeBetweenAttemptsInMs { get; set; } = DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS;

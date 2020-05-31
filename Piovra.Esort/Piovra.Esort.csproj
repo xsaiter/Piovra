@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Piovra.Core\Piovra.Core.csproj" />
+    <ProjectReference Include="..\Piovra.Core\Piovra.Core.csproj" />
+    <ProjectReference Include="..\Piovra.Ds\Piovra.Ds.csproj" />
   </ItemGroup>
 
 </Project>

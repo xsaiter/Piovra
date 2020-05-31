@@ -25,25 +25,24 @@ namespace Piovra.Esort {
 
         static async Task<List<Stream>> SplitFile(string srcFile, int memorySize, string outDir) {
             EnsureDir(outDir);
-            var res = new List<Stream>();
-            using (var src = new FileStream(srcFile, FileMode.Open, FileAccess.Read)) {
-                var bufferSize = memorySize - memorySize % NUM_SIZE;
-                var buffer = new byte[bufferSize];
-                var n = 0;
-                var i = 0;
-                while ((n = await src.ReadAsync(buffer, 0, buffer.Length)) > 0) {
-                    var nums = buffer.AsNums();
-                    Array.Sort(nums);
-                    var destName = $"{outDir}/{i++}_{srcFile}";
-                    var dest = new FileStream(destName, FileMode.CreateNew, FileAccess.ReadWrite);
-                    await dest.WriteAsync(nums.AsBytes(), 0, n);
-                    if (dest.CanSeek) {
-                        dest.Seek(0, SeekOrigin.Begin);
-                    }
-                    res.Add(dest);
+            var result = new List<Stream>();
+            using var src = new FileStream(srcFile, FileMode.Open, FileAccess.Read);
+            var bufferSize = memorySize - memorySize % NUM_SIZE;
+            var buffer = new byte[bufferSize];
+            var n = 0;
+            var i = 0;
+            while ((n = await src.ReadAsync(buffer, 0, buffer.Length)) > 0) {
+                var nums = buffer.AsNums();
+                Array.Sort(nums);
+                var destName = $"{outDir}/{i++}_{srcFile}";
+                var dest = new FileStream(destName, FileMode.CreateNew, FileAccess.ReadWrite);
+                await dest.WriteAsync(nums.AsBytes(), 0, n);
+                if (dest.CanSeek) {
+                    dest.Seek(0, SeekOrigin.Begin);
                 }
+                result.Add(dest);
             }
-            return res;
+            return result;
         }
 
         static void EnsureDir(string dir) {
@@ -53,8 +52,7 @@ namespace Piovra.Esort {
             Directory.CreateDirectory(dir);
         }
 
-        static async Task Merge(List<Stream> streams, string destFile) {
-            using var writer = new BinaryWriter(new FileStream(destFile, FileMode.CreateNew, FileAccess.Write));
+        static async Task Merge(List<Stream> streams, string destFile) {            
             var pq = PriorityQueue<Feed>.Min();
             foreach (var stream in streams) {
                 var x = new Feed(stream);
@@ -63,6 +61,7 @@ namespace Piovra.Esort {
                     pq.Enqueue(x);
                 }
             }
+            using var writer = new BinaryWriter(new FileStream(destFile, FileMode.CreateNew, FileAccess.Write));
             while (!pq.IsEmpty()) {
                 var x = pq.Peek();
                 if (x != null) {
@@ -124,9 +123,7 @@ namespace Piovra.Esort {
                 }
             }
 
-            public int CompareTo(Feed other) {
-                return Num.CompareTo(other.Num);
-            }
+            public int CompareTo(Feed other) => Num.CompareTo(other.Num);
         }
     }
 }

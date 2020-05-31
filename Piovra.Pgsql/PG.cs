@@ -26,61 +26,48 @@ namespace Piovra.Pgsql {
             return (T)result;
         }
 
-        public static async Task<List<T>> PerformQuery<T>(this NpgsqlConnection conn, string sql, object param = null)
-        where T : new() {
+        public static async Task<List<T>> PerformQuery<T>(this NpgsqlConnection conn, string sql, object param = null) where T : new() {
             var result = new List<T>();
-
-            using (var cmd = conn.CreateCommand()) {
-                PrepareCmd(cmd, sql, param);
-
-                using var r = await cmd.ExecuteReaderAsync();
-                if (r.HasRows) {
-                    var properties = typeof(T).GetProperties();
-                    var columns = r.GetColumnSchema();
-
-                    while (r.Read()) {
-                        var obj = new T();
-
-                        foreach (var column in columns) {
-                            var name = column.ColumnName;
-                            var property = properties.FirstOrDefault(x => x.Name.SameIgnoreCase(name));
-                            if (property != null) {
-                                var i = r.GetOrdinal(name);
-                                if (!r.IsDBNull(i)) {
-                                    var value = r.GetValue(i);
-                                    property.SetValue(obj, value);
-                                }
+            using var cmd = conn.CreateCommand();
+            PrepareCmd(cmd, sql, param);
+            using var r = await cmd.ExecuteReaderAsync();
+            if (r.HasRows) {
+                var properties = typeof(T).GetProperties();
+                var columns = r.GetColumnSchema();
+                while (r.Read()) {
+                    var obj = new T();
+                    foreach (var column in columns) {
+                        var name = column.ColumnName;
+                        var property = properties.FirstOrDefault(x => x.Name.SameIgnoreCase(name));
+                        if (property != null) {
+                            var i = r.GetOrdinal(name);
+                            if (!r.IsDBNull(i)) {
+                                var value = r.GetValue(i);
+                                property.SetValue(obj, value);
                             }
                         }
-
-                        result.Add(obj);
                     }
+                    result.Add(obj);
                 }
             }
-
             return result;
         }
 
         static void PrepareCmd(NpgsqlCommand cmd, string sql, object param = null) {
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = sql;
-
             if (param != null) {
                 var properties = param.GetType().GetProperties();
-
                 foreach (var property in properties) {
                     var p = cmd.CreateParameter();
-
                     p.ParameterName = $"@{property.Name}";
                     var value = property.GetValue(param);
-
                     if (value != null) {
                         p.NpgsqlValue = value;
                         p.NpgsqlDbType = GetDbTypeFrom(property);
                     } else {
                         p.NpgsqlValue = null;
                     }
-
                     cmd.Parameters.Add(p);
                 }
             }
@@ -131,7 +118,8 @@ namespace Piovra.Pgsql {
             }
         }
 
-        static readonly Dictionary<Type, NpgsqlDbType> mapTypes = new Dictionary<Type, NpgsqlDbType> { { typeof(int), NpgsqlDbType.Integer },
+        static readonly Dictionary<Type, NpgsqlDbType> mapTypes = new Dictionary<Type, NpgsqlDbType> {
+            { typeof(int), NpgsqlDbType.Integer },
             { typeof(int?), NpgsqlDbType.Integer },
             { typeof(long), NpgsqlDbType.Bigint },
             { typeof(long?), NpgsqlDbType.Bigint },
@@ -144,7 +132,7 @@ namespace Piovra.Pgsql {
             { typeof(string), NpgsqlDbType.Text }
         };
 
-        public class SmartConn : Sql.Core.SmartConn<NpgsqlConnection> {
+        public class SmartConn : Sql.Core.SmartDbConn<NpgsqlConnection> {
             public SmartConn(Config cfg) : base(cfg) { }
         }
     }

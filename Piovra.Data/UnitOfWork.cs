@@ -9,9 +9,7 @@ namespace Piovra.Data {
     }
 
     public abstract class UnitOfWork : IUnitOfWork {
-        protected UnitOfWork(DbContext context) {
-            Context = context;
-        }
+        protected UnitOfWork(DbContext context) => Context = ARG.NotNull(context, nameof(context));        
 
         public DbContext Context { get; }
 

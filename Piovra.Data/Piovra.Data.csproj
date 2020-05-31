@@ -9,4 +9,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Piovra.Core\Piovra.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Piovra {
     public class RegistryBase {
-        static Lazy<RegistryBase> _lazy = new Lazy<RegistryBase>(() => new RegistryBase());
+        static readonly Lazy<RegistryBase> _lazy = new Lazy<RegistryBase>(() => new RegistryBase());
         static RegistryBase Sole => _lazy.Value;
         protected RegistryBase() { }
 

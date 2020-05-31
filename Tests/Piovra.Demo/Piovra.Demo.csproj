@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Piovra.Core\Piovra.Core.csproj" />
+    <ProjectReference Include="..\..\Piovra.Ds\Piovra.Ds.csproj" />
     <ProjectReference Include="..\..\Piovra.Lia\Piovra.Lia.csproj" />
     <ProjectReference Include="..\..\Piovra.Json\Piovra.Json.csproj" />
   </ItemGroup>

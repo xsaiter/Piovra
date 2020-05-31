@@ -14,8 +14,7 @@ namespace Piovra.Svg {
     }
 
     public class Circle : Shape {
-        public Circle(Point center, int radius, Style style = null) : base(style) => 
-            (Center, Radius) = (center, radius);
+        public Circle(Point center, int radius, Style style = null) : base(style) => (Center, Radius) = (center, radius);
         public Point Center { get; }
         public int Radius { get; }
         public override XElement ToSvg() {

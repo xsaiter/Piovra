@@ -15,11 +15,15 @@ namespace Piovra {
 
         public static List<T> AsList<T>(this T obj) => new List<T> { obj };
 
+        public static IEnumerable<T> AsSeq<T>(this T obj) {
+            yield return obj;
+        }
+
         public static bool SameSequences<T, TKey>(this IEnumerable<T> items, IEnumerable<T> other, Func<T, TKey> keySelector)
-        where TKey : IComparable<TKey> => items.OrderBy(keySelector).SequenceEqual(other.OrderBy(keySelector));
+            where TKey : IComparable<TKey> => items.OrderBy(keySelector).SequenceEqual(other.OrderBy(keySelector));
 
         public static bool SameSequences<T>(this IEnumerable<T> items, IEnumerable<T> other)
-        where T : IComparable<T> => items.SameSequences(other, x => x);
+            where T : IComparable<T> => items.SameSequences(other, x => x);
 
         public static bool Same(this string s, string t) {
             if (s == null || t == null) {
@@ -56,9 +60,9 @@ namespace Piovra {
         }
 
         public static List<T> AllocateList<T>(int capacity, Func<T> create) {
-            var res = new List<T>(capacity);
-            res.Extend(capacity, create);
-            return res;
+            var result = new List<T>(capacity);
+            result.Extend(capacity, create);
+            return result;
         }
 
         public static T Coalesce<T>(params T[] items) where T : class => items.FirstOrDefault(x => x != null);
@@ -93,28 +97,17 @@ namespace Piovra {
 
         public static byte[] AsBytes(this IEnumerable<int> nums) => nums.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
 
-        public static byte[] AsBytes(this int num) => BitConverter.GetBytes(num);        
+        public static byte[] AsBytes(this int num) => BitConverter.GetBytes(num);
 
-        public static int AsNum(this byte[] bytes) => BitConverter.ToInt32(bytes);        
+        public static int AsNum(this byte[] bytes) => BitConverter.ToInt32(bytes);
 
         public static int[] AsNums(this byte[] bytes) {
             var size = bytes.Length / sizeof(int);
-            var res = new int[size];
+            var result = new int[size];
             for (var i = 0; i < size; ++i) {
-                res[i] = BitConverter.ToInt32(bytes, i * sizeof(int));
+                result[i] = BitConverter.ToInt32(bytes, i * sizeof(int));
             }
-            return res;
-        }
-    }
-
-    public class Asserts {
-        public static void True(bool condition, string message = null) {
-            if (!condition) {
-                throw new Exception(message);
-            }
-        }
-        public static void False(bool condition, string message = null) {
-            True(!condition, message);
+            return result;
         }
     }
 
@@ -128,5 +121,20 @@ namespace Piovra {
         Batch(IEnumerable<T> items) => Items = items;
         public void Dispose() => Items.Foreach(x => x?.Dispose());
         public static Batch<T> New(IEnumerable<T> items) => new Batch<T>(items);
+    }
+
+    public class ASSERT {
+        public static void True(bool condition, string message = null) {
+            if (!condition) {
+                throw new Exception(message);
+            }
+        }
+        public static void False(bool condition, string message = null) => True(!condition, message);
+    }
+
+    public static class ARG {
+        public static T NotNull<T>(T paramValue, string paramName) where T : class => paramValue ?? throw new ArgumentNullException(paramName);
+
+        public static string NotNullOrEmpty(string paramValue, string paramName) => paramValue.NonEmpty() ? paramValue : throw new ArgumentNullException(paramName);
     }
 }
