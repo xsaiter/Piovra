@@ -52,7 +52,7 @@ namespace Piovra.Esort {
             Directory.CreateDirectory(dir);
         }
 
-        static async Task Merge(List<Stream> streams, string destFile) {            
+        static async Task Merge(List<Stream> streams, string destFile) {
             var pq = PriorityQueue<Feed>.Min();
             foreach (var stream in streams) {
                 var x = new Feed(stream);
@@ -75,19 +75,19 @@ namespace Piovra.Esort {
             }
         }
 
+        public static async Task PrintAllFiles(string dir) {
+            var files = Directory.GetFiles(dir);
+            foreach (var file in files) {
+                await PrintFile(file);
+            }
+        }
+
         public static async Task PrintFile(string name) {
             var i = 0;
             var buffer = new byte[NUM_SIZE];
             using var stream = new FileStream(name, FileMode.Open, FileAccess.Read);
             while ((await stream.ReadAsync(buffer, 0, buffer.Length)) > 0) {
                 Console.WriteLine($"{i++}. {buffer.AsNum()}");
-            }
-        }
-
-        public static async Task PrintAllFiles(string dir) {
-            var files = Directory.GetFiles(dir);
-            foreach (var file in files) {
-                await PrintFile(file);
             }
         }
 

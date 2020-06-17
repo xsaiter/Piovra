@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Piovra.Data {
-    public interface IUnitOfWork : IDisposable {
+    public interface IUnitOfWork : IDisposable, IAsyncDisposable {
         Task Commit(CancellationToken cancellationToken = default);
     }
 
@@ -13,12 +13,16 @@ namespace Piovra.Data {
 
         public DbContext Context { get; }
 
-        public async Task Commit(CancellationToken cancellationToken = default) {
-            await Context.SaveChangesAsync(cancellationToken);
+        public Task Commit(CancellationToken cancellationToken = default) {
+            return Context.SaveChangesAsync(cancellationToken);
         }
 
         public void Dispose() {
             Context.Dispose();
+        }
+
+        public ValueTask DisposeAsync() {
+            return Context.DisposeAsync();
         }
     }
 }
