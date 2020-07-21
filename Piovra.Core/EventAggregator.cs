@@ -63,12 +63,9 @@ namespace Piovra {
             public class Act {
                 object OrigAction { get; }
                 public Action<object> Action { get; }
-                Act(object origAction, Action<object> action) {
-                    OrigAction = origAction;
-                    Action = action;
-                }
-                public static Act From<T>(Action<T> action) => new Act(action, _ => action((T)_));
+                Act(object origAction, Action<object> action) => (OrigAction, Action) = (origAction, action);                                    
                 public Action<T> To<T>() => (Action<T>)OrigAction;
+                public static Act From<T>(Action<T> action) => new Act(action, _ => action((T)_));
             }
         }
     }

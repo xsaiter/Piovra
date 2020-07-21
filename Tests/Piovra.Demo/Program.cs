@@ -4,7 +4,7 @@ using Piovra.Lia;
 
 namespace Piovra.Demo {   
     class Program {       
-        static void Main(string[] args) {           
+        static void Main(string[] args) {            
             var x = new double[2, 3] { { 2, 2, 2 }, { 2, 2, 2 } };
 
             var mx = new Matrix(x);
