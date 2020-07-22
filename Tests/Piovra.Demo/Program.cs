@@ -2,9 +2,9 @@
 using Piovra.Ds;
 using Piovra.Lia;
 
-namespace Piovra.Demo {   
-    class Program {       
-        static void Main(string[] args) {            
+namespace Piovra.Demo {
+    class Program {
+        static void Main(string[] args) {
             var x = new double[2, 3] { { 2, 2, 2 }, { 2, 2, 2 } };
 
             var mx = new Matrix(x);
@@ -14,7 +14,7 @@ namespace Piovra.Demo {
             var my = mx * 10;
 
             x[1, 1] = 10;
-            x[1, 2] = 20;            
+            x[1, 2] = 20;
 
             var l1 = x.GetLength(0);
             var l2 = x.GetLength(1);
