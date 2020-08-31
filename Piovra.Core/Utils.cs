@@ -37,6 +37,12 @@ namespace Piovra {
 
         public static string Mirror(this string s) => new string(s.ToCharArray().Reverse().ToArray());
 
+        public static string SetAtIndex(this string s, int index, char c) {
+            var a = s.ToCharArray();
+            a[index] = c;
+            return new string(a);
+        }
+
         public static int ComputeHash(this IEnumerable<object> items) =>
             items.Select(x => x == null ? 0 : x.GetHashCode()).Aggregate(23, (hash, itemHash) => hash * 31 + itemHash);
 

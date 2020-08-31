@@ -1,11 +1,11 @@
 ﻿using System;
-using Piovra.Ds;
+using System.Collections.Generic;
 using Piovra.Lia;
 
 namespace Piovra.Demo {
-    class Program {        
+    class Program {
         static void Main(string[] args) {
-           
+            string s = "hello";
             Console.ReadKey();
         }
     }

@@ -79,7 +79,7 @@ namespace Piovra.Ds {
             _a[j] = t;
         }
 
-        bool StrictInequality(int i, int j) => NonIncreasing ? _a[i].Lt(_a[j]) : _a[i].Gt(_a[j]);        
+        bool StrictInequality(int i, int j) => NonIncreasing ? _a[i].Lt(_a[j]) : _a[i].Gt(_a[j]);
 
         static int Left(int i) => 2 * i;
         static int Right(int i) => 2 * i + 1;
