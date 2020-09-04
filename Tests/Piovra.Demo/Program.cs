@@ -5,7 +5,8 @@ using Piovra.Lia;
 namespace Piovra.Demo {
     class Program {
         static void Main(string[] args) {
-            string s = "hello";
+            string s = "hello";            
+            var enu = s.GetEnumerator();
             Console.ReadKey();
         }
     }
