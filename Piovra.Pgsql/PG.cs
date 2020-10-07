@@ -42,7 +42,7 @@ namespace Piovra.Pgsql {
                     var obj = new T();
                     foreach (var column in columns) {
                         var name = column.ColumnName;
-                        var property = properties.FirstOrDefault(x => x.Name.SameIgnoreCase(name));
+                        var property = properties.FirstOrDefault(_ => _.Name.SameIgnoreCase(name));
                         if (property != null) {
                             var i = r.GetOrdinal(name);
                             if (!r.IsDBNull(i)) {

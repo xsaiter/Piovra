@@ -3,6 +3,7 @@
         public Point(double x, double y) => (X, Y) = (x, y);
         
         public double X { get; }
+        
         public double Y { get; }
 
         public static double CrossProduct(Point a, Point b, Point c) => (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);        

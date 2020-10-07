@@ -14,12 +14,12 @@ namespace Piovra.Ds {
         }
 
         public int Degree { get; }
+
         public Node Root { get; private set; }
+
         public int H { get; private set; }
 
-        public Entry Search(K key) {
-            return SearchImpl(Root, key);
-        }
+        public Entry Search(K key) => SearchImpl(Root, key);        
 
         Entry SearchImpl(Node x, K key) {
             var pos = x.Entries.TakeWhile(_ => key.Ge(_.Key)).Count();
@@ -42,7 +42,7 @@ namespace Piovra.Ds {
             }
         }
 
-        private void SplitChild(Node parent, int index, Node toSplit) {
+        void SplitChild(Node parent, int index, Node toSplit) {
             var newNode = new Node(Degree);
 
             parent.Entries.Insert(index, toSplit.Entries[Degree - 1]);
@@ -58,10 +58,10 @@ namespace Piovra.Ds {
             }
         }
 
-        private void InsertNonFull(Node node, K key, V value) {
+        void InsertNonFull(Node node, K key, V value) {
             var positionToInsert = node.Entries.TakeWhile(entry => key.CompareTo(entry.Key) >= 0).Count();
             if (node.IsLeaf) {
-                node.Entries.Insert(positionToInsert, new Entry { Key = key, Value = value });                
+                node.Entries.Insert(positionToInsert, new Entry { Key = key, Value = value });
             } else {
                 var child = node.Children[positionToInsert];
                 if (child.HasReachedMaxEntries) {
@@ -71,7 +71,7 @@ namespace Piovra.Ds {
                     }
                 }
                 InsertNonFull(node.Children[positionToInsert], key, value);
-            }            
+            }
         }
 
         public class Node {
@@ -82,12 +82,17 @@ namespace Piovra.Ds {
             }
 
             public int Degree { get; }
+
             public List<Node> Children { get; }
+
             public List<Entry> Entries { get; }
+
             public int NEntries => Entries.Count;
+
             public bool IsLeaf { get; set; }
 
             public bool HasReachedMaxEntries => Entries.Count == 2 * Degree - 1;
+
             public bool HasReachedMinEntries => Entries.Count == Degree - 1;
         }
 
