@@ -8,18 +8,20 @@ namespace Piovra.Demo.EfCoreTests {
         public DbSet<Person> Persons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);            
             modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
             MapPerson(modelBuilder);
         }
 
         static void MapPerson(ModelBuilder modelBuilder) {
             var cfg = modelBuilder.Entity<Person>();
-            cfg.ToTable("Person", "public");
+            cfg.ToTable("person", "public");
 
-            cfg.Property(x => x.Id).HasColumnName("id");
+            cfg.Property(x => x.Id).HasColumnName("id").IsRequired();
+            cfg.Property(x => x.Age).HasColumnName("age").IsRequired();
             cfg.Property(x => x.Info)
                 .HasColumnName("info")
+                .IsRequired(false)
                 .HasColumnType("xml")
                 .HasConversion(new XmlPropertyConverter("Info"));
 

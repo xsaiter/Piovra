@@ -1,0 +1,8 @@
+﻿create table public.person (
+  id serial primary key not null,
+  age int not null,
+  info xml
+);
+
+insert into public.person (age, info)
+values (100, '<data></data>'::xml);

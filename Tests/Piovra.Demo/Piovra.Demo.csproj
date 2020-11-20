@@ -7,8 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Piovra.Core\Piovra.Core.csproj" />
     <ProjectReference Include="..\..\Piovra.Ds\Piovra.Ds.csproj" />
+    <ProjectReference Include="..\..\Piovra.EfCore.Extensions\Piovra.EfCore.Extensions.csproj" />
     <ProjectReference Include="..\..\Piovra.Lia\Piovra.Lia.csproj" />
     <ProjectReference Include="..\..\Piovra.Json\Piovra.Json.csproj" />
   </ItemGroup>

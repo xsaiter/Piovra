@@ -13,15 +13,16 @@ namespace Piovra.Demo {
 
         static async Task TestEf() {
             using var dc = CreateStaffDc();
-            var person = await dc.Persons.FirstOrDefaultAsync();
+            var person = await dc.Persons.FirstAsync();
+            person.Age++;
             var xml = person.Info;
-            xml.Add(new XElement("test"));
+            xml.Raw.Add(new XElement("test"));
             await dc.SaveChangesAsync();
         }
 
         static StaffDc CreateStaffDc() {
             var builder = new DbContextOptionsBuilder<StaffDc>();
-            builder.UseNpgsql("");
+            builder.UseNpgsql(@"server=localhost;port=5433;database=sun;user id=postgres;password=1q2w3e");
             var dc = new StaffDc(builder.Options);
             return dc;
         }

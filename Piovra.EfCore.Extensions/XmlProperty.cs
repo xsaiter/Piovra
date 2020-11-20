@@ -1,18 +1,24 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
 
 namespace Piovra.EfCore.Extensions {
     public class XmlProperty : NotificationObject {
-        public XmlProperty(string propertyName, XElement raw) {
+        public XmlProperty(string propertyName, XElement raw, Action<string> callback) {
             PropertyName = propertyName;
             Raw = raw;            
             Raw.Changed += OnChanged;
+            Callback = callback;
         }
 
-        public XElement Raw { get; set; }
-        public string PropertyName { get; }        
+        public string PropertyName { get; }
+        public XElement Raw { get; set; }        
+        public Action<string> Callback { get; }
 
         void OnChanged(object sender, XObjectChangeEventArgs e) {
-            RaiseProprtyChanged(PropertyName);
-        }        
+            RaisePropertyChanged(PropertyName);
+            Callback?.Invoke(PropertyName);
+        }
+
+        public override string ToString() => Raw.ToString();        
     }
 }
