@@ -5,8 +5,4 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Piovra.Core\Piovra.Core.csproj" />
-  </ItemGroup>
-
 </Project>
