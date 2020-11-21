@@ -4,8 +4,9 @@ using System.Text.RegularExpressions;
 namespace Piovra.Sql.Core {
     public class DbConnStringObject {
         DbConnStringObject(string connString) => ConnString = ARG.NotNullOrEmpty(connString, nameof(connString));
-        
+
         public string ConnString { get; }
+
         public Dictionary<string, string> Map { get; } = new Dictionary<string, string>();
 
         public bool ContainsKey(string key) => Map.ContainsKey(Key(key));
@@ -14,7 +15,7 @@ namespace Piovra.Sql.Core {
 
         public string FormatPair(string key, char separator = '=') => $"{key}{separator}{Value(key)}";
 
-        string Key(string key) => key.ToLower();
+        static string Key(string key) => key.ToLower();
 
         public static DbConnStringObject Parse(string connString) {
             var result = new DbConnStringObject(connString);

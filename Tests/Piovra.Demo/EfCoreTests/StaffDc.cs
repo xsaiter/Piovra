@@ -5,7 +5,7 @@ namespace Piovra.Demo.EfCoreTests {
     public class StaffDc : DbContext {
         public StaffDc(DbContextOptions<StaffDc> options) : base(options) { }
 
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<Person> Persons { get; set; }        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);            
@@ -27,5 +27,5 @@ namespace Piovra.Demo.EfCoreTests {
 
             cfg.HasKey(x => x.Id);
         }
-    }
+    }    
 }

@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Piovra.Data {
-
     public class Repository<T, TIdentity> : IRepository<T, TIdentity>
         where T : class, IEntity<TIdentity>
         where TIdentity : IEquatable<TIdentity> {
