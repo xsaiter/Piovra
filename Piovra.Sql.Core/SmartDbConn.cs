@@ -52,7 +52,9 @@ namespace Piovra.Sql.Core {
 
         public static Task<C> New(string connString) => New(new Config(connString));
 
-        public void Dispose() => CleanUp();
+        public void Dispose() {
+            CleanUp();
+        }
 
         void CleanUp() {
             if (_conn != null) {

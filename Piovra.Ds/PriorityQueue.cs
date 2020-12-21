@@ -7,7 +7,6 @@ namespace Piovra.Ds {
         PriorityQueue(BinaryHeap<T> heap) => _heap = ARG.NotNull(heap, nameof(heap));
 
         public static PriorityQueue<T> Max(int capacity = INITIAL_CAPACITY) => new PriorityQueue<T>(new BinaryHeap<T>(capacity, true));
-
         public static PriorityQueue<T> Min(int capacity = INITIAL_CAPACITY) => new PriorityQueue<T>(new BinaryHeap<T>(capacity, false));        
 
         public const int INITIAL_CAPACITY = 1;
@@ -16,7 +15,7 @@ namespace Piovra.Ds {
 
         public bool IsEmpty() => _heap.IsEmpty();        
 
-        public void Enqueue(T item) {
+        public void Enqueue(T item) {            
             _heap.Add(item);
         }
 

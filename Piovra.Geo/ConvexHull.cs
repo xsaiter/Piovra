@@ -11,7 +11,7 @@ namespace Piovra.Geo {
             var n = points.Count();
 
             if (n < 4) {
-                points.Foreach(x => result.Points.Add(x));
+                points.Foreach(_ => result.Points.Add(_));
                 return result;
             }
 

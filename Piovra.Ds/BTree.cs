@@ -14,9 +14,7 @@ namespace Piovra.Ds {
         }
 
         public int Degree { get; }
-
         public Node Root { get; private set; }
-
         public int H { get; private set; }
 
         public Entry Search(K key) => SearchImpl(Root, key);        
@@ -82,17 +80,12 @@ namespace Piovra.Ds {
             }
 
             public int Degree { get; }
-
             public List<Node> Children { get; }
-
             public List<Entry> Entries { get; }
-
             public int NEntries => Entries.Count;
-
             public bool IsLeaf { get; set; }
 
             public bool HasReachedMaxEntries => Entries.Count == 2 * Degree - 1;
-
             public bool HasReachedMinEntries => Entries.Count == Degree - 1;
         }
 

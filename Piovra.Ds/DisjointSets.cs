@@ -42,10 +42,8 @@ namespace Piovra.Ds {
         public class Node : IEquatable<Node> {
             public Node(T item) => Item = item;
             
-            public T Item { get; set; }
-            
-            public int Rank { get; set; }
-            
+            public T Item { get; set; }            
+            public int Rank { get; set; }            
             public Node Parent { get; set; }
 
             public bool Equals(Node other) {

@@ -42,13 +42,15 @@ namespace Piovra.Ds {
             return node;
         }
 
-        Node Walk(Node node, char c) {
+        static Node Walk(Node node, char c) {
             if (node.HasChild(c)) {
                 var found = node.GetChild(c);
                 ++found.PrefixCount;
                 return found;
             }
-            var child = new Node { PrefixCount = 1 };
+            var child = new Node { 
+                PrefixCount = 1 
+            };
             node.Children.Add(c, child);
             return child;
         }
