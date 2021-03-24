@@ -12,16 +12,16 @@ namespace Piovra.Web {
             var passwordDigest = GeneratePasswordDigest(nonceBase64, createdAt, password);
             var userToken = Guid.NewGuid().ToString("N").ToUpper();
 
-            var result = new StringBuilder(@$"<{options.SoapNamespaceName}:Header>");            
-            result.Append(@$"<wsse:Security {options.SoapNamespaceName}:mustUnderstand=""1"" xmlns:wsse=""{options.WsseNamespace}"" xmlns:wsu=""{options.WsuNamespace}"">");
-            result.Append(@$"<wsse:UsernameToken wsu:Id=""UsernameToken-{userToken}"">");
-            result.Append(@$"<wsse:Username>{userName}</wsse:Username>");
-            result.Append(@$"<wsse:Password Type=""{options.WssePasswordType}"">{passwordDigest}</wsse:Password>");
-            result.Append(@$"<wsse:Nonce EncodingType=""{options.WsseNonceEncodingType}"">{nonceBase64}</wsse:Nonce>");
-            result.Append(@$"<wsu:Created>{createdAt}</wsu:Created>");
-            result.Append(@"</wsse:UsernameToken>");
-            result.Append(@"</wsse:Security>");
-            result.Append(@$"</{options.SoapNamespaceName}:Header>");
+            var result = new StringBuilder($@"<{options.SoapNamespaceName}:Header>");            
+            result.Append($@"<wsse:Security {options.SoapNamespaceName}:mustUnderstand=""1"" xmlns:wsse=""{options.WsseNamespace}"" xmlns:wsu=""{options.WsuNamespace}"">");
+            result.Append($@"<wsse:UsernameToken wsu:Id=""UsernameToken-{userToken}"">");
+            result.Append($@"<wsse:Username>{userName}</wsse:Username>");
+            result.Append($@"<wsse:Password Type=""{options.WssePasswordType}"">{passwordDigest}</wsse:Password>");
+            result.Append($@"<wsse:Nonce EncodingType=""{options.WsseNonceEncodingType}"">{nonceBase64}</wsse:Nonce>");
+            result.Append($@"<wsu:Created>{createdAt}</wsu:Created>");
+            result.Append($@"</wsse:UsernameToken>");
+            result.Append($@"</wsse:Security>");
+            result.Append($@"</{options.SoapNamespaceName}:Header>");
 
             return result.ToString();
         }  
