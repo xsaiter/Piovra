@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace Piovra.Web {
-    public static class WsseeSoapHeaderCreator {
+    public static class WsseSoapHeaderCreator {
         public static string CreateSoapHeader(string userName, string password) => CreateSoapHeader(userName, password, new Options());        
 
         public static string CreateSoapHeader(string userName, string password, Options options) {
