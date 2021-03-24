@@ -3,28 +3,42 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace Piovra.Web {
-    public static class WsseeSoapHeaderCreator {        
-        public static string CreateSoapHeader(string userName, string password) {
+    public static class WsseeSoapHeaderCreator {
+        public static string CreateSoapHeader(string userName, string password) => CreateSoapHeader(userName, password, new Options());        
+
+        public static string CreateSoapHeader(string userName, string password, Options options) {
             var nonceBase64 = GetNonceBase64();
-            
             var createdAt = FormatTZ(DateTime.UtcNow);
-
             var passwordDigest = GeneratePasswordDigest(nonceBase64, createdAt, password);
+            var userToken = Guid.NewGuid().ToString("N").ToUpper();
 
-            var result = new StringBuilder(@"<soapenv:Envelope xmlns:sear=""http://www.remotesite.com/serviceName"" xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">");
-            result.Append(@"<soapenv:Header>");
-            result.Append(@"<wsse:Security soapenv:mustUnderstand=""1"" xmlns:wsse=""http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"" xmlns:wsu=""http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"">");
-            result.Append(@$"<wsse:UsernameToken wsu:Id=""UsernameToken-{Guid.NewGuid().ToString("N").ToUpper()}"">");
+            var result = new StringBuilder(@$"<{options.SoapNamespaceName}:Header>");            
+            result.Append(@$"<wsse:Security {options.SoapNamespaceName}:mustUnderstand=""1"" xmlns:wsse=""{options.WsseNamespace}"" xmlns:wsu=""{options.WsuNamespace}"">");
+            result.Append(@$"<wsse:UsernameToken wsu:Id=""UsernameToken-{userToken}"">");
             result.Append(@$"<wsse:Username>{userName}</wsse:Username>");
-            result.Append(@$"<wsse:Password Type=""http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText"">{passwordDigest}</wsse:Password>");
-            result.Append(@$"<wsse:Nonce EncodingType=""http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"">{nonceBase64}</wsse:Nonce>");
+            result.Append(@$"<wsse:Password Type=""{options.WssePasswordType}"">{passwordDigest}</wsse:Password>");
+            result.Append(@$"<wsse:Nonce EncodingType=""{options.WsseNonceEncodingType}"">{nonceBase64}</wsse:Nonce>");
             result.Append(@$"<wsu:Created>{createdAt}</wsu:Created>");
             result.Append(@"</wsse:UsernameToken>");
             result.Append(@"</wsse:Security>");
-            result.Append(@"</soapenv:Header>");
+            result.Append(@$"</{options.SoapNamespaceName}:Header>");
 
             return result.ToString();
-        }        
+        }  
+        
+        public class Options {
+            public string SoapNamespaceName { get; set; } = DEFAULT_SOAP_NAMESPACE_NAME;
+            public string WsseNamespace { get; set; } = DEFAULT_WSSE_NAMESPACE;
+            public string WsuNamespace { get; set; } = DEFAULT_WSU_NAMESPACE;
+            public string WssePasswordType { get; set; } = DEFAULT_WSSE_PASSWORD_TYPE;
+            public string WsseNonceEncodingType { get; set; } = DEFAULT_WSSE_NONCE_ENCODING_TYPE;            
+
+            public const string DEFAULT_SOAP_NAMESPACE_NAME = "soap";
+            public const string DEFAULT_WSSE_NAMESPACE = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
+            public const string DEFAULT_WSU_NAMESPACE = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd";
+            public const string DEFAULT_WSSE_PASSWORD_TYPE = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest";
+            public const string DEFAULT_WSSE_NONCE_ENCODING_TYPE = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary";
+        }
 
         public static string GeneratePasswordDigest(string password) {
             var nonceBase64 = GetNonceBase64();
