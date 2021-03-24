@@ -9,7 +9,7 @@ namespace Piovra.Web {
             
             var createdAt = FormatTZ(DateTime.UtcNow);
 
-            var passwordDigest = GeneratePasswordDigest(password, createdAt, password);
+            var passwordDigest = GeneratePasswordDigest(nonceBase64, createdAt, password);
 
             var result = new StringBuilder(@"<soapenv:Envelope xmlns:sear=""http://www.remotesite.com/serviceName"" xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"">");
             result.Append(@"<soapenv:Header>");
@@ -40,14 +40,14 @@ namespace Piovra.Web {
         public static string GeneratePasswordDigest(string nonceBase64, string createdAt, string password) {
             var nonceBytes = Convert.FromBase64String(nonceBase64);
 
-            var createdBytes = Encoding.UTF8.GetBytes(createdAt);
+            var createdAtBytes = Encoding.UTF8.GetBytes(createdAt);
             var passwordBytes = Encoding.UTF8.GetBytes(password);
 
-            var result = new byte[nonceBytes.Length + createdBytes.Length + passwordBytes.Length];
+            var result = new byte[nonceBytes.Length + createdAtBytes.Length + passwordBytes.Length];
 
             Array.Copy(nonceBytes, result, nonceBytes.Length);
-            Array.Copy(createdBytes, 0, result, nonceBytes.Length, createdBytes.Length);
-            Array.Copy(passwordBytes, 0, result, nonceBytes.Length + createdBytes.Length, passwordBytes.Length);
+            Array.Copy(createdAtBytes, 0, result, nonceBytes.Length, createdAtBytes.Length);
+            Array.Copy(passwordBytes, 0, result, nonceBytes.Length + createdAtBytes.Length, passwordBytes.Length);
 
             return Convert.ToBase64String(Hash(result));
 
