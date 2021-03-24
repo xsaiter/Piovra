@@ -114,39 +114,6 @@ namespace Piovra {
                 result[i] = BitConverter.ToInt32(bytes, i * sizeof(int));
             }
             return result;
-        }
-    }
-
-    public class Result<T> {
-        public T Value { get; set; }
-        public static Result<T> Of(T value) => new Result<T> { Value = value };
-    }
-
-    public class Batch<T> : IDisposable where T : IDisposable {
-        public IEnumerable<T> Items { get; }
-        Batch(IEnumerable<T> items) => Items = items;
-        public void Dispose() => Items.Foreach(x => x?.Dispose());
-        public static Batch<T> New(IEnumerable<T> items) => new Batch<T>(items);
-    }
-
-    public class ASSERT {
-        public static void True(bool condition, string message = null) {
-            if (!condition) {
-                throw new Exception(message);
-            }
-        }
-        public static void False(bool condition, string message = null) => True(!condition, message);
-    }
-
-    public static class ARG {
-        public static T NotNull<T>(T paramValue, string paramName) where T : class => paramValue ?? throw new ArgumentNullException(paramName);
-
-        public static string NotNullOrEmpty(string paramValue, string paramName) => paramValue.NonEmpty() ? paramValue : throw new ArgumentNullException(paramName);
-
-        public static void EnsureOutOfRange(Func<bool> failCondition, string paramName) {
-            if (failCondition()) {
-                throw new ArgumentOutOfRangeException(paramName);
-            }
-        }
+        }        
     }
 }
