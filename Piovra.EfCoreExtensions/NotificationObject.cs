@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Piovra.EfCore.Extensions {
+namespace Piovra.EfCoreExtensions {
     public abstract class NotificationObject : INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;
 

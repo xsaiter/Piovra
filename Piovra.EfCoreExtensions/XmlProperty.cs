@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace Piovra.EfCore.Extensions {
+namespace Piovra.EfCoreExtensions {
     public class XmlProperty : NotificationObject {
         public XmlProperty(string propertyName, XElement raw, Action<string> callback) {
             PropertyName = propertyName;

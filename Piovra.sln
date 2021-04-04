@@ -31,9 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.Esort", "Piovra.Esor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.Ds", "Piovra.Ds\Piovra.Ds.csproj", "{6DD50D7E-4964-4776-82CE-53D40E634139}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.EfCore.Extensions", "Piovra.EfCore.Extensions\Piovra.EfCore.Extensions.csproj", "{F2707FE4-192A-49B4-A957-B9FA6CE7B821}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.Web", "Piovra.Web\Piovra.Web.csproj", "{2AD3FCBE-4CBA-4905-9859-CE2A1A5BD580}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piovra.Web", "Piovra.Web\Piovra.Web.csproj", "{2AD3FCBE-4CBA-4905-9859-CE2A1A5BD580}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.DapperExtensions", "Piovra.DapperExtensions\Piovra.DapperExtensions.csproj", "{4577EA6F-166A-4219-94D0-293E17303769}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Piovra.EfCoreExtensions", "Piovra.EfCoreExtensions\Piovra.EfCoreExtensions.csproj", "{73F6AB4B-5EB1-4264-8EFD-9140E367457A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,14 +95,18 @@ Global
 		{6DD50D7E-4964-4776-82CE-53D40E634139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DD50D7E-4964-4776-82CE-53D40E634139}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DD50D7E-4964-4776-82CE-53D40E634139}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2707FE4-192A-49B4-A957-B9FA6CE7B821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2707FE4-192A-49B4-A957-B9FA6CE7B821}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2707FE4-192A-49B4-A957-B9FA6CE7B821}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2707FE4-192A-49B4-A957-B9FA6CE7B821}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2AD3FCBE-4CBA-4905-9859-CE2A1A5BD580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2AD3FCBE-4CBA-4905-9859-CE2A1A5BD580}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AD3FCBE-4CBA-4905-9859-CE2A1A5BD580}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AD3FCBE-4CBA-4905-9859-CE2A1A5BD580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4577EA6F-166A-4219-94D0-293E17303769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4577EA6F-166A-4219-94D0-293E17303769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4577EA6F-166A-4219-94D0-293E17303769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4577EA6F-166A-4219-94D0-293E17303769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73F6AB4B-5EB1-4264-8EFD-9140E367457A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73F6AB4B-5EB1-4264-8EFD-9140E367457A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73F6AB4B-5EB1-4264-8EFD-9140E367457A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73F6AB4B-5EB1-4264-8EFD-9140E367457A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

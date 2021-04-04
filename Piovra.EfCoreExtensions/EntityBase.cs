@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
-namespace Piovra.EfCore.Extensions {
+namespace Piovra.EfCoreExtensions {
     public class EntityBase : NotificationObject {
         protected XmlProperty GetXmlProperty(XElement xml, [CallerMemberName] string propertyName = null) {
             return new XmlProperty(propertyName, xml, _ => RaisePropertyChanged(_));

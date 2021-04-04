@@ -1,4 +1,4 @@
-﻿using Piovra.EfCore.Extensions;
+﻿using Piovra.EfCoreExtensions;
 
 namespace Piovra.Demo.EfCoreTests {
     public class Person : EntityBase {
