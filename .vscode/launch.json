@@ -9,9 +9,9 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build demo",
-      "program": "${workspaceFolder}/Tests/Piovra.Demo/bin/Debug/net5.0/Piovra.Demo.dll",
+      "program": "${workspaceFolder}/Tests/Piovra.Tests/bin/Debug/net7.0/Piovra.Tests.exe",
       "args": [],
-      "cwd": "${workspaceFolder}/Tests/Piovra.Demo",
+      "cwd": "${workspaceFolder}/Tests/Piovra.Tests",
       "console": "internalConsole",
       "stopAtEntry": false,
       "internalConsoleOptions": "openOnSessionStart"

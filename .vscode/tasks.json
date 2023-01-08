@@ -7,23 +7,13 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/Tests/Piovra.Demo/Piovra.Demo.csproj"
+        "${workspaceFolder}/Piovra.sln"
       ],
       "problemMatcher": "$msCompile",
       "group": {
         "kind": "build",
         "isDefault": true
       }
-    },
-    {
-      "label": "build problems",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/Tools/Piovra.Problems/Piovra.Problems.csproj"
-      ],
-      "problemMatcher": "$msCompile"
     }
   ]
 }

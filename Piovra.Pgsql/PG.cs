@@ -134,7 +134,7 @@ namespace Piovra.Pgsql {
             { typeof(DateTime), NpgsqlDbType.Date },
             { typeof(DateTime?), NpgsqlDbType.Date },
             { typeof(string), NpgsqlDbType.Text }
-        };        
+        };
     }
 
     public class SmartConn : Sql.Core.SmartDbConn<NpgsqlConnection> {
