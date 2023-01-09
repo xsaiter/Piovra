@@ -2,32 +2,32 @@
 using System.Linq;
 using Piovra.Ds;
 
-namespace Piovra.Graphs {
-    public class KruskalMST<V> where V : IEquatable<V> {
-        readonly IWeightedGraph<V> _g;
+namespace Piovra.Graphs;
 
-        public KruskalMST(IWeightedGraph<V> g) {
-            _g = g;
-        }
+public class KruskalMST<V> where V : IEquatable<V> {
+    readonly IWeightedGraph<V> _g;
 
-        public MST<V> Execute() {
-            var mst = new MST<V>();
+    public KruskalMST(IWeightedGraph<V> g) {
+        _g = g;
+    }
 
-            var orderedEdges = _g.AllEdges().OrderBy(e => e.Weight);
+    public MST<V> Execute() {
+        var mst = new MST<V>();
 
-            var ds = new DisjointSets<Node<V>>();
+        var orderedEdges = _g.AllEdges().OrderBy(e => e.Weight);
 
-            foreach (var edge in orderedEdges) {
-                var head = ds.Find(edge.Head);
-                var tail = ds.Find(edge.Tail);
+        var ds = new DisjointSets<Node<V>>();
 
-                if (!head.Equals(tail)) {
-                    mst.Edges.Add(edge);
-                    ds.Union(head, tail);
-                }
+        foreach (var edge in orderedEdges) {
+            var head = ds.Find(edge.Head);
+            var tail = ds.Find(edge.Tail);
+
+            if (!head.Equals(tail)) {
+                mst.Edges.Add(edge);
+                ds.Union(head, tail);
             }
-
-            return mst;
         }
+
+        return mst;
     }
 }

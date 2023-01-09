@@ -1,37 +1,35 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
-namespace Piovra.Geo {
-    public class ConvexHull {
-        public List<Point> Points { get; } = new List<Point>();
+namespace Piovra.Geo;
 
-        public static ConvexHull GrahamScan(IEnumerable<Point> points) {
-            var result = new ConvexHull();
+public class ConvexHull {
+    public List<Point> Points { get; } = new List<Point>();
 
-            var n = points.Count();
+    public static ConvexHull GrahamScan(IEnumerable<Point> points) {
+        var result = new ConvexHull();
 
-            if (n < 4) {
-                points.Foreach(_ => result.Points.Add(_));
-                return result;
-            }
+        var n = points.Count();
 
-            var pointList = points.ToList();
-
-            var posMinY = 0;
-            var minY = pointList[0].Y;
-
-            for (var i = 1; i < n; ++i) {
-                if (pointList[i].Y < minY) {
-                    minY = pointList[i].Y;
-                    posMinY = i;
-                }
-            }            
-
-            var t = pointList[0];
-            pointList[0] = pointList[posMinY];
-            pointList[posMinY] = t;
-
+        if (n < 4) {
+            points.Foreach(_ => result.Points.Add(_));
             return result;
         }
+
+        var pointList = points.ToList();
+
+        var posMinY = 0;
+        var minY = pointList[0].Y;
+
+        for (var i = 1; i < n; ++i) {
+            if (pointList[i].Y < minY) {
+                minY = pointList[i].Y;
+                posMinY = i;
+            }
+        }
+
+        (pointList[posMinY], pointList[0]) = (pointList[0], pointList[posMinY]);
+
+        return result;
     }
 }

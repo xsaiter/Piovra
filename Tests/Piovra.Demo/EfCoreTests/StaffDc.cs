@@ -1,31 +1,31 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Piovra.EfCoreExtensions;
 
-namespace Piovra.Demo.EfCoreTests {
-    public class StaffDc : DbContext {
-        public StaffDc(DbContextOptions<StaffDc> options) : base(options) { }
+namespace Piovra.Demo.EfCoreTests;
 
-        public DbSet<Person> Persons { get; set; }        
+public class StaffDc : DbContext {
+    public StaffDc(DbContextOptions<StaffDc> options) : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            base.OnModelCreating(modelBuilder);            
-            modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
-            MapPerson(modelBuilder);
-        }
+    public DbSet<Person> Persons { get; set; }
 
-        static void MapPerson(ModelBuilder modelBuilder) {
-            var cfg = modelBuilder.Entity<Person>();
-            cfg.ToTable("person", "public");
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
+        MapPerson(modelBuilder);
+    }
 
-            cfg.Property(x => x.Id).HasColumnName("id").IsRequired();
-            cfg.Property(x => x.Age).HasColumnName("age").IsRequired();
-            cfg.Property(x => x.Info)
-                .HasColumnName("info")
-                .IsRequired(false)
-                .HasColumnType("xml")
-                .HasConversion(new XmlPropertyConverter("Info"));
+    static void MapPerson(ModelBuilder modelBuilder) {
+        var cfg = modelBuilder.Entity<Person>();
+        cfg.ToTable("person", "public");
 
-            cfg.HasKey(x => x.Id);
-        }
-    }    
+        cfg.Property(x => x.Id).HasColumnName("id").IsRequired();
+        cfg.Property(x => x.Age).HasColumnName("age").IsRequired();
+        cfg.Property(x => x.Info)
+            .HasColumnName("info")
+            .IsRequired(false)
+            .HasColumnType("xml")
+            .HasConversion(new XmlPropertyConverter("Info"));
+
+        cfg.HasKey(x => x.Id);
+    }
 }

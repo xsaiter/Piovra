@@ -5,31 +5,31 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Piovra.Data {
-    public class Repository<T, TIdentity> : IRepository<T, TIdentity>
-        where T : class, IEntity<TIdentity>
-        where TIdentity : IEquatable<TIdentity> {
-        readonly UnitOfWork _unitOfWork;
+namespace Piovra.Data;
 
-        public Repository(UnitOfWork unitOfWork) => _unitOfWork = ARG.NotNull(unitOfWork, nameof(unitOfWork));
+public class Repository<T, TIdentity> : IRepository<T, TIdentity>
+    where T : class, IEntity<TIdentity>
+    where TIdentity : IEquatable<TIdentity> {
+    readonly UnitOfWork _unitOfWork;
 
-        public Task<T> GetById(TIdentity id) => Set().FindAsync(id).AsTask();
+    public Repository(UnitOfWork unitOfWork) => _unitOfWork = ARG.NotNull(unitOfWork, nameof(unitOfWork));
 
-        public Task<List<T>> GetAllList() => Set().ToListAsync();
+    public Task<T> GetByIdAsync(TIdentity id) => Set().FindAsync(id).AsTask();
 
-        public Task<List<T>> GetListBy(Expression<Func<T, bool>> predicate) => Set().Where(predicate).ToListAsync();
+    public Task<List<T>> GetAllListAsync() => Set().ToListAsync();
 
-        public IQueryable<T> GetAll() => Set();
+    public Task<List<T>> GetListByAsync(Expression<Func<T, bool>> predicate) => Set().Where(predicate).ToListAsync();
 
-        public Task Add(T entity) => Set().AddAsync(entity).AsTask();
+    public IQueryable<T> GetAll() => Set();
 
-        public async Task Remove(T entity) {
-            var existing = await Set().FindAsync(entity.Id);
-            if (existing != null) {
-                Set().Remove(existing);
-            }
+    public Task AddAsync(T entity) => Set().AddAsync(entity).AsTask();
+
+    public async Task RemoveAsync(T entity) {
+        var existing = await Set().FindAsync(entity.Id);
+        if (existing != null) {
+            Set().Remove(existing);
         }
-
-        protected DbSet<T> Set() => _unitOfWork.Context.Set<T>();
     }
+
+    protected DbSet<T> Set() => _unitOfWork.Context.Set<T>();
 }

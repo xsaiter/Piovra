@@ -1,19 +1,19 @@
 ﻿using System;
 
-namespace Piovra.Graphs {
-    public class DFS<V> where V : IEquatable<V> {
-        readonly IGraph<V> _g;
+namespace Piovra.Graphs;
 
-        public DFS(IGraph<V> g) {
-            _g = g;
-        }
+public class DFS<V> where V : IEquatable<V> {
+    readonly IGraph<V> _g;
 
-        public Result<V> Execute(V source) {
-            var s = _g.NodeOf(source);
+    public DFS(IGraph<V> g) {
+        _g = g;
+    }
 
-            var res = new Result<V>(s);
+    public Result<V> Execute(V source) {
+        var s = _g.NodeOf(source);
 
-            return res;
-        }
+        var res = new Result<V>(s);
+
+        return res;
     }
 }

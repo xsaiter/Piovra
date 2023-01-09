@@ -1,32 +1,32 @@
 ﻿using Piovra.Ds;
 using Xunit;
 
-namespace Piovra.Tests {
-    public class TrieTests {
-        [Fact]
-        public void Test() {
-            var trie = new Trie();
+namespace Piovra.Tests;
 
-            trie.AddWord("Canal");
-            trie.AddWord("Candy");
-            trie.AddWord("The");
-            trie.AddWord("There");
-            
-            Assert.Equal(2, trie.GetCountPrefix("Can"));
+public class TrieTests {
+    [Fact]
+    public void Test() {
+        var trie = new Trie();
 
-            Assert.Equal(2, trie.GetCountPrefix("The"));
-            Assert.Equal(2, trie.GetCountPrefix("Th"));
-            Assert.Equal(2, trie.GetCountPrefix("T"));
+        trie.AddWord("Canal");
+        trie.AddWord("Candy");
+        trie.AddWord("The");
+        trie.AddWord("There");
 
-            Assert.Equal(1, trie.GetCountPrefix("Cana"));
+        Assert.Equal(2, trie.GetCountPrefix("Can"));
 
-            Assert.True(trie.ContainsWord("Candy"));
-            Assert.True(trie.ContainsWord("The"));
-            Assert.True(trie.ContainsWord("There"));
-            Assert.True(trie.ContainsWord("Canal"));
+        Assert.Equal(2, trie.GetCountPrefix("The"));
+        Assert.Equal(2, trie.GetCountPrefix("Th"));
+        Assert.Equal(2, trie.GetCountPrefix("T"));
 
-            Assert.False(trie.ContainsWord("Cana"));
-            Assert.False(trie.ContainsWord("Ther"));
-        }
+        Assert.Equal(1, trie.GetCountPrefix("Cana"));
+
+        Assert.True(trie.ContainsWord("Candy"));
+        Assert.True(trie.ContainsWord("The"));
+        Assert.True(trie.ContainsWord("There"));
+        Assert.True(trie.ContainsWord("Canal"));
+
+        Assert.False(trie.ContainsWord("Cana"));
+        Assert.False(trie.ContainsWord("Ther"));
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Piovra.Ds {
-    public class FibHeap {
-    }
+namespace Piovra.Ds;
+
+public class FibHeap {
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using Xunit;
 
 namespace Piovra.Tests;
+
 public class GraphTests {
     [Fact]
     public void Test() {

@@ -4,20 +4,20 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Piovra.Data {
-    public interface IRepository<T, TIdentity>
-        where T : class, IEntity<TIdentity>
-        where TIdentity : IEquatable<TIdentity> {
-        Task<T> GetById(TIdentity id);
+namespace Piovra.Data;
 
-        Task<List<T>> GetAllList();
+public interface IRepository<T, TIdentity>
+    where T : class, IEntity<TIdentity>
+    where TIdentity : IEquatable<TIdentity> {
+    Task<T> GetByIdAsync(TIdentity id);
 
-        Task<List<T>> GetListBy(Expression<Func<T, bool>> predicate);
+    Task<List<T>> GetAllListAsync();
 
-        IQueryable<T> GetAll();
+    Task<List<T>> GetListByAsync(Expression<Func<T, bool>> predicate);
 
-        Task Add(T entity);
+    IQueryable<T> GetAll();
 
-        Task Remove(T entity);
-    }
+    Task AddAsync(T entity);
+
+    Task RemoveAsync(T entity);
 }

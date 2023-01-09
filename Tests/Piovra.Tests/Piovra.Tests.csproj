@@ -1,22 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <OutputType>dll</OutputType>
-
+    <LangVersion>latest</LangVersion>    
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+    <PackageReference Include="xunit" Version="2.4.2" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\Piovra.Core\Piovra.Core.csproj" />
     <ProjectReference Include="..\..\Piovra.DapperExtensions\Piovra.DapperExtensions.csproj" />
@@ -26,5 +17,4 @@
     <ProjectReference Include="..\..\Piovra.Pgsql\Piovra.Pgsql.csproj" />
     <ProjectReference Include="..\..\Piovra.Svg\Piovra.Svg.csproj" />
   </ItemGroup>
-
 </Project>

@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
 
-namespace Piovra.EfCoreExtensions {
-    public abstract class NotificationObject : INotifyPropertyChanged {
-        public event PropertyChangedEventHandler PropertyChanged;
+namespace Piovra.EfCoreExtensions;
 
-        protected virtual void RaisePropertyChanged(string propertyName) {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+public abstract class NotificationObject : INotifyPropertyChanged {
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void RaisePropertyChanged(string propertyName) {
+        var handler = PropertyChanged;
+        handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

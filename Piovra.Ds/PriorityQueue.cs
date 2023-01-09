@@ -1,32 +1,32 @@
 ﻿using System;
 
-namespace Piovra.Ds {
-    public class PriorityQueue<T> where T : IComparable<T> {
-        readonly BinaryHeap<T> _heap;
+namespace Piovra.Ds;
 
-        PriorityQueue(BinaryHeap<T> heap) => _heap = ARG.NotNull(heap, nameof(heap));
+public class PriorityQueue<T> where T : IComparable<T> {
+    readonly BinaryHeap<T> _heap;
 
-        public static PriorityQueue<T> Max(int capacity = INITIAL_CAPACITY) => new PriorityQueue<T>(new BinaryHeap<T>(capacity, true));
-        public static PriorityQueue<T> Min(int capacity = INITIAL_CAPACITY) => new PriorityQueue<T>(new BinaryHeap<T>(capacity, false));        
+    PriorityQueue(BinaryHeap<T> heap) => _heap = ARG.NotNull(heap, nameof(heap));
 
-        public const int INITIAL_CAPACITY = 1;
+    public static PriorityQueue<T> Max(int capacity = INITIAL_CAPACITY) => new(new BinaryHeap<T>(capacity, true));
+    public static PriorityQueue<T> Min(int capacity = INITIAL_CAPACITY) => new(new BinaryHeap<T>(capacity, false));
 
-        public bool IsMax => _heap.NonIncreasing;
+    public const int INITIAL_CAPACITY = 1;
 
-        public bool IsEmpty() => _heap.IsEmpty();        
+    public bool IsMax => _heap.NonIncreasing;
 
-        public void Enqueue(T item) {            
-            _heap.Add(item);
-        }
+    public bool IsEmpty() => _heap.IsEmpty();
 
-        public T Dequeue() {
-            var result = _heap.Top();
-            _heap.Pop();
-            return result;
-        }
+    public void Enqueue(T item) {
+        _heap.Add(item);
+    }
 
-        public T Peek() {
-            return _heap.Top();
-        }
+    public T Dequeue() {
+        var result = _heap.Top();
+        _heap.Pop();
+        return result;
+    }
+
+    public T Peek() {
+        return _heap.Top();
     }
 }
