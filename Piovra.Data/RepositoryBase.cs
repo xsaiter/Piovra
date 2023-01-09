@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Piovra.Data;
 
-public class Repository<T, TIdentity> : IRepository<T, TIdentity>
+public class RepositoryBase<T, TIdentity> : IRepository<T, TIdentity>
     where T : class, IEntity<TIdentity>
     where TIdentity : IEquatable<TIdentity> {
-    readonly UnitOfWork _unitOfWork;
+    protected readonly UnitOfWork _unitOfWork;
 
-    public Repository(UnitOfWork unitOfWork) => _unitOfWork = ARG.NotNull(unitOfWork, nameof(unitOfWork));
+    protected RepositoryBase(UnitOfWork unitOfWork) => _unitOfWork = ARG.NotNull(unitOfWork, nameof(unitOfWork));
 
     public Task<T> GetByIdAsync(TIdentity id) => Set().FindAsync(id).AsTask();
 

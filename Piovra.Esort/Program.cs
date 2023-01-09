@@ -15,8 +15,8 @@ class Program {
                 await FileSort.SortAsync(ParseSortCfg(args));
             }
             Console.WriteLine("OK");
-        } catch (Exception e) {
-            Console.WriteLine($"ERROR: {e}");
+        } catch (Exception ex) {
+            Console.WriteLine($"ERROR: {ex}");
         }
 
         Console.ReadKey();

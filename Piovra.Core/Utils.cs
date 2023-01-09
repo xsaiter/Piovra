@@ -14,7 +14,7 @@ public static class Utils {
 
     public static bool NonEmpty<T>(this IEnumerable<T> items) => items.Any();
 
-    public static List<T> AsList<T>(this T obj) => new List<T> { obj };
+    public static List<T> AsList<T>(this T obj) => new() { obj };
 
     public static IEnumerable<T> AsSeq<T>(this T obj) {
         yield return obj;
@@ -27,16 +27,16 @@ public static class Utils {
         where T : IComparable<T> => items.SameSequences(other, x => x);
 
     public static bool Same(this string s, string t) {
-        if (s == null || t == null) {
+        if (s is null || t is null) {
             return false;
         }
         var n = Math.Min(s.Length, t.Length);
-        return s.Substring(0, n).Equals(s.Substring(0, n));
+        return s[..n].Equals(s[..n]);
     }
 
     public static bool SameIgnoreCase(this string s, string t) => string.Equals(s, t, StringComparison.OrdinalIgnoreCase);
 
-    public static string Mirror(this string s) => new string(s.ToCharArray().Reverse().ToArray());
+    public static string Mirror(this string s) => new(s.ToCharArray().Reverse().ToArray());
 
     public static string SetAtIndex(this string s, int index, char c) {
         var a = s.ToCharArray();

@@ -54,7 +54,7 @@ public static class FileSort {
         Directory.CreateDirectory(dir);
     }
 
-    static async Task MergeAsync(List<Stream> streams, string destFile) {
+    static async Task MergeAsync(IEnumerable<Stream> streams, string destFile) {
         var pq = PriorityQueue<Feed>.Min();
         foreach (var stream in streams) {
             var x = new Feed(stream);
@@ -105,7 +105,8 @@ public static class FileSort {
         public string Name { get; set; }
         public int Size { get; set; }
         public int Min { get; set; } = 0;
-        public int Max { get; set; } = 1 << 10;
+        public int Max { get; set; } = DEFAULT_MAX;
+        public const int DEFAULT_MAX = 1 << 10;
     }
 
     class Feed : IComparable<Feed> {

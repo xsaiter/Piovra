@@ -9,6 +9,7 @@ namespace Piovra.Data;
 public interface IRepository<T, TIdentity>
     where T : class, IEntity<TIdentity>
     where TIdentity : IEquatable<TIdentity> {
+
     Task<T> GetByIdAsync(TIdentity id);
 
     Task<List<T>> GetAllListAsync();

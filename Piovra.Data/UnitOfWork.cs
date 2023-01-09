@@ -10,7 +10,7 @@ public abstract class UnitOfWork : IUnitOfWork {
 
     public DbContext Context { get; }
 
-    public Task Commit(CancellationToken cancellationToken = default) {
+    public Task<int> Commit(CancellationToken cancellationToken = default) {
         return Context.SaveChangesAsync(cancellationToken);
     }
 
