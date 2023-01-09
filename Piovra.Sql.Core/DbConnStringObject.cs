@@ -18,7 +18,7 @@ public partial class DbConnStringObject {
     public static DbConnStringObject Parse(string connString) {
         var result = new DbConnStringObject(connString);
         var ms = _regex.Matches(connString);
-        foreach (Match m in ms.Cast<Match>()) {
+        foreach (var m in ms.Cast<Match>()) {
             result.Map.Add(m.Groups[1].Value.ToLower(), m.Groups[2].Value);
         }
         return result;

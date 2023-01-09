@@ -13,7 +13,7 @@ public class SmartDbConn<C> : IDisposable where C : DbConnection, new() {
 
     public SmartDbConn(string connString) : this(new Config(connString)) { }
 
-    public async Task<C> Get() {
+    public async Task<C> GetAsync() {
         if (!OK) {
             CleanUp();
             _conn = await NewAsync(_cfg);
