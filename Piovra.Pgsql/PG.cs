@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 using Npgsql;
 using NpgsqlTypes;
@@ -120,8 +120,7 @@ public static class PG {
         }
     }
 
-    static readonly Dictionary<Type, NpgsqlDbType> mapTypes = new()
-    {
+    static readonly Dictionary<Type, NpgsqlDbType> mapTypes = new() {
         { typeof(int), NpgsqlDbType.Integer },
         { typeof(int?), NpgsqlDbType.Integer },
         { typeof(long), NpgsqlDbType.Bigint },

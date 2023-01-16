@@ -19,9 +19,7 @@ public class FenwickTree {
         return res;
     }
 
-    public int Sum(int fromIndex, int toIndex) {
-        return Sum(toIndex) - Sum(fromIndex - 1);
-    }
+    public int Sum(int fromIndex, int toIndex) => Sum(toIndex) - Sum(fromIndex - 1);
 
     public FenwickTree Update(int index, int value) {
         var i = index;

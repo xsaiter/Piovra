@@ -32,8 +32,8 @@ public class RegistryBase {
 
         public I Get<I>() where I : class {
             var type = typeof(I);
-            if (_map.ContainsKey(type)) {
-                return (I)_map[type]();
+            if (_map.TryGetValue(type, out Func<object> value)) {
+                return (I)value();
             }
             throw new Exception($"not found: {type}");
         }

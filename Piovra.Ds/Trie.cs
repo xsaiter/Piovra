@@ -57,7 +57,7 @@ public class Trie {
     }
 
     public class Node {
-        public Dictionary<char, Node> Children { get; } = new Dictionary<char, Node>();
+        public Dictionary<char, Node> Children { get; } = new();
         public bool IsLeaf { get; set; }
         public int PrefixCount { get; set; }
         public bool HasChild(char key) => Children.ContainsKey(key);
