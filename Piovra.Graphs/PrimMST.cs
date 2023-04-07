@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace Piovra.Graphs;
+
 public class PrimMST<V> where V : IEquatable<V> {
     readonly IWeightedGraph<V> _g;
 
