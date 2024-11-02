@@ -31,8 +31,7 @@ public class BTree<K, V> where K : IComparable<K> {
     public void Add(K key, V value) {
         if (!Root.HasReachedMaxEntries) {
             InsertNonFull(this.Root, key, value);
-        }
-        else {
+        } else {
             var oldRoot = Root;
             Root = new Node(Degree);
             Root.Children.Add(oldRoot);
@@ -59,11 +58,14 @@ public class BTree<K, V> where K : IComparable<K> {
     }
 
     void InsertNonFull(Node node, K key, V value) {
-        var positionToInsert = node.Entries.TakeWhile(entry => key.CompareTo(entry.Key) >= 0).Count();
+        var positionToInsert = node
+            .Entries
+            .TakeWhile(entry => key.CompareTo(entry.Key) >= 0)
+            .Count();
+
         if (node.IsLeaf) {
             node.Entries.Insert(positionToInsert, new Entry { Key = key, Value = value });
-        }
-        else {
+        } else {
             var child = node.Children[positionToInsert];
             if (child.HasReachedMaxEntries) {
                 SplitChild(node, positionToInsert, child);
@@ -75,16 +77,10 @@ public class BTree<K, V> where K : IComparable<K> {
         }
     }
 
-    public class Node {
-        public Node(int degree) {
-            Degree = degree;
-            Children = new List<Node>(degree);
-            Entries = new List<Entry>(degree);
-        }
-
-        public int Degree { get; }
-        public List<Node> Children { get; }
-        public List<Entry> Entries { get; }
+    public class Node(int degree) {
+        public int Degree { get; } = degree;
+        public List<Node> Children { get; } = new List<Node>(degree);
+        public List<Entry> Entries { get; } = new List<Entry>(degree);
         public int NEntries => Entries.Count;
         public bool IsLeaf { get; set; }
 

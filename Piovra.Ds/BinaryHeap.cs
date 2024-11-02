@@ -78,7 +78,9 @@ public class BinaryHeap<T> where T : IComparable<T> {
         (_a[j], _a[i]) = (_a[i], _a[j]);
     }
 
-    bool StrictInequality(int i, int j) => NonIncreasing ? _a[i].Lt(_a[j]) : _a[i].Gt(_a[j]);
+    bool StrictInequality(int i, int j) {
+        return NonIncreasing ? _a[i].Lt(_a[j]) : _a[i].Gt(_a[j]);
+    }
 
     static int Left(int i) => 2 * i;
     static int Right(int i) => 2 * i + 1;

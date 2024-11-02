@@ -7,7 +7,7 @@ class Program {
     static async Task Main(string[] args) {
         try {
             if (args.Length == 0) {
-                throw new Exception("invalid number of arguments");
+                throw new Exception("Invalid number of arguments");
             }
             if (args[0] == "-g") {
                 FileSort.GenerateSourceFile(ParseGenerateCfg(args));
@@ -27,8 +27,8 @@ class Program {
 
         var i = 1;
         while (i < args.Length) {
-            var s = args[i];
-            switch (s) {
+            var arg = args[i];
+            switch (arg) {
                 case "-name":
                     cfg.Name = args[++i];
                     break;
@@ -42,7 +42,7 @@ class Program {
                     cfg.Max = int.Parse(args[++i]);
                     break;
                 default:
-                    throw new Exception($"unexpected arg: {s}");
+                    throw new Exception($"Unexpected {nameof(arg)}: {arg}");
             }
             ++i;
         }
@@ -55,8 +55,8 @@ class Program {
 
         int i = 0;
         while (i < args.Length) {
-            var s = args[i];
-            switch (s) {
+            var arg = args[i];
+            switch (arg) {
                 case "-src":
                     cfg.SrcFile = args[++i];
                     break;
@@ -67,7 +67,7 @@ class Program {
                     cfg.MemorySize = int.Parse(args[++i]);
                     break;
                 default:
-                    throw new Exception($"unexpected arg: {s}");
+                    throw new Exception($"Unexpected {nameof(arg)}: {arg}");
             }
             ++i;
         }

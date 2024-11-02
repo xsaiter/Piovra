@@ -16,7 +16,7 @@ public class RegistryBase {
     protected virtual void Clean() { }
 
     public class Config {
-        readonly Dictionary<Type, Func<object>> _map = new();
+        readonly Dictionary<Type, Func<object>> _map = [];
         Config() { }
         public static Config New() => new();
 

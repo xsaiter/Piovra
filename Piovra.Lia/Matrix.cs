@@ -1,20 +1,14 @@
 ﻿using System;
 
 namespace Piovra.Lia;
-public class Matrix {
-    readonly double[,] _a;
-
-    public Matrix(double[,] a) {
-        _a = a;
-        M = a.Rows();
-        N = a.Cols();
-    }
+public class Matrix(double[,] a) {
+    readonly double[,] _a = a;
 
     public Matrix(int m, int n) : this(new double[m, n]) { }
     public static Matrix Square(int n) => new(n, n);
 
-    public int M { get; }
-    public int N { get; }
+    public int M { get; } = a.Rows();
+    public int N { get; } = a.Cols();
 
     public double this[int i, int j] {
         get => _a[i, j];

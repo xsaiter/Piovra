@@ -4,12 +4,8 @@ using Piovra.Ds;
 
 namespace Piovra.Graphs;
 
-public class KruskalMST<V> where V : IEquatable<V> {
-    readonly IWeightedGraph<V> _g;
-
-    public KruskalMST(IWeightedGraph<V> g) {
-        _g = g;
-    }
+public class KruskalMST<V>(IWeightedGraph<V> g) where V : IEquatable<V> {
+    readonly IWeightedGraph<V> _g = g;
 
     public MST<V> Execute() {
         var mst = new MST<V>();

@@ -24,8 +24,8 @@ public partial class DbConnStringObject {
         return result;
     }
 
-    static readonly Regex _regex = MyRegex();
+    static readonly Regex _regex = CreateRegex();
 
     [GeneratedRegex("(?<key>[^=;]+)=(?<value>[^;]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
-    private static partial Regex MyRegex();
+    private static partial Regex CreateRegex();
 }

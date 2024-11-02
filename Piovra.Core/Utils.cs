@@ -102,7 +102,8 @@ public static class Utils {
     public static int Rows<T>(this T[,] a) => a.GetLength(0);
     public static int Cols<T>(this T[,] a) => a.GetLength(1);
 
-    public static byte[] AsBytes(this IEnumerable<int> nums) => nums.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
+    public static byte[] AsBytes(this IEnumerable<int> nums) =>
+        nums.SelectMany(x => BitConverter.GetBytes(x)).ToArray();
 
     public static byte[] AsBytes(this int num) => BitConverter.GetBytes(num);
 

@@ -80,7 +80,9 @@ public static class PG {
 
     static NpgsqlDbType GetDbTypeFrom(PropertyInfo property) {
         var t = property.PropertyType;
-        return mapTypes.TryGetValue(t, out NpgsqlDbType value) ? value : throw new Exception($"unexpected type: {t}");
+        return mapTypes.TryGetValue(t, out NpgsqlDbType value)
+            ? value
+            : throw new Exception($"Unexpected type: {t}");
     }
 
     public static async Task RunAllSqlFilesInDirectoryAsync(string path, int timeout, string connString, int step = 100) {

@@ -26,8 +26,8 @@ public class Lee {
 
     const int DIRS = 4;
 
-    static readonly int[] dx = { 1, 0, -1, 0 };
-    static readonly int[] dy = { 0, -1, 0, 1 };
+    static readonly int[] dx = [1, 0, -1, 0];
+    static readonly int[] dy = [0, -1, 0, 1];
 
     public static Response Execute(Request request) {
         var res = new Response();
@@ -54,7 +54,7 @@ public class Lee {
         bool stop = false;
         int x, y, num, nx, ny;
 
-        while (!stop && q.Any()) {
+        while (!stop && q.Count != 0) {
             var c = q.Dequeue();
             x = c.X;
             y = c.Y;

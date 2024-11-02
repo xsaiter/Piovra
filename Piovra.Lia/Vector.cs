@@ -2,13 +2,8 @@
 
 namespace Piovra.Lia;
 
-public class Vector {
-    readonly double[] _a;
-
-    public Vector(double[] a) {
-        N = a.Length;
-        _a = a;
-    }
+public class Vector(double[] a) {
+    readonly double[] _a = a;
 
     public Vector(int length) : this(new double[length]) { }
 
@@ -18,7 +13,7 @@ public class Vector {
         return v;
     }
 
-    public int N { get; }
+    public int N { get; } = a.Length;
 
     public double this[int i] {
         get => _a[i];

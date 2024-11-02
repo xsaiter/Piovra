@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Piovra.Lia;
 
 public class SparseMatrix<T> where T : IComparable<T> {
-    readonly Dictionary<(int, int), T> _m = new();
+    readonly Dictionary<(int, int), T> _m = [];
     public SparseMatrix(int h, int w) => (H, W) = (h, w);
 
     public int H { get; }

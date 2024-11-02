@@ -109,10 +109,8 @@ public static class FileSort {
         public const int DEFAULT_MAX = 1 << 10;
     }
 
-    class Feed : IComparable<Feed> {
-        public Feed(Stream stream) => Stream = stream;
-
-        Stream Stream { get; }
+    class Feed(Stream stream) : IComparable<Feed> {
+        Stream Stream { get; } = stream;
         public int Num { get; private set; }
         public bool HasNum { get; private set; }
 

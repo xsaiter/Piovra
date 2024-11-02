@@ -11,7 +11,7 @@ public class JsonTests {
             Age = 100,
             Passport = ("123", "45", ("any", 10))
         };
-        var json = JSON.To(person);
+        var json = JsonUtils.To(person);
         var tmp = json;
     }
 

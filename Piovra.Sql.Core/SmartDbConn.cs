@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace Piovra.Sql.Core;
 
-public class SmartDbConn<C> : IDisposable where C : DbConnection, new() {
-    readonly Config _cfg;
+public class SmartDbConn<C>(SmartDbConn<C>.Config cfg) : IDisposable where C : DbConnection, new() {
+    readonly Config _cfg = ARG.CheckNotNull(cfg, nameof(cfg));
     C _conn;
-
-    public SmartDbConn(Config cfg) => _cfg = ARG.CheckNotNull(cfg, nameof(cfg));
 
     public SmartDbConn(string connString) : this(new Config(connString)) { }
 
@@ -34,14 +32,13 @@ public class SmartDbConn<C> : IDisposable where C : DbConnection, new() {
                 conn.ConnectionString = cfg.ConnString;
                 await conn.OpenAsync();
                 isOpened = true;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 if (conn != null) {
                     conn.Dispose();
                     conn = null;
                 }
                 if (attempts > cfg.MaxAttempts) {
-                    throw new Exception($"max attempts = {cfg.MaxAttempts} is exceeded", e);
+                    throw new Exception($"Max attempts = {cfg.MaxAttempts} is exceeded", e);
                 }
                 await Task.Delay(cfg.TimeBetweenAttemptsInMs);
                 ++attempts;
@@ -65,12 +62,12 @@ public class SmartDbConn<C> : IDisposable where C : DbConnection, new() {
         }
     }
 
-    public class Config {
+    public class Config(string connString) {
         public const int DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS = 5000;
         public const int DEFAULT_MAX_ATTEMPTS = 10;
-        public Config(string connString) => ConnString = connString;
+
         public Func<C> CreateConn { get; set; } = () => new C();
-        public string ConnString { get; set; }
+        public string ConnString { get; set; } = connString;
         public int MaxAttempts { get; set; } = DEFAULT_MAX_ATTEMPTS;
         public int TimeBetweenAttemptsInMs { get; set; } = DEFAULT_TIME_BETWEEN_ATTEMPTS_IN_MS;
     }
