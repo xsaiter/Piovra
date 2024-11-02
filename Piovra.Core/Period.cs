@@ -2,6 +2,4 @@
 
 namespace Piovra;
 
-public class Period : Range<DateTime> {
-    public Period(DateTime l, DateTime r) : base(l, r) { }
-}
+public class Period(DateTime l, DateTime r) : Range<DateTime>(l, r);
