@@ -5,7 +5,8 @@ public class Point {
     public double X { get; }
     public double Y { get; }
 
-    public static double CrossProduct(Point a, Point b, Point c) => (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
+    public static double CrossProduct(Point a, Point b, Point c) =>
+        (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
 
     public static Orientations Orientation(Point a, Point b, Point c) {
         var x = CrossProduct(a, b, c);

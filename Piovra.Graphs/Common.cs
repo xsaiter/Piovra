@@ -15,8 +15,7 @@ public class Item {
     public const int NO_DISTANCE = -1;
 }
 
-public class Result<V> where V : IEquatable<V> {
-    public Result(Node<V> source) => Source = source;
-    public Node<V> Source { get; set; }
-    public List<Item> Items { get; set; }
+public class Result<V>(Node<V> source) where V : IEquatable<V> {
+    public Node<V> Source { get; set; } = source;
+    public List<Item> Items { get; set; } = [];
 }

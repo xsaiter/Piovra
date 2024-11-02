@@ -34,7 +34,8 @@ public static class Utils {
         return s[..n].Equals(s[..n]);
     }
 
-    public static bool SameIgnoreCase(this string s, string t) => string.Equals(s, t, StringComparison.OrdinalIgnoreCase);
+    public static bool SameIgnoreCase(this string s, string t) =>
+        string.Equals(s, t, StringComparison.OrdinalIgnoreCase);
 
     public static string Mirror(this string s) => new(s.ToCharArray().Reverse().ToArray());
 
@@ -72,7 +73,8 @@ public static class Utils {
         return result;
     }
 
-    public static T Coalesce<T>(params T[] items) where T : class => items.FirstOrDefault(x => x != null);
+    public static T Coalesce<T>(params T[] items) where T : class =>
+        items.FirstOrDefault(x => x != null);
 
     public static bool IsKthBit(int x, int k) => (x & (1 << (k - 1))) > 0;
 

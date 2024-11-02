@@ -5,10 +5,12 @@ using System.Text.RegularExpressions;
 namespace Piovra.Sql.Core;
 
 public partial class DbConnStringObject {
-    DbConnStringObject(string connString) => ConnString = ARG.NotNullOrEmpty(connString, nameof(connString));
+    DbConnStringObject(string connString) {
+        ConnString = ARG.NotNullOrEmpty(connString, nameof(connString));
+    }
 
     public string ConnString { get; }
-    public Dictionary<string, string> Map { get; } = new Dictionary<string, string>();
+    public Dictionary<string, string> Map { get; } = [];
 
     public bool ContainsKey(string key) => Map.ContainsKey(Key(key));
     public string Value(string key) => Map[Key(key)];

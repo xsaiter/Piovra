@@ -7,9 +7,8 @@ public class Point {
     public int Y { get; set; }
 }
 
-public abstract class Shape : Drawing {
-    protected Shape(Style style) => Style = style;
-    public Style Style { get; set; }
+public abstract class Shape(Style style) : Drawing {
+    public Style Style { get; set; } = style;
     protected void AppendStyle(XElement x) => Style?.WriteTo(x);
 }
 

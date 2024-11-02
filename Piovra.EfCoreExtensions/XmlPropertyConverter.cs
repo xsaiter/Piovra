@@ -5,5 +5,6 @@ namespace Piovra.EfCoreExtensions;
 
 public class XmlPropertyConverter : ValueConverter<XmlProperty, string> {
     public XmlPropertyConverter(string propertyName)
-        : base(_ => _.ToString(), _ => new XmlProperty(propertyName, XElement.Parse(_), null)) { }
+        : base(convertToProviderExpression: _ => _.ToString(),
+            convertFromProviderExpression: _ => new XmlProperty(propertyName, XElement.Parse(_), null)) { }
 }

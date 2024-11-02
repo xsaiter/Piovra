@@ -12,7 +12,7 @@ public class Lee {
     }
 
     public class Response {
-        public List<Cell> Route { get; } = new List<Cell>();
+        public List<Cell> Route { get; } = [];
         public bool HasRoute() => Route.NonEmpty();
     }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Piovra.Geo;
 
 public class ConvexHull {
-    public List<Point> Points { get; } = new List<Point>();
+    public List<Point> Points { get; } = [];
 
     public static ConvexHull GrahamScan(IEnumerable<Point> points) {
         var result = new ConvexHull();

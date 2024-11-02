@@ -5,7 +5,7 @@ namespace Piovra.Svg;
 public class Image {
     public static Image Make(SVG root) {
         if (!root.IsRoot) {
-            throw new ArgumentException("no root");
+            throw new ArgumentException("No root");
         }
         return new Image(root) {
             Xml = new XDocument(new XDeclaration("1.0", "utf-8", "no"), root.ToSvg())

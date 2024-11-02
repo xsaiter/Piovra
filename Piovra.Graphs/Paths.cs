@@ -6,5 +6,5 @@ public class ShortestPath {
 }
 
 public class Route<V> where V : IEquatable<V> {
-    public List<V> Nodes { get; set; } = new();
+    public List<V> Nodes { get; set; } = [];
 }

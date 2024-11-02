@@ -12,14 +12,14 @@ public class SmartDbConn<C>(SmartDbConn<C>.Config cfg) : IDisposable where C : D
     public SmartDbConn(string connString) : this(new Config(connString)) { }
 
     public async Task<C> GetAsync() {
-        if (!OK) {
+        if (!IsSuccess()) {
             CleanUp();
             _conn = await NewAsync(_cfg);
         }
         return _conn;
     }
 
-    public bool OK => _conn?.State == ConnectionState.Open;
+    public bool IsSuccess() => _conn?.State == ConnectionState.Open;
 
     public static async Task<C> NewAsync(Config cfg) {
         var attempts = 0;

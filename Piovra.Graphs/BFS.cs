@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Piovra.Graphs;
 
@@ -29,7 +28,7 @@ public class BFS<V>(IGraph<V> g) where V : IEquatable<V> {
         var q = new Queue<Node<V>>();
         q.Enqueue(s);
 
-        while (q.Any()) {
+        while (q.Count != 0) {
             var u = q.Dequeue();
             var ui = items[u.Id];
             foreach (var v in _g.Neighbors(u)) {

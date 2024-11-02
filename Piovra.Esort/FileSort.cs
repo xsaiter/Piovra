@@ -63,7 +63,8 @@ public static class FileSort {
                 pq.Enqueue(x);
             }
         }
-        using var writer = new BinaryWriter(new FileStream(destFile, FileMode.CreateNew, FileAccess.Write));
+        var fs = new FileStream(destFile, FileMode.CreateNew, FileAccess.Write);
+        using var writer = new BinaryWriter(fs);
         while (!pq.IsEmpty()) {
             var x = pq.Peek();
             if (x != null) {

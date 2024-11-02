@@ -32,7 +32,7 @@ public class JacobiMethod : LinearSystemSolver {
                 }
                 r[i] = c[i];
             }
-        } while (e > Help.EPSILON);
+        } while (e > Helper.EPS);
 
         return r;
     }
