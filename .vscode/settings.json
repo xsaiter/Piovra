@@ -25,5 +25,12 @@
     "gtest-adapter.debugConfig": [
         ".NET Core Attach"
     ],
-    "dotnet-test-explorer.testProjectPath": "**/**/*Tests.csproj"
+    "dotnet-test-explorer.testProjectPath": "**/**/*Tests.csproj",
+    "editor.defaultFormatter": "ms-dotnettools.csdevkit",
+    //"notebook.defaultFormatter": "ms-dotnettools.csdevkit",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    }
 }

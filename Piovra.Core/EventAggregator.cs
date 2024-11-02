@@ -10,7 +10,7 @@ public sealed class EventAggregator {
 
     public static TEvent GetEvent<TEvent>() where TEvent : IEvent, new() => Sole.GetOrCreateEvent<TEvent>();
 
-    readonly Dictionary<Type, IEvent> _events = new();
+    readonly Dictionary<Type, IEvent> _events = [];
 
     TEvent GetOrCreateEvent<TEvent>() where TEvent : IEvent, new() {
         var key = Key<TEvent>();
@@ -44,7 +44,8 @@ public sealed class EventAggregator {
             if (_map.TryGetValue(key, out List<Act> value)) {
                 var acts = value;
                 acts.Add(Act.From(action));
-            } else {
+            }
+            else {
                 _map.Add(key, Act.From(action).AsList());
             }
         }

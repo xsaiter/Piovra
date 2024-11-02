@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace Piovra.Data;
 
-public abstract class UnitOfWork : IUnitOfWork {
-    protected UnitOfWork(DbContext context) => Context = ARG.NotNull(context, nameof(context));
-
-    public DbContext Context { get; }
+public abstract class UnitOfWork(DbContext context) : IUnitOfWork {
+    public DbContext Context { get; } = ARG.CheckNotNull(context, nameof(context));
 
     public Task<int> Commit(CancellationToken cancellationToken = default) {
         return Context.SaveChangesAsync(cancellationToken);

@@ -1,7 +1,6 @@
 ﻿namespace Piovra;
 
-public abstract class Decorator<T> where T : class {
-    protected Decorator(T element) => Element = element;
-    public T Element { get; }
+public abstract class Decorator<T>(T element) where T : class {
+    public T Element { get; } = element;
     public T OriginalElement() => Element is Decorator<T> element ? element.OriginalElement() : Element;
 }

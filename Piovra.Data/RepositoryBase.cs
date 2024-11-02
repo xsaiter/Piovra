@@ -12,7 +12,7 @@ public class RepositoryBase<T, TIdentity> : IRepository<T, TIdentity>
     where TIdentity : IEquatable<TIdentity> {
     protected readonly UnitOfWork _unitOfWork;
 
-    protected RepositoryBase(UnitOfWork unitOfWork) => _unitOfWork = ARG.NotNull(unitOfWork, nameof(unitOfWork));
+    protected RepositoryBase(UnitOfWork unitOfWork) => _unitOfWork = ARG.CheckNotNull(unitOfWork, nameof(unitOfWork));
 
     public Task<T> GetByIdAsync(TIdentity id) => Set().FindAsync(id).AsTask();
 

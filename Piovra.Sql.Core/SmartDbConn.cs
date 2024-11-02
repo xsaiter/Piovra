@@ -9,7 +9,7 @@ public class SmartDbConn<C> : IDisposable where C : DbConnection, new() {
     readonly Config _cfg;
     C _conn;
 
-    public SmartDbConn(Config cfg) => _cfg = ARG.NotNull(cfg, nameof(cfg));
+    public SmartDbConn(Config cfg) => _cfg = ARG.CheckNotNull(cfg, nameof(cfg));
 
     public SmartDbConn(string connString) : this(new Config(connString)) { }
 
@@ -34,7 +34,8 @@ public class SmartDbConn<C> : IDisposable where C : DbConnection, new() {
                 conn.ConnectionString = cfg.ConnString;
                 await conn.OpenAsync();
                 isOpened = true;
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 if (conn != null) {
                     conn.Dispose();
                     conn = null;

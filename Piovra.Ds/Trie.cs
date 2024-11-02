@@ -36,7 +36,8 @@ public class Trie {
         foreach (var c in s) {
             if (node.HasChild(c)) {
                 node = node.GetChild(c);
-            } else {
+            }
+            else {
                 return null;
             }
         }
