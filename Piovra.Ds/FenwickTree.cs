@@ -1,11 +1,7 @@
 ﻿namespace Piovra.Ds;
 
-public class FenwickTree {
-    readonly int[] _a;
-
-    public FenwickTree(int size) {
-        _a = new int[size + 1];
-    }
+public class FenwickTree(int size) {
+    readonly int[] _a = new int[size + 1];
 
     public int Capacity => _a.Length;
 
@@ -19,7 +15,9 @@ public class FenwickTree {
         return res;
     }
 
-    public int Sum(int fromIndex, int toIndex) => Sum(toIndex) - Sum(fromIndex - 1);
+    public int Sum(int fromIndex, int toIndex) {
+        return Sum(toIndex) - Sum(fromIndex - 1);
+    }
 
     public FenwickTree Update(int index, int value) {
         var i = index;

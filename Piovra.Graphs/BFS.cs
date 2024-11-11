@@ -11,7 +11,7 @@ public class BFS<V>(IGraph<V> g) where V : IEquatable<V> {
 
         var res = new Result<V>(s);
 
-        var items = Utils.AllocateList(_g.NV, () => new Item());
+        var items = CollectionUtils.AllocateList(_g.NV, () => new Item());
 
         foreach (var node in _g.AllNodes()) {
             if (node.Id != s.Id) {

@@ -8,7 +8,7 @@ public class BinaryHeap<T> where T : IComparable<T> {
 
     public BinaryHeap(int capacity = 1, bool nonIncreasing = true) {
         ARG.EnsureOutOfRange(() => capacity < 1, nameof(capacity));
-        _a = Utils.AllocateList<T>(capacity + 1, () => default);
+        _a = CollectionUtils.AllocateList<T>(capacity + 1, () => default);
         NonIncreasing = nonIncreasing;
         Size = 0;
     }

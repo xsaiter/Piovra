@@ -1,18 +1,16 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Piovra.Geo;
 
-public class ConvexHull {
-    public List<Point> Points { get; } = [];
-
-    public static ConvexHull GrahamScan(IEnumerable<Point> points) {
+public class GrahamScanConvexHullStrategy : ICreateConvexHullStrategy {
+    public ConvexHull Create(IEnumerable<Point> points) {
         var result = new ConvexHull();
 
         var n = points.Count();
 
         if (n < 4) {
-            points.Foreach(_ => result.Points.Add(_));
+            points.Foreach(_ => result.AddPoint(_));
             return result;
         }
 

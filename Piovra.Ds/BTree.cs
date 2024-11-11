@@ -20,7 +20,7 @@ public class BTree<K, V> where K : IComparable<K> {
 
     public Entry Search(K key) => SearchImpl(Root, key);
 
-    Entry SearchImpl(Node x, K key) {
+    static Entry SearchImpl(Node x, K key) {
         var pos = x.Entries.TakeWhile(_ => key.Ge(_.Key)).Count();
         if (pos < x.NEntries && x.Entries[pos].Key.Eq(key)) {
             return x.Entries[pos];

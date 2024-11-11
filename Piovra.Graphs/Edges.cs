@@ -42,7 +42,7 @@ public class Edge<V> : IEdge<V> where V : IEquatable<V> {
     }
 
     public override int GetHashCode() {
-        return Utils.Enumerate(Head, Tail).ComputeHash();
+        return CollectionUtils.Enumerate(Head, Tail).ComputeHash();
     }
 }
 
@@ -73,6 +73,6 @@ public class WeightedEdge<V> : IEdge<V> where V : IEquatable<V> {
     }
 
     public override int GetHashCode() {
-        return Utils.EnumerateObjects(Edge, Weight).ComputeHash();
+        return CollectionUtils.EnumerateObjects(Edge, Weight).ComputeHash();
     }
 }

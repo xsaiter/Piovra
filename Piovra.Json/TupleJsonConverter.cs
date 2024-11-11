@@ -25,7 +25,7 @@ public class TupleJsonConverter : JsonConverter {
         t.WriteTo(writer);
     }
 
-    void Prepare(JObject obj, object value) {
+    static void Prepare(JObject obj, object value) {
         var ps = obj.Properties().ToList();
         var pis = value.GetType().GetProperties();
 
@@ -81,9 +81,8 @@ public class TupleJsonConverter : JsonConverter {
         public int N { get; set; }
     }
 
-    public class Node {
-        public Node(string typeName) => TypeName = typeName;
-        public string TypeName { get; }
+    public class Node(string typeName) {
+        public string TypeName { get; } = typeName;
         public string PropertyName { get; set; }
         public JProperty Property { get; set; }
         public List<Node> Nodes { get; } = new();

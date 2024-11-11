@@ -137,6 +137,5 @@ public static class PG {
     };
 }
 
-public class SmartConn : Sql.Core.SmartDbConn<NpgsqlConnection> {
-    public SmartConn(Config cfg) : base(cfg) { }
-}
+public class SmartConn(Sql.Core.SmartDbConn<NpgsqlConnection>.Config cfg)
+    : Sql.Core.SmartDbConn<NpgsqlConnection>(cfg);
