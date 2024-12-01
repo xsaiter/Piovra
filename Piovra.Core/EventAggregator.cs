@@ -27,7 +27,7 @@ public sealed class EventAggregator {
     public interface IEvent { }
 
     public class Event<TPayload> : IEvent {
-        readonly Dictionary<Type, List<Act>> _map = new();
+        readonly Dictionary<Type, List<Act>> _map = [];
 
         public bool Publish(TPayload payload) {
             var key = Key();
@@ -44,8 +44,7 @@ public sealed class EventAggregator {
             if (_map.TryGetValue(key, out List<Act> value)) {
                 var acts = value;
                 acts.Add(Act.From(action));
-            }
-            else {
+            } else {
                 _map.Add(key, Act.From(action).AsList());
             }
         }

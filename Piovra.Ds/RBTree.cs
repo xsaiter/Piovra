@@ -21,8 +21,7 @@ public class RBTree<K, V> where K : IComparable<K> {
             }
             if (cmp < 0) {
                 x = x.L;
-            }
-            else {
+            } else {
                 x = x.R;
             }
         }
@@ -42,8 +41,7 @@ public class RBTree<K, V> where K : IComparable<K> {
             cmp = z.Key.CompareTo(x.Key);
             if (cmp < 0) {
                 x = x.L;
-            }
-            else {
+            } else {
                 x = x.R;
             }
         }
@@ -52,13 +50,11 @@ public class RBTree<K, V> where K : IComparable<K> {
 
         if (y == _nil) {
             _root = z;
-        }
-        else {
+        } else {
             cmp = z.Key.CompareTo(y.Key);
             if (cmp < 0) {
                 y.L = z;
-            }
-            else {
+            } else {
                 y.R = z;
             }
         }
@@ -79,8 +75,7 @@ public class RBTree<K, V> where K : IComparable<K> {
                     y.Color = BLACK;
                     z.P.P.Color = RED;
                     z = z.P.P;
-                }
-                else {
+                } else {
                     if (z == z.P.R) {
                         z = z.P;
                         LeftRotate(z);
@@ -89,16 +84,14 @@ public class RBTree<K, V> where K : IComparable<K> {
                     z.P.P.Color = RED;
                     RightRotate(z.P.P);
                 }
-            }
-            else {
+            } else {
                 var y = z.P.P.L;
                 if (y.Color == RED) {
                     z.P.Color = BLACK;
                     y.Color = BLACK;
                     z.P.P.Color = RED;
                     z = z.P.P;
-                }
-                else {
+                } else {
                     if (z == z.P.L) {
                         z = z.P;
                         RightRotate(z);
@@ -125,11 +118,9 @@ public class RBTree<K, V> where K : IComparable<K> {
 
         if (x.P == _nil) {
             _root = y;
-        }
-        else if (x == x.P.L) {
+        } else if (x == x.P.L) {
             x.P.L = y;
-        }
-        else {
+        } else {
             x.P.R = y;
         }
 
@@ -149,11 +140,9 @@ public class RBTree<K, V> where K : IComparable<K> {
 
         if (x.P == _nil) {
             _root = y;
-        }
-        else if (x == x.P.R) {
+        } else if (x == x.P.R) {
             x.P.R = y;
-        }
-        else {
+        } else {
             x.P.L = y;
         }
 
