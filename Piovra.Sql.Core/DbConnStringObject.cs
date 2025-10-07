@@ -6,7 +6,7 @@ namespace Piovra.Sql.Core;
 
 public partial class DbConnStringObject {
     DbConnStringObject(string connString) {
-        ConnString = ARG.NotNullOrEmpty(connString, nameof(connString));
+        ConnString = Requires.NotNullOrEmpty(connString, nameof(connString));
     }
 
     public string ConnString { get; }

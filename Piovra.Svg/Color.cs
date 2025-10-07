@@ -1,16 +1,10 @@
 ﻿namespace Piovra.Svg;
-public class Color {
-    public Color(byte r, byte g, byte b, double a = 1.0) {
-        R = r;
-        G = g;
-        B = b;
-        A = a;
-    }
 
-    public byte R { get; }
-    public byte G { get; }
-    public byte B { get; }
-    public double A { get; }
+public class Color(byte r, byte g, byte b, double a = 1.0) {
+    public byte R { get; } = r;
+    public byte G { get; } = g;
+    public byte B { get; } = b;
+    public double A { get; } = a;
 
     public static Color RED => new(H, L, L);
     public static Color GREEN => new(L, H, L);

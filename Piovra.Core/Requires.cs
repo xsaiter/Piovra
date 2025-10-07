@@ -2,7 +2,7 @@
 
 namespace Piovra;
 
-public static class ARG {
+public static class Requires {
     public static T CheckNotNull<T>(T paramValue, string paramName) where T : class =>
         paramValue ?? throw new ArgumentNullException(paramName);
 
@@ -14,13 +14,4 @@ public static class ARG {
             throw new ArgumentOutOfRangeException(paramName);
         }
     }
-}
-
-public class ASSERT {
-    public static void True(bool condition, string message = null) {
-        if (!condition) {
-            throw new Exception(message);
-        }
-    }
-    public static void False(bool condition, string message = null) => True(!condition, message);
 }

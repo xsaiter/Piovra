@@ -8,34 +8,34 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Npgsql;
 using NpgsqlTypes;
+using System.Threading;
 
 namespace Piovra.Pgsql;
 
 public static class PG {
-    public static async Task<int> PerformNonQueryAsync(this NpgsqlConnection conn, string sql, object param = null) {
+    public static async Task<int> PerformNonQueryAsync(this NpgsqlConnection conn, string sql, object param = null, CancellationToken cancellationToken = default) {
         using var cmd = conn.CreateCommand();
         PrepareCmd(cmd, sql, param);
-        var result = await cmd.ExecuteNonQueryAsync();
-        return result;
+        return await cmd.ExecuteNonQueryAsync(cancellationToken);
     }
 
-    public static async Task<T> PerformScalarAsync<T>(this NpgsqlConnection conn, string sql, object param = null) {
+    public static async Task<T> PerformScalarAsync<T>(this NpgsqlConnection conn, string sql, object param = null, CancellationToken cancellationToken = default) {
         using var cmd = conn.CreateCommand();
         PrepareCmd(cmd, sql, param);
-        var result = await cmd.ExecuteScalarAsync();
+        var result = await cmd.ExecuteScalarAsync(cancellationToken);
         return (T)result;
     }
 
-    public static Task<List<T>> PerformQueryAsync<T>(this NpgsqlConnection conn, string sql, object param = null)
+    public static Task<List<T>> PerformQueryAsync<T>(this NpgsqlConnection conn, string sql, object param = null, CancellationToken cancellationToken = default)
         where T : new() =>
-        PerformQueryAsync<T, List<T>>(conn, sql, param);
+        PerformQueryAsync<T, List<T>>(conn, sql, param, cancellationToken);
 
-    public static async Task<R> PerformQueryAsync<T, R>(this NpgsqlConnection conn, string sql, object param = null)
+    public static async Task<R> PerformQueryAsync<T, R>(this NpgsqlConnection conn, string sql, object param = null, CancellationToken cancellationToken = default)
         where T : new() where R : ICollection<T>, new() {
         var result = new R();
         using var cmd = conn.CreateCommand();
         PrepareCmd(cmd, sql, param);
-        using var r = await cmd.ExecuteReaderAsync();
+        using var r = await cmd.ExecuteReaderAsync(cancellationToken);
         if (r.HasRows) {
             var properties = typeof(T).GetProperties();
             var columns = r.GetColumnSchema();
@@ -85,17 +85,17 @@ public static class PG {
             : throw new Exception($"Unexpected type: {t}");
     }
 
-    public static async Task RunAllSqlFilesInDirectoryAsync(string path, int timeout, string connString, int step = 100) {
+    public static async Task RunAllSqlFilesInDirectoryAsync(string path, int timeout, string connString, int step = 100, CancellationToken cancellationToken = default) {
         var files = Directory.GetFiles(path);
 
         using var conn = await SmartConn.NewAsync(connString);
         foreach (var file in files) {
-            var lines = await File.ReadAllLinesAsync(file);
+            var lines = await File.ReadAllLinesAsync(file, cancellationToken);
 
             var skip = 0;
             List<string> cc;
 
-            while ((cc = lines.Skip(skip).Take(step).ToList()).Any()) {
+            while ((cc = [.. lines.Skip(skip).Take(step)]).Count != 0) {
                 skip += cc.Count;
 
                 var sb = new StringBuilder();
@@ -107,17 +107,17 @@ public static class PG {
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandTimeout = timeout;
 
-                await cmd.ExecuteNonQueryAsync();
+                await cmd.ExecuteNonQueryAsync(cancellationToken);
             }
         }
     }
 
-    public static async Task CopyFromFileAsync(NpgsqlConnection conn, FileInfo file, string copyFromCommand) {
+    public static async Task CopyFromFileAsync(NpgsqlConnection conn, FileInfo file, string copyFromCommand, CancellationToken cancellationToken = default) {
         using var stream = file.OpenRead();
-        using var writer = await conn.BeginTextImportAsync(copyFromCommand);
+        using var writer = await conn.BeginTextImportAsync(copyFromCommand, cancellationToken);
         using var reader = new StreamReader(stream);
         while (!reader.EndOfStream) {
-            var line = await reader.ReadLineAsync();
+            var line = await reader.ReadLineAsync(cancellationToken);
             await writer.WriteLineAsync(line);
         }
     }

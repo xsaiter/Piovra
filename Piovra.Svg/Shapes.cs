@@ -1,6 +1,7 @@
 ﻿using System.Xml.Linq;
 
 namespace Piovra.Svg;
+
 public class Point {
     public Point(int x, int y) => (X, Y) = (x, y);
     public int X { get; set; }
