@@ -24,12 +24,16 @@ public static class Utils {
     public static bool SameIgnoreCase(this string s, string t) =>
         string.Equals(s, t, StringComparison.OrdinalIgnoreCase);
 
-    public static string Mirror(this string s) => new(s.ToCharArray().Reverse().ToArray());
+    public static string Mirror(this string s) {
+        var arr = s.ToCharArray();
+        Array.Reverse(arr);
+        return new(arr);
+    }
 
     public static string SetAtIndex(this string s, int index, char c) {
         var a = s.ToCharArray();
         a[index] = c;
-        return new string(a);
+        return new(a);
     }
 
     public static int ComputeHash(this IEnumerable<object> items) =>

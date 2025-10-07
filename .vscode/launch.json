@@ -9,7 +9,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build demo",
-      "program": "${workspaceFolder}/Tests/Piovra.Demo/bin/Debug/net8.0/Piovra.Demo.exe",
+      "program": "${workspaceFolder}/Tests/Piovra.Demo/bin/Debug/net9.0/Piovra.Demo.exe",
       "args": [],
       "cwd": "${workspaceFolder}/Tests/Piovra.Demo",
       "console": "internalConsole",
