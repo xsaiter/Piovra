@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Piovra;
 
@@ -12,6 +13,12 @@ public static class Requires {
     public static void EnsureOutOfRange(Func<bool> failCondition, string paramName) {
         if (failCondition()) {
             throw new ArgumentOutOfRangeException(paramName);
+        }
+    }
+
+    public static void NotNull<T>([NotNull] T self) {
+        if (self is null) {
+            throw new Exception("Arg is null");
         }
     }
 }

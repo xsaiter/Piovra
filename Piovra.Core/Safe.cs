@@ -42,7 +42,7 @@ public static class Safe {
     static Func<T1, T2, int> AsFunc<T1, T2>(this Action<T1, T2> action) => (arg1, arg2) => { action(arg1, arg2); return 0; };
 
     public abstract class After {
-        public After Next { get; set; }
+        public required After Next { get; init; }
         public void ProcessOk() {
             ExecuteOk();
             Next?.ProcessOk();

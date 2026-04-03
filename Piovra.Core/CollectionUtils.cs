@@ -31,7 +31,8 @@ public static class CollectionUtils {
 
     public static IEnumerable<T> Enumerate<T>(params T[] items) => items;
 
-    public static IEnumerable<object> EnumerateObjects(params object[] items) => items.Cast<object>();
+    public static IEnumerable<object> EnumerateObjects(params object[] items) =>
+        items.Cast<object>();
 
     public static void Extend<T>(this ICollection<T> items, IEnumerable<T> newItems) {
         foreach (var newItem in newItems) {
@@ -53,7 +54,4 @@ public static class CollectionUtils {
         result.Extend(capacity, create);
         return result;
     }
-
-    public static T Coalesce<T>(params T[] items) where T : class =>
-        items.FirstOrDefault(x => x != null);
 }

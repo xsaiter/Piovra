@@ -1,6 +1,5 @@
 ﻿namespace Piovra;
 
-public class Result<T> {
-    public T Value { get; set; }
-    public static Result<T> Of(T value) => new() { Value = value };
+public record Result<T>(T Value) {
+    public static Result<T> Of(T value) => new(value);
 }

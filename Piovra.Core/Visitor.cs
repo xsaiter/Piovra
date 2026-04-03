@@ -19,7 +19,7 @@ public interface IVisitable<T, R> : IVisitable {
 }
 
 public abstract class VisitableBase<T> where T : class, IVisitable {
-    protected T Self => this as T;
+    protected T Self => (this as T)!;
 }
 
 public abstract class Visitable<T> : VisitableBase<T>, IVisitable<T> where T : class, IVisitable {

@@ -20,9 +20,9 @@ public class RegistryBase {
         Config() { }
         public static Config New() => new();
 
-        public Config Add<I, R>() where R : I, new() => Add<I, R>(() => new R());
+        public Config Add<I, R>() where R : notnull, I, new() => Add<I, R>(() => new R());
 
-        public Config Add<I, R>(Func<R> create) where R : I {
+        public Config Add<I, R>(Func<R> create) where R : notnull, I {
             var type = typeof(I);
             if (!_map.ContainsKey(type)) {
                 _map.Add(type, () => create());
@@ -32,10 +32,10 @@ public class RegistryBase {
 
         public I Get<I>() where I : class {
             var type = typeof(I);
-            if (_map.TryGetValue(type, out Func<object> value)) {
+            if (_map.TryGetValue(type, out var value)) {
                 return (I)value();
             }
-            throw new Exception($"not found: {type}");
+            throw new Exception($"Not found: {type}");
         }
     }
 }
