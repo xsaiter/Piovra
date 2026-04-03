@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Piovra.Graphs;
 
-namespace Piovra.Graphs;
 public class ShortestPath {
 }
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Piovra.Graphs;
+﻿namespace Piovra.Graphs;
 
 public interface IEdge<V> : IEquatable<IEdge<V>> where V : IEquatable<V> {
     Node<V> Head { get; }
@@ -18,8 +16,8 @@ public class Edge<V> : IEdge<V> where V : IEquatable<V> {
     public Node<V> Head { get; }
     public Node<V> Tail { get; }
 
-    public bool Equals(IEdge<V> other) {
-        if (other == null) {
+    public bool Equals(IEdge<V>? other) {
+        if (other is null) {
             return false;
         }
         if (ReferenceEquals(this, other)) {
@@ -28,8 +26,8 @@ public class Edge<V> : IEdge<V> where V : IEquatable<V> {
         return Head.Equals(other.Head) && Tail.Equals(other.Tail);
     }
 
-    public override bool Equals(object obj) {
-        if (obj == null) {
+    public override bool Equals(object? obj) {
+        if (obj is null) {
             return false;
         }
         if (ReferenceEquals(this, obj)) {
@@ -57,8 +55,8 @@ public class WeightedEdge<V> : IEdge<V> where V : IEquatable<V> {
     public Node<V> Tail => Edge.Tail;
     public double Weight { get; }
 
-    public bool Equals(IEdge<V> other) {
-        if (other == null) {
+    public bool Equals(IEdge<V>? other) {
+        if (other is null) {
             return false;
         }
         if (ReferenceEquals(this, other)) {
@@ -68,7 +66,7 @@ public class WeightedEdge<V> : IEdge<V> where V : IEquatable<V> {
         return Edge.Equals(otherObj.Edge);
     }
 
-    public override bool Equals(object obj) {
+    public override bool Equals(object? obj) {
         return Equals(obj as WeightedEdge<V>);
     }
 

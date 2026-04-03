@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Piovra.Graphs;
+﻿namespace Piovra.Graphs;
 
 public class Node<V> : IEquatable<Node<V>> where V : IEquatable<V> {
     public static Node<V> Of(V vertex) => new(vertex);
@@ -12,15 +8,15 @@ public class Node<V> : IEquatable<Node<V>> where V : IEquatable<V> {
     public V Vertex { get; }
     public int Id { get; set; }
 
-    public bool Equals(Node<V> other) {
-        if (other == null) {
+    public bool Equals(Node<V>? other) {
+        if (other is null) {
             return false;
         }
         return Vertex.Equals(other.Vertex);
     }
 
-    public override bool Equals(object obj) {
-        if (obj == null) {
+    public override bool Equals(object? obj) {
+        if (obj is null) {
             return false;
         }
         if (ReferenceEquals(this, obj)) {
@@ -38,7 +34,7 @@ public class Node<V> : IEquatable<Node<V>> where V : IEquatable<V> {
 public interface IGraph<V> where V : IEquatable<V> {
     int NV { get; }
     int NE { get; }
-    Node<V> NodeOf(V vertex);
+    Node<V>? NodeOf(V vertex);
     IEnumerable<Node<V>> AllNodes();
     IEnumerable<Node<V>> Neighbors(Node<V> node);
 }
@@ -48,8 +44,8 @@ public interface IGraph<V, E> where V : IEquatable<V> where E : IEdge<V> {
 }
 
 public abstract class Graph<V, E> : IGraph<V> where V : IEquatable<V> where E : IEdge<V> {
-    readonly Dictionary<Node<V>, HashSet<E>> _adj = new();
-    readonly Dictionary<V, Node<V>> _map = new();
+    readonly Dictionary<Node<V>, HashSet<E>> _adj = [];
+    readonly Dictionary<V, Node<V>> _map = [];
     int _nodeId;
 
     public int NV { get; private set; }
@@ -69,11 +65,11 @@ public abstract class Graph<V, E> : IGraph<V> where V : IEquatable<V> where E : 
         return _adj[node].Select(x => x.Tail);
     }
 
-    public Node<V> NodeOf(V vertex) {
-        if (!_map.ContainsKey(vertex)) {
-            return null;
+    public Node<V>? NodeOf(V vertex) {
+        if (_map.TryGetValue(vertex, out var value)) {
+            return value;
         }
-        return _map[vertex];
+        return null;
     }
 
     public IEnumerable<E> IncidentEdges(Node<V> node) {

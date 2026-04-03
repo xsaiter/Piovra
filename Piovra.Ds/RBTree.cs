@@ -1,17 +1,15 @@
-﻿using System;
-
-namespace Piovra.Ds;
+﻿namespace Piovra.Ds;
 
 public class RBTree<K, V> where K : IComparable<K> {
     readonly Node _nil;
-    Node _root;
+    Node? _root;
 
     public RBTree() {
         _nil = new Node { Color = BLACK };
         _root = _nil;
     }
 
-    public Result<V> GetValue(K key) {
+    public Result<V?>? GetValue(K key) {
         var x = _root;
 
         while (x != _nil) {
@@ -26,7 +24,7 @@ public class RBTree<K, V> where K : IComparable<K> {
             }
         }
 
-        return x != null ? Result<V>.Of(x.Value) : null;
+        return x is not null ? Result<V?>.Of(x.Value) : null;
     }
 
     public void Add(K key, V value) {
@@ -108,55 +106,55 @@ public class RBTree<K, V> where K : IComparable<K> {
 
     void LeftRotate(Node x) {
         var y = x.R;
-        x.R = y.L;
+        x.R = y?.L;
 
-        if (y.L != _nil) {
-            y.L.P = x;
+        if (y?.L != _nil) {
+            y?.L?.P = x;
         }
 
-        y.P = x.P;
+        y?.P = x.P;
 
         if (x.P == _nil) {
             _root = y;
-        } else if (x == x.P.L) {
+        } else if (x == x?.P?.L) {
             x.P.L = y;
         } else {
-            x.P.R = y;
+            x?.P?.R = y;
         }
 
-        y.L = x;
-        x.P = y;
+        y?.L = x;
+        x?.P = y;
     }
 
     void RightRotate(Node x) {
         var y = x.L;
-        x.L = y.R;
+        x.L = y?.R;
 
-        if (y.R != _nil) {
-            y.R.P = x;
+        if (y?.R != _nil) {
+            y?.R?.P = x;
         }
 
-        y.P = x.P;
+        y?.P = x.P;
 
         if (x.P == _nil) {
             _root = y;
-        } else if (x == x.P.R) {
+        } else if (x == x?.P?.R) {
             x.P.R = y;
         } else {
-            x.P.L = y;
+            x?.P?.L = y;
         }
 
-        y.R = x;
-        x.P = y;
+        y?.R = x;
+        x?.P = y;
     }
 
     class Node {
-        public K Key { get; set; }
-        public V Value { get; set; }
-        public Colors Color { get; set; }
-        public Node P { get; set; }
-        public Node L { get; set; }
-        public Node R { get; set; }
+        public K? Key { get; set; }
+        public V? Value { get; set; }
+        public Colors? Color { get; set; }
+        public Node? P { get; set; }
+        public Node? L { get; set; }
+        public Node? R { get; set; }
     }
 
     const Colors RED = Colors.RED;

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Piovra.Graphs;
+﻿namespace Piovra.Graphs;
 
 public class BFS<V>(IGraph<V> g) where V : IEquatable<V> {
     readonly IGraph<V> _g = Requires.CheckNotNull(g, nameof(g));
 
     public Result<V> Execute(V source) {
         var s = _g.NodeOf(source);
+
+        Requires.NotNull(s);
 
         var res = new Result<V>(s);
 

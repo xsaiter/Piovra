@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace Piovra.Graphs;
 
-namespace Piovra.Graphs;
 public class Lee {
     public class Request {
-        public int[,] A { get; set; }
-        public int StartX { get; set; }
-        public int StartY { get; set; }
-        public int EndX { get; set; }
-        public int EndY { get; set; }
+        public required int[,] A { get; init; }
+        public required int StartX { get; init; }
+        public required int StartY { get; init; }
+        public required int EndX { get; init; }
+        public required int EndY { get; init; }
     }
 
     public class Response {
