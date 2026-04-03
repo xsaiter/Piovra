@@ -3,8 +3,7 @@ using System.Xml.Linq;
 
 namespace Piovra.EfCoreExtensions;
 
-public class XmlPropertyConverter : ValueConverter<XmlProperty, string> {
-    public XmlPropertyConverter(string propertyName)
-        : base(convertToProviderExpression: _ => _.ToString(),
-            convertFromProviderExpression: _ => new XmlProperty(propertyName, XElement.Parse(_), null)) { }
-}
+public class XmlPropertyConverter(string propertyName)
+    : ValueConverter<XmlProperty, string>(
+        convertToProviderExpression: _ => _.ToString(),
+        convertFromProviderExpression: _ => new XmlProperty(propertyName, XElement.Parse(_)));

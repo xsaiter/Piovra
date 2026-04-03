@@ -4,7 +4,7 @@ using System.Xml.Linq;
 namespace Piovra.EfCoreExtensions;
 
 public class XmlProperty : NotificationObject {
-    public XmlProperty(string propertyName, XElement raw, Action<string> callback) {
+    public XmlProperty(string propertyName, XElement raw, Action<string>? callback = null) {
         PropertyName = propertyName;
         Raw = raw;
         Raw.Changed += OnChanged;
@@ -13,9 +13,9 @@ public class XmlProperty : NotificationObject {
 
     public string PropertyName { get; }
     public XElement Raw { get; set; }
-    public Action<string> Callback { get; }
+    public Action<string>? Callback { get; }
 
-    void OnChanged(object sender, XObjectChangeEventArgs e) {
+    void OnChanged(object? sender, XObjectChangeEventArgs e) {
         RaisePropertyChanged(PropertyName);
         Callback?.Invoke(PropertyName);
     }

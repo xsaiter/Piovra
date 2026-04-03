@@ -3,7 +3,7 @@
 namespace Piovra.EfCoreExtensions;
 
 public abstract class NotificationObject : INotifyPropertyChanged {
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void RaisePropertyChanged(string propertyName) {
         var handler = PropertyChanged;
