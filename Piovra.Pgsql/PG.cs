@@ -131,6 +131,7 @@ public static class PG {
         using var stream = file.OpenRead();
         using var writer = await conn.BeginTextImportAsync(copyFromCommand, cancellationToken);
         using var reader = new StreamReader(stream);
+
         while (!reader.EndOfStream) {
             var line = await reader.ReadLineAsync(cancellationToken);
             await writer.WriteLineAsync(line);
