@@ -1,43 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
+﻿using System.Data;
 using System.Text;
 using System.Reflection;
-using System.Threading.Tasks;
 using Npgsql;
 using NpgsqlTypes;
-using System.Threading;
 
 namespace Piovra.Pgsql;
 
 public static class PG {
     public static async Task<int> PerformNonQueryAsync(this NpgsqlConnection conn,
-        string sql, object param = null, CancellationToken cancellationToken = default) {
+        string sql, object? param = null, CancellationToken cancellationToken = default) {
 
         using var cmd = conn.CreateCommand();
         PrepareCmd(cmd, sql, param);
         return await cmd.ExecuteNonQueryAsync(cancellationToken);
     }
 
-    public static async Task<T> PerformScalarAsync<T>(this NpgsqlConnection conn,
-        string sql, object param = null, CancellationToken cancellationToken = default) {
+    public static async Task<T?> PerformScalarAsync<T>(this NpgsqlConnection conn,
+        string sql, object? param = null, CancellationToken cancellationToken = default) {
 
         using var cmd = conn.CreateCommand();
         PrepareCmd(cmd, sql, param);
         var result = await cmd.ExecuteScalarAsync(cancellationToken);
-        return (T)result;
+        return (T?)result;
     }
 
     public static Task<List<T>> PerformQueryAsync<T>(this NpgsqlConnection conn,
-        string sql, object param = null, CancellationToken cancellationToken = default)
+        string sql, object? param = null, CancellationToken cancellationToken = default)
         where T : new() {
         return PerformQueryAsync<T, List<T>>(conn, sql, param, cancellationToken);
     }
 
     public static async Task<R> PerformQueryAsync<T, R>(this NpgsqlConnection conn,
-        string sql, object param = null, CancellationToken cancellationToken = default)
+        string sql, object? param = null, CancellationToken cancellationToken = default)
         where T : new() where R : ICollection<T>, new() {
 
         var result = new R();
@@ -66,7 +60,7 @@ public static class PG {
         return result;
     }
 
-    static void PrepareCmd(NpgsqlCommand cmd, string sql, object param = null) {
+    static void PrepareCmd(NpgsqlCommand cmd, string sql, object? param = null) {
         cmd.CommandType = CommandType.Text;
         cmd.CommandText = sql;
         if (param != null) {
