@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace Piovra;
 
@@ -16,9 +17,10 @@ public static class Requires {
         }
     }
 
-    public static void NotNull<T>([NotNull] T self) {
-        if (self is null) {
-            throw new Exception("Arg is null");
+    public static void NotNull<T>([NotNull] T param,
+        string details = "", [CallerArgumentExpression(nameof(param))] string paramName = "") {
+        if (param is null) {
+            throw new Exception($"{paramName} must not be null, {nameof(details)}: {details}");
         }
     }
 }

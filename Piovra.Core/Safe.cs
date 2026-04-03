@@ -99,26 +99,21 @@ public static class Safe {
         R Execute();
     }
 
-    class Cmd<R> : ICmd<R> {
-        protected Cmd() { }
-        public Cmd(Func<R> f) => F0 = f;
-        public Func<R> F0 { get; }
+    class Cmd<R>(Func<R> f) : ICmd<R> {
+        public Func<R> F0 { get; } = f;
         public virtual R Execute() => F0();
     }
 
-    class Cmd<T, R> : Cmd<R> {
-        protected Cmd(T arg) => Arg = arg;
-        public Cmd(T arg, Func<T, R> f) : this(arg) => F = f;
-        public T Arg { get; }
-        public Func<T, R> F { get; }
-        public override R Execute() => F(Arg);
+    class Cmd<T, R>(T arg, Func<T, R> f) : ICmd<R> {
+        public T Arg { get; } = arg;
+        public Func<T, R> F { get; } = f;
+        public virtual R Execute() => F(Arg);
     }
 
-    class Cmd<T1, T2, R> : Cmd<T1, R> {
-        protected Cmd(T1 arg1, T2 arg2) : base(arg1) => Arg2 = arg2;
-        public Cmd(T1 arg1, T2 arg2, Func<T1, T2, R> f) : this(arg1, arg2) => F2 = f;
-        public T2 Arg2 { get; }
-        public Func<T1, T2, R> F2 { get; }
-        public override R Execute() => F2(Arg, Arg2);
+    class Cmd<T1, T2, R>(T1 arg1, T2 arg2, Func<T1, T2, R> f) : ICmd<R> {
+        public T1 Arg1 { get; } = arg1;
+        public T2 Arg2 { get; } = arg2;
+        public Func<T1, T2, R> F { get; } = f;
+        public virtual R Execute() => F(Arg1, Arg2);
     }
 }

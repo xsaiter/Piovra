@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Piovra.Data;
 
@@ -17,7 +13,7 @@ public class RepositoryBase<T, TIdentity> : IRepository<T, TIdentity>
         _unitOfWork = Requires.CheckNotNull(unitOfWork, nameof(unitOfWork));
     }
 
-    public Task<T> GetByIdAsync(TIdentity id) =>
+    public Task<T?> GetByIdAsync(TIdentity id) =>
         Set().FindAsync(id).AsTask();
 
     public Task<List<T>> GetAllListAsync() =>
