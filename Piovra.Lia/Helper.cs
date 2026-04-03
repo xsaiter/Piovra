@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Piovra.Lia;
+﻿namespace Piovra.Lia;
 
 public static class Helper {
     public const double EPS = 1e-3;

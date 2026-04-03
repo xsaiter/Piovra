@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Piovra.Lia;
+﻿namespace Piovra.Lia;
 
 public class Matrix(double[,] a) {
     readonly double[,] _a = a;
@@ -66,5 +64,9 @@ public class Matrix(double[,] a) {
     }
 
     public Matrix Copy() => new(CopyArray());
-    double[,] CopyArray() => _a.Clone() as double[,];
+    double[,] CopyArray() {
+        var clone = _a.Clone() as double[,];
+        Requires.NotNull(clone);
+        return clone;
+    }
 }

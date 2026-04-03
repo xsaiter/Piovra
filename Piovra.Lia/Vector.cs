@@ -44,10 +44,14 @@ public class Vector(double[] a) {
 
     public void AssertSameLengths(Vector other) {
         if (N != other.N) {
-            throw new ArgumentException("lengths not equal");
+            throw new ArgumentException("Lengths not equal");
         }
     }
 
     public Vector Copy() => new(CopyArray());
-    double[] CopyArray() => _a.Clone() as double[];
+    double[] CopyArray() {
+        var result = _a.Clone() as double[];
+        Requires.NotNull(result);
+        return result;
+    }
 }

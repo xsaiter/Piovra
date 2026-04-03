@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,11 +10,12 @@ public class TupleJsonConverter : JsonConverter {
         return true;
     }
 
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+    public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer) {
         throw new NotImplementedException();
     }
 
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer) {
+        Requires.NotNull(value);
         var t = JToken.FromObject(value);
         if (t.Type == JTokenType.Object) {
             Prepare((JObject)t, value);
@@ -34,6 +32,7 @@ public class TupleJsonConverter : JsonConverter {
             var pi = pis[i];
 
             var typeName = pi.ToString();
+            Requires.NotNull(typeName);
 
             if (IsValueTuple(typeName)) {
                 var tree = new Parser(typeName).Parse();
@@ -53,6 +52,7 @@ public class TupleJsonConverter : JsonConverter {
                     if (t.Type == JTokenType.Object) {
                         if (p.Value is JObject nestedObj) {
                             var nestedValue = pi.GetValue(value);
+                            Requires.NotNull(nestedValue);
                             Prepare(nestedObj, nestedValue);
                         }
                     }
@@ -66,8 +66,10 @@ public class TupleJsonConverter : JsonConverter {
         var attr = pi.CustomAttributes.First();
         var typedArg = attr.ConstructorArguments.First();
         var args = typedArg.Value as IEnumerable;
-        foreach (dynamic arg in args) {
-            result.Items.Add(arg.Value);
+        if (args is not null) {
+            foreach (dynamic arg in args) {
+                result.Items.Add(arg.Value);
+            }
         }
         return result;
     }
@@ -83,9 +85,9 @@ public class TupleJsonConverter : JsonConverter {
 
     public class Node(string typeName) {
         public string TypeName { get; } = typeName;
-        public string PropertyName { get; set; }
-        public JProperty Property { get; set; }
-        public List<Node> Nodes { get; } = new();
+        public string? PropertyName { get; set; }
+        public JProperty? Property { get; set; }
+        public List<Node> Nodes { get; } = [];
 
         public void Visit(Names names) {
             Nodes.ForEach(x => x.PropertyName = names.Items[names.N++]);
@@ -104,19 +106,16 @@ public class TupleJsonConverter : JsonConverter {
         public void Replace() {
             if (Property != null) {
                 Nodes.ForEach(x => x.Replace());
+                Requires.NotNull(PropertyName);
                 Property.Replace(new JProperty(PropertyName, Property.Value));
             }
         }
     }
 
-    public class Parser {
-        readonly string s;
+    public class Parser(string s) {
+        readonly string s = s;
         int i;
         char ch;
-
-        public Parser(string s) {
-            this.s = s;
-        }
 
         public Node Parse() {
             var token = GetToken();

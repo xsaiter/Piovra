@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Piovra.Lia;
+﻿namespace Piovra.Lia;
 
 public class SparseMatrix<T> where T : IComparable<T> {
     readonly Dictionary<(int, int), T> _m = [];
@@ -13,7 +10,7 @@ public class SparseMatrix<T> where T : IComparable<T> {
     public T this[int i, int j] {
         get {
             var key = (i, j);
-            if (_m.TryGetValue(key, out T value)) {
+            if (_m.TryGetValue(key, out var value)) {
                 return value;
             }
             throw new Exception($"no ({i} {j})");
