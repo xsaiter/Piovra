@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Piovra.Ds;
+﻿using Piovra.Ds;
 
 namespace Piovra.Esort;
 
@@ -93,14 +87,6 @@ public static class FileSort {
         }
     }
 
-    public class GenerateCfg {
-        public string Name { get; set; }
-        public int Size { get; set; }
-        public int Min { get; set; } = 0;
-        public int Max { get; set; } = DEFAULT_MAX;
-        public const int DEFAULT_MAX = 1 << 10;
-    }
-
     class Feed(Stream stream) : IComparable<Feed> {
         Stream Stream { get; } = stream;
         public int Num { get; private set; }
@@ -116,16 +102,33 @@ public static class FileSort {
             }
         }
 
-        public int CompareTo(Feed other) => Num.CompareTo(other.Num);
+        public int CompareTo(Feed? other) {
+            if (other is null) {
+                return 1;
+            }
+            if (ReferenceEquals(this, other)) {
+                return 0;
+            }
+            return Num.CompareTo(other.Num);
+        }
     }
 
-    public class Cfg {
-        public int MemorySize { get; set; }
-        public string SrcFile { get; set; }
-        public string DestFile { get; set; }
-        public string OutDir { get; set; } = DEFAULT_OUT_DIR;
+    public record GenerateCfg(
+        string Name,
+        int Size,
+        int Min,
+        int Max) {
+        public const int DEFAULT_MIN = 0;
+        public const int DEFAULT_MAX = 1 << 10;
+    }
+
+    public record Cfg(
+        int MemorySize,
+        string SrcFile,
+        string DestFile,
+        string OutDir = Cfg.DEFAULT_OUT_DIR) {
         public const string DEFAULT_OUT_DIR = "Tmp";
     }
 
-    const int NUM_SIZE = sizeof(int);
+    public const int NUM_SIZE = sizeof(int);
 }

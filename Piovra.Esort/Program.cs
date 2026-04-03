@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Piovra.Esort;
+﻿namespace Piovra.Esort;
 
 class Program {
     static async Task Main(string[] args) {
@@ -23,23 +20,26 @@ class Program {
     }
 
     static FileSort.GenerateCfg ParseGenerateCfg(string[] args) {
-        var cfg = new FileSort.GenerateCfg();
+        string? name = null;
+        int? size = null;
+        int? min = null;
+        int? max = null;
 
         var i = 1;
         while (i < args.Length) {
             var arg = args[i];
             switch (arg) {
                 case "-name":
-                    cfg.Name = args[++i];
+                    name = args[++i];
                     break;
                 case "-size":
-                    cfg.Size = int.Parse(args[++i]);
+                    size = int.Parse(args[++i]);
                     break;
                 case "-min":
-                    cfg.Min = int.Parse(args[++i]);
+                    min = int.Parse(args[++i]);
                     break;
                 case "-max":
-                    cfg.Max = int.Parse(args[++i]);
+                    max = int.Parse(args[++i]);
                     break;
                 default:
                     throw new Exception($"Unexpected {nameof(arg)}: {arg}");
@@ -47,24 +47,32 @@ class Program {
             ++i;
         }
 
-        return cfg;
+        Requires.NotNull(name);
+        Requires.NotNull(size);
+
+        min ??= FileSort.GenerateCfg.DEFAULT_MIN;
+        max ??= FileSort.GenerateCfg.DEFAULT_MAX;
+
+        return new FileSort.GenerateCfg(name, size.Value, min.Value, max.Value);
     }
 
     static FileSort.Cfg ParseSortCfg(string[] args) {
-        var cfg = new FileSort.Cfg();
+        string? srcFile = null;
+        string? destFile = null;
+        int? memorySize = 0;
 
         int i = 0;
         while (i < args.Length) {
             var arg = args[i];
             switch (arg) {
                 case "-src":
-                    cfg.SrcFile = args[++i];
+                    srcFile = args[++i];
                     break;
                 case "-dest":
-                    cfg.DestFile = args[++i];
+                    destFile = args[++i];
                     break;
                 case "-msize":
-                    cfg.MemorySize = int.Parse(args[++i]);
+                    memorySize = int.Parse(args[++i]);
                     break;
                 default:
                     throw new Exception($"Unexpected {nameof(arg)}: {arg}");
@@ -72,6 +80,10 @@ class Program {
             ++i;
         }
 
-        return cfg;
+        Requires.NotNull(srcFile);
+        Requires.NotNull(destFile);
+        Requires.NotNull(memorySize);
+
+        return new FileSort.Cfg(SrcFile: srcFile, DestFile: destFile, MemorySize: memorySize.Value);
     }
 }
