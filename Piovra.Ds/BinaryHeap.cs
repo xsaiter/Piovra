@@ -21,7 +21,7 @@ public class BinaryHeap<T> where T : IComparable<T> {
 
     void AssertNonEmpty() {
         if (IsEmpty()) {
-            throw new Exception("heap empty");
+            throw new Exception("Heap empty");
         }
     }
 

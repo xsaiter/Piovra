@@ -5,7 +5,8 @@ using System.Text;
 namespace Piovra.Web;
 
 public static class WsseSoapHeaderCreator {
-    public static string CreateSoapHeader(string userName, string password) => CreateSoapHeader(userName, password, new Options());
+    public static string CreateSoapHeader(string userName, string password) =>
+        CreateSoapHeader(userName, password, new Options());
 
     public static string CreateSoapHeader(string userName, string password, Options options) {
         var nonceBase64 = GetNonceBase64();

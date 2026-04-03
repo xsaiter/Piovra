@@ -7,7 +7,7 @@ public abstract class LinearSystemSolver {
     public static LinearSystemSolver CreateJacobiMethod() => new JacobiMethod();
 }
 
-public class JacobiMethod : LinearSystemSolver {
+class JacobiMethod : LinearSystemSolver {
     public override Vector Solve(Matrix a, Vector b) {
         var n = b.N;
         var r = Vector.Create(n, 1.0);

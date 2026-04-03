@@ -1,11 +1,6 @@
 ﻿namespace Piovra.Svg;
 
-public class Color(byte r, byte g, byte b, double a = 1.0) {
-    public byte R { get; } = r;
-    public byte G { get; } = g;
-    public byte B { get; } = b;
-    public double A { get; } = a;
-
+public record Color(byte R, byte G, byte B, double A = 1.0) {
     public static Color RED => new(H, L, L);
     public static Color GREEN => new(L, H, L);
     public static Color BLUE => new(L, L, H);

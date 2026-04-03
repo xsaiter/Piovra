@@ -2,4 +2,4 @@
 
 namespace Piovra;
 
-public class Period(DateTime l, DateTime r) : Range<DateTime>(l, r);
+public record Period(DateTime L, DateTime R) : Range<DateTime>(L, R);

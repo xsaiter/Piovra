@@ -64,7 +64,7 @@ public class BTree<K, V> where K : IComparable<K> {
             .Count();
 
         if (node.IsLeaf) {
-            node.Entries.Insert(positionToInsert, new Entry { Key = key, Value = value });
+            node.Entries.Insert(positionToInsert, new Entry(Key: key, Value: value));
         } else {
             var child = node.Children[positionToInsert];
             if (child.HasReachedMaxEntries) {
@@ -88,8 +88,5 @@ public class BTree<K, V> where K : IComparable<K> {
         public bool HasReachedMinEntries => Entries.Count == Degree - 1;
     }
 
-    public class Entry {
-        public K Key { get; set; }
-        public V Value { get; set; }
-    }
+    public record Entry(K Key, V Value);
 }

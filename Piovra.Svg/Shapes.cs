@@ -2,11 +2,7 @@
 
 namespace Piovra.Svg;
 
-public class Point {
-    public Point(int x, int y) => (X, Y) = (x, y);
-    public int X { get; set; }
-    public int Y { get; set; }
-}
+public record Point(int X, int Y);
 
 public abstract class Shape(Style style) : Drawing {
     public Style Style { get; set; } = style;

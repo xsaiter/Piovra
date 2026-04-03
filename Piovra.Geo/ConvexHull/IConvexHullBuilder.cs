@@ -2,6 +2,6 @@ using System.Collections.Generic;
 
 namespace Piovra.Geo;
 
-public interface ICreateConvexHullStrategy {
+public interface IConvexHullBuilder {
     ConvexHull Create(IEnumerable<Point> points);
 }

@@ -17,7 +17,7 @@ public class SVG : Drawing {
     public int W { get; }
     public int H { get; }
     public bool IsRoot { get; }
-    List<Drawing> Drawings { get; } = new List<Drawing>();
+    List<Drawing> Drawings { get; } = [];
 
     public SVG AddShape(Shape shape) {
         return AddDrawing(shape);

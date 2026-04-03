@@ -2,11 +2,12 @@
 using Xunit;
 
 namespace Piovra.Tests;
+
 public class SvgTests {
     [Fact]
     public void Test() {
         var c1 = new Circle(new Point(10, 20), 10);
-        var c2 = new Circle(new Point(50, 50), 40, new Style { FillColor = Color.RED });
+        var c2 = new Circle(new Point(50, 50), 40, new Style(FillColor: Color.RED, StrokeColor: Color.GREEN, StrokeWidth: null));
 
         var r1 = new Rect(new Point(100, 100), 30, 30);
 

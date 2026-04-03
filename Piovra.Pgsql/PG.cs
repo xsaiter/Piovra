@@ -13,25 +13,33 @@ using System.Threading;
 namespace Piovra.Pgsql;
 
 public static class PG {
-    public static async Task<int> PerformNonQueryAsync(this NpgsqlConnection conn, string sql, object param = null, CancellationToken cancellationToken = default) {
+    public static async Task<int> PerformNonQueryAsync(this NpgsqlConnection conn,
+        string sql, object param = null, CancellationToken cancellationToken = default) {
+
         using var cmd = conn.CreateCommand();
         PrepareCmd(cmd, sql, param);
         return await cmd.ExecuteNonQueryAsync(cancellationToken);
     }
 
-    public static async Task<T> PerformScalarAsync<T>(this NpgsqlConnection conn, string sql, object param = null, CancellationToken cancellationToken = default) {
+    public static async Task<T> PerformScalarAsync<T>(this NpgsqlConnection conn,
+        string sql, object param = null, CancellationToken cancellationToken = default) {
+
         using var cmd = conn.CreateCommand();
         PrepareCmd(cmd, sql, param);
         var result = await cmd.ExecuteScalarAsync(cancellationToken);
         return (T)result;
     }
 
-    public static Task<List<T>> PerformQueryAsync<T>(this NpgsqlConnection conn, string sql, object param = null, CancellationToken cancellationToken = default)
-        where T : new() =>
-        PerformQueryAsync<T, List<T>>(conn, sql, param, cancellationToken);
+    public static Task<List<T>> PerformQueryAsync<T>(this NpgsqlConnection conn,
+        string sql, object param = null, CancellationToken cancellationToken = default)
+        where T : new() {
+        return PerformQueryAsync<T, List<T>>(conn, sql, param, cancellationToken);
+    }
 
-    public static async Task<R> PerformQueryAsync<T, R>(this NpgsqlConnection conn, string sql, object param = null, CancellationToken cancellationToken = default)
+    public static async Task<R> PerformQueryAsync<T, R>(this NpgsqlConnection conn,
+        string sql, object param = null, CancellationToken cancellationToken = default)
         where T : new() where R : ICollection<T>, new() {
+
         var result = new R();
         using var cmd = conn.CreateCommand();
         PrepareCmd(cmd, sql, param);
@@ -85,10 +93,15 @@ public static class PG {
             : throw new Exception($"Unexpected type: {t}");
     }
 
-    public static async Task RunAllSqlFilesInDirectoryAsync(string path, int timeout, string connString, int step = 100, CancellationToken cancellationToken = default) {
+    public static async Task RunAllSqlFilesInDirectoryAsync(string path,
+        int timeout, string connString, int step = 100, CancellationToken cancellationToken = default) {
+
         var files = Directory.GetFiles(path);
 
-        using var conn = await SmartConn.NewAsync(connString);
+        using var conn = await SmartConn.NewAsync(
+            connString: connString,
+            cancellationToken: cancellationToken);
+
         foreach (var file in files) {
             var lines = await File.ReadAllLinesAsync(file, cancellationToken);
 
@@ -112,7 +125,9 @@ public static class PG {
         }
     }
 
-    public static async Task CopyFromFileAsync(NpgsqlConnection conn, FileInfo file, string copyFromCommand, CancellationToken cancellationToken = default) {
+    public static async Task CopyFromFileAsync(NpgsqlConnection conn,
+        FileInfo file, string copyFromCommand, CancellationToken cancellationToken = default) {
+
         using var stream = file.OpenRead();
         using var writer = await conn.BeginTextImportAsync(copyFromCommand, cancellationToken);
         using var reader = new StreamReader(stream);

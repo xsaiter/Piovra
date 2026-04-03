@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Piovra.Geo;
 
-public class GrahamScanConvexHullStrategy : ICreateConvexHullStrategy {
+public class GrahamConvexHullBuilder : IConvexHullBuilder {
     public ConvexHull Create(IEnumerable<Point> points) {
         var result = new ConvexHull();
 
