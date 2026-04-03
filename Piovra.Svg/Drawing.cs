@@ -1,6 +1,7 @@
 ﻿using System.Xml.Linq;
 
 namespace Piovra.Svg;
+
 public abstract class Drawing {
     public abstract XElement ToSvg();
 

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Data.Common;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Piovra.Sql.Core;
 
@@ -10,7 +7,7 @@ public class SmartDbConn<C>(SmartDbConn<C>.Config cfg)
     : IDisposable where C : DbConnection, new() {
 
     readonly Config _cfg = Requires.CheckNotNull(cfg, nameof(cfg));
-    C _conn;
+    C? _conn;
 
     public SmartDbConn(string connString) : this(new Config(connString)) { }
 
@@ -19,6 +16,7 @@ public class SmartDbConn<C>(SmartDbConn<C>.Config cfg)
             CleanUp();
             _conn = await NewAsync(_cfg, cancellationToken);
         }
+        Requires.NotNull(_conn);
         return _conn;
     }
 
@@ -27,7 +25,7 @@ public class SmartDbConn<C>(SmartDbConn<C>.Config cfg)
     public static async Task<C> NewAsync(Config cfg, CancellationToken cancellationToken = default) {
         var attempts = 0;
         var isOpened = false;
-        C conn = null;
+        C? conn = null;
 
         while (!isOpened) {
             try {
@@ -47,7 +45,7 @@ public class SmartDbConn<C>(SmartDbConn<C>.Config cfg)
                 ++attempts;
             }
         }
-
+        Requires.NotNull(conn);
         return conn;
     }
 

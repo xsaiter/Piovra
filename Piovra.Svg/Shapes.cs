@@ -4,13 +4,13 @@ namespace Piovra.Svg;
 
 public record Point(int X, int Y);
 
-public abstract class Shape(Style style) : Drawing {
-    public Style Style { get; set; } = style;
+public abstract class Shape(Style? style) : Drawing {
+    public Style? Style { get; } = style;
     protected void AppendStyle(XElement x) => Style?.WriteTo(x);
 }
 
 public class Circle : Shape {
-    public Circle(Point center, int radius, Style style = null) : base(style) =>
+    public Circle(Point center, int radius, Style? style = null) : base(style) =>
         (Center, Radius) = (center, radius);
 
     public Point Center { get; }
@@ -27,8 +27,8 @@ public class Circle : Shape {
 }
 
 public class Rect : Shape {
-    public Rect(Point position, int w, int h, Style style = null) : base(style) =>
-        (Position, W, H) = (position, w, h);
+    public Rect(Point position, int w, int h, Style? style = null)
+        : base(style) => (Position, W, H) = (position, w, h);
 
     public Point Position { get; }
     public int W { get; }

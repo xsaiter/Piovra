@@ -1,17 +1,23 @@
-﻿using System;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace Piovra.Svg;
+
 public class Image {
-    public static Image Make(SVG root) {
+    Image(SVG root, XDocument xml) {
+        Root = root;
+        Xml = xml;
+    }
+    public SVG Root { get; }
+    public XDocument Xml { get; }
+
+    public static Image Load(SVG root) {
         if (!root.IsRoot) {
             throw new ArgumentException("No root");
         }
-        return new Image(root) {
-            Xml = new XDocument(new XDeclaration("1.0", "utf-8", "no"), root.ToSvg())
-        };
+        var xml = new XDocument(
+            declaration: new XDeclaration("1.0", "utf-8", "no"),
+            content: root.ToSvg());
+
+        return new Image(root, xml);
     }
-    Image(SVG root) => Root = root;
-    public SVG Root { get; }
-    public XDocument Xml { get; private set; }
 }

@@ -16,7 +16,7 @@ public class SvgTests {
         svg.AddShape(c2);
         svg.AddShape(r1);
 
-        var image = Image.Make(svg);
+        var image = Image.Load(svg);
 
         Assert.True(image.Xml != null);
     }

@@ -1,5 +1,3 @@
-using System.Net.Http;
-
 namespace Piovra.Web;
 
 public abstract class GatewayBase<T>(HttpClient client) where T : IStaticClientNameKnown<T> {
