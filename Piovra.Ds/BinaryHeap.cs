@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Piovra.Ds;
+﻿namespace Piovra.Ds;
 
 public class BinaryHeap<T> where T : IComparable<T> {
     readonly List<T> _a;

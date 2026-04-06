@@ -8,7 +8,7 @@ public class EntityBase : NotificationObject {
         return new XmlProperty(propertyName, xml, _ => RaisePropertyChanged(_));
     }
 
-    protected void SetXmlProperty(ref XmlProperty field, XmlProperty value, [CallerMemberName] string propertyName = "") {
+    protected void SetXmlProperty(ref XmlProperty? field, XmlProperty? value, [CallerMemberName] string propertyName = "") {
         SetProperty(ref field, value, propertyName);
     }
 
