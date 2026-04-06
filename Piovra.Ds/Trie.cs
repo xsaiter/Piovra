@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Piovra.Ds;
+﻿namespace Piovra.Ds;
 
 public class Trie {
     public Node Root { get; } = new Node();
@@ -30,7 +28,7 @@ public class Trie {
         return node != null ? node.PrefixCount : 0;
     }
 
-    Node FindNode(string s) {
+    Node? FindNode(string s) {
         if (s.Empty()) return null;
         var node = Root;
         foreach (var c in s) {

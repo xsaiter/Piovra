@@ -5,8 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Piovra.Ds {
     public class FifoSortedDictionary<Key, Value> : IDictionary<Key, Value> where Key : notnull {
-        readonly SortedDictionary<Key, Value> _dict;
-        readonly Dictionary<Key, Value> _dictKeys;
+        readonly SortedDictionary<Key, Value> _dict = [];
+        readonly Dictionary<Key, Value> _dictKeys = [];
 
         public Value this[Key key] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

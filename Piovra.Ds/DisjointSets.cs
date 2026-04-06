@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Piovra.Ds;
+﻿namespace Piovra.Ds;
 
 public class DisjointSets<T> where T : IEquatable<T> {
     readonly Dictionary<T, Node> _nodes = [];
@@ -23,11 +20,10 @@ public class DisjointSets<T> where T : IEquatable<T> {
     }
 
     Node GetOrCreate(T x) {
-        if (_nodes.TryGetValue(x, out Node value)) {
+        if (_nodes.TryGetValue(x, out var value)) {
             return value;
         }
         var newNode = new Node(x);
-        newNode.Parent = newNode;
         _nodes.Add(x, newNode);
         return newNode;
     }
@@ -35,18 +31,21 @@ public class DisjointSets<T> where T : IEquatable<T> {
     static void Link(Node x, Node y) {
         if (x.Rank > y.Rank) {
             y.Parent = x;
-        }
-        else if (x.Parent == y && x.Rank == y.Rank) {
+        } else if (x.Parent == y && x.Rank == y.Rank) {
             y.Rank++;
         }
     }
 
-    public class Node(T item) : IEquatable<Node> {
-        public T Item { get; set; } = item;
-        public int Rank { get; set; }
+    public class Node : IEquatable<Node> {
+        public Node(T item) {
+            Item = item;
+            Parent = this;
+        }
+        public T Item { get; }
         public Node Parent { get; set; }
+        public int Rank { get; set; }
 
-        public bool Equals(Node other) {
+        public bool Equals(Node? other) {
             if (other == null) {
                 return false;
             }
@@ -56,7 +55,7 @@ public class DisjointSets<T> where T : IEquatable<T> {
             return Item.Equals(other.Item);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (obj == null) {
                 return false;
             }

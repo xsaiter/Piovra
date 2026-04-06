@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Piovra.Ds;
+﻿namespace Piovra.Ds;
 
 public class BTree<K, V> where K : IComparable<K> {
     public BTree(int degree) {
@@ -18,9 +14,9 @@ public class BTree<K, V> where K : IComparable<K> {
     public Node Root { get; private set; }
     public int H { get; private set; }
 
-    public Entry Search(K key) => SearchImpl(Root, key);
+    public Entry? Search(K key) => SearchImpl(Root, key);
 
-    static Entry SearchImpl(Node x, K key) {
+    static Entry? SearchImpl(Node x, K key) {
         var pos = x.Entries.TakeWhile(_ => key.Ge(_.Key)).Count();
         if (pos < x.NEntries && x.Entries[pos].Key.Eq(key)) {
             return x.Entries[pos];
@@ -30,7 +26,7 @@ public class BTree<K, V> where K : IComparable<K> {
 
     public void Add(K key, V value) {
         if (!Root.HasReachedMaxEntries) {
-            InsertNonFull(this.Root, key, value);
+            InsertNonFull(Root, key, value);
         } else {
             var oldRoot = Root;
             Root = new Node(Degree);
