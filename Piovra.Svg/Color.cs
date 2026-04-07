@@ -10,5 +10,7 @@ public record Color(byte R, byte G, byte B, double A = 1.0) {
     readonly static byte H = byte.MaxValue;
     readonly static byte L = byte.MinValue;
 
-    public override string ToString() => $"rgba({R},{G},{B},{A})";
+    public override string ToString() {
+        return string.Create(System.Globalization.CultureInfo.InvariantCulture, $"rgba({R},{G},{B},{A})");
+    }
 }

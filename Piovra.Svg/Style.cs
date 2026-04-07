@@ -2,7 +2,7 @@
 
 namespace Piovra.Svg;
 
-public record Style(Color FillColor, Color StrokeColor, int? StrokeWidth) {
+public record Style(Color? FillColor = null, Color? StrokeColor = null, int? StrokeWidth = null) {
     public void WriteTo(XElement x) {
         if (FillColor != null) {
             x.Add(new XAttribute("fill", FillColor.ToString()));

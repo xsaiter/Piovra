@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Piovra;
+﻿namespace Piovra;
 
 public class Batch<T> : IDisposable where T : IDisposable {
-    public IEnumerable<T> Items { get; }
-    Batch(IEnumerable<T> items) => Items = items;
-
+    readonly List<T> _items;
+    public IEnumerable<T> Items => _items;
+    Batch(IEnumerable<T> items) => _items = [.. items];
     public static Batch<T> New(IEnumerable<T> items) => new(items);
 
     public void Dispose() {

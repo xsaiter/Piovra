@@ -10,7 +10,7 @@ public static class Requires {
     public static string NotNullOrEmpty(string paramValue, string paramName) =>
         paramValue.NonEmpty() ? paramValue : throw new ArgumentNullException(paramName);
 
-    public static void EnsureOutOfRange(Func<bool> failCondition, string paramName) {
+    public static void ThrowIf(Func<bool> failCondition, string paramName) {
         if (failCondition()) {
             throw new ArgumentOutOfRangeException(paramName);
         }

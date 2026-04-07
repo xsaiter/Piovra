@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace Piovra.Svg;
 
@@ -28,6 +26,13 @@ public class SVG : Drawing {
             throw new Exception("SVG: must have exactly one root");
         }
         return AddDrawing(svg);
+    }
+
+    public SVG Add(params Drawing[] items) {
+        foreach (var item in items) {
+            Drawings.Add(item);
+        }
+        return this;
     }
 
     SVG AddDrawing(Drawing item) {
