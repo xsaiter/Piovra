@@ -3,9 +3,9 @@ namespace Piovra.Ds.SegmentTree;
 public abstract class Node<T>(int a, int b) {
     public int A { get; } = a;
     public int B { get; } = b;
-    public T Value { get; set; }
-    public Node<T> L { get; set; }
-    public Node<T> R { get; set; }
+    public T Value { get; set; } = default!;
+    public Node<T> L { get; set; } = default!;
+    public Node<T> R { get; set; } = default!;
 
     public bool IsLeaf() => A == B;
     public int Mid() => A + (B - A) / 2;

@@ -11,9 +11,9 @@ public class SegTreeTest {
     }
 
     public class Node {
-        public int Value { get; set; }
-        public Node L { get; set; }
-        public Node R { get; set; }
+        public int Value { get; set; } = default;
+        public Node L { get; set; } = default!;
+        public Node R { get; set; } = default!;
         public int A { get; set; }
         public int B { get; set; }
 

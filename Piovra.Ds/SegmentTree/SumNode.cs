@@ -22,7 +22,7 @@ public class SumNode<T>(int a, int b) : Node<T>(a, b) where T : INumber<T> {
 
     public override T Query(int a, int b) {
         if (!Intersects(a, b)) {
-            return default;
+            return default!;
         }
         if (Contains(a, b)) {
             return Value;

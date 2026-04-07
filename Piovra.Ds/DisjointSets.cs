@@ -1,9 +1,12 @@
 ﻿namespace Piovra.Ds;
 
-public class DisjointSets<T> where T : IEquatable<T> {
+public class DisjointSets<T> where T : notnull, IEquatable<T> {
     readonly Dictionary<T, Node> _nodes = [];
 
     public void Union(T x, T y) {
+        if (x.Equals(y)) {
+            return;
+        }
         var rootX = FindRoot(GetOrCreate(x));
         var rootY = FindRoot(GetOrCreate(y));
         Link(rootX, rootY);
@@ -29,10 +32,16 @@ public class DisjointSets<T> where T : IEquatable<T> {
     }
 
     static void Link(Node x, Node y) {
+        if (x == y) {
+            return;
+        }
         if (x.Rank > y.Rank) {
             y.Parent = x;
-        } else if (x.Parent == y && x.Rank == y.Rank) {
-            y.Rank++;
+        } else {
+            x.Parent = y;
+            if (x.Rank == y.Rank) {
+                y.Rank++;
+            }
         }
     }
 
