@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Piovra.Ds;
+﻿namespace Piovra.Ds;
 
 public class PriorityQueue<T> where T : IComparable<T> {
     readonly BinaryHeap<T> _heap;

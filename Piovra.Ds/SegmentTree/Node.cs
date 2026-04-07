@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Piovra.Ds.SegmentTree;
 
 public abstract class Node<T>(int a, int b) {

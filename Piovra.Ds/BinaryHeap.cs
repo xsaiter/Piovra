@@ -5,7 +5,7 @@ public class BinaryHeap<T> where T : IComparable<T> {
 
     public BinaryHeap(int capacity = 1, bool nonIncreasing = true) {
         Requires.EnsureOutOfRange(() => capacity < 1, nameof(capacity));
-        _a = CollectionUtils.AllocateList<T>(capacity + 1, () => default);
+        _a = CollectionUtils.AllocateList<T>(capacity + 1, () => default!);
         NonIncreasing = nonIncreasing;
         Size = 0;
     }
@@ -24,7 +24,7 @@ public class BinaryHeap<T> where T : IComparable<T> {
 
     public void Add(T item) {
         if (Size + 1 == _a.Count) {
-            _a.Extend(_a.Count, () => default);
+            _a.Extend(_a.Count, () => default!);
         }
         _a[++Size] = item;
         Up(Size);
@@ -39,7 +39,7 @@ public class BinaryHeap<T> where T : IComparable<T> {
         AssertNonEmpty();
         Swap(1, Size--);
         Down(1);
-        _a[Size + 1] = default;
+        _a[Size + 1] = default!;
     }
 
     void Up(int i) {
