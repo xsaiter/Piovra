@@ -1,9 +1,6 @@
-using System.Linq;
-using System.Collections.Generic;
-
 namespace Piovra.Geo;
 
-public class GrahamConvexHullBuilder : IConvexHullBuilder {
+class GrahamConvexHullBuilder : IConvexHullBuilder {
     public ConvexHull Create(IEnumerable<Point> points) {
         var result = new ConvexHull();
 

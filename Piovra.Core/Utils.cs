@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Piovra;
+﻿namespace Piovra;
 
 public static class Utils {
     public static bool Empty(this string s) => string.IsNullOrEmpty(s);

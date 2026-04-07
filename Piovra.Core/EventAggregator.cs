@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Piovra;
+﻿namespace Piovra;
 
 public sealed class EventAggregator {
     static readonly Lazy<EventAggregator> _sole = new(() => new EventAggregator());

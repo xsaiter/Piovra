@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Piovra.Graphs;
+﻿namespace Piovra.Graphs;
 
 public class DijkstraSP<V, G> where V : IEquatable<V> {
     readonly IWeightedGraph<V> _g;

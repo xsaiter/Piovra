@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Piovra;
+﻿namespace Piovra;
 
 public static class Safe {
     public static Task Do(Func<Task> f, After after) =>

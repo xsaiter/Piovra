@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Piovra.Graphs;
+﻿namespace Piovra.Graphs;
 
 public class DFS<V> where V : IEquatable<V> {
     readonly IGraph<V> _g;

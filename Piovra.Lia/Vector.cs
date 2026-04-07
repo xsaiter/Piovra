@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Piovra.Lia;
+﻿namespace Piovra.Lia;
 
 public class Vector(double[] a) {
     readonly double[] _a = a;
@@ -13,7 +11,7 @@ public class Vector(double[] a) {
         return v;
     }
 
-    public int N { get; } = a.Length;
+    public int N => a.Length;
 
     public double this[int i] {
         get => _a[i];
