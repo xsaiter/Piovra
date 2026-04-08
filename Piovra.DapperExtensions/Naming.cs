@@ -4,6 +4,10 @@ namespace Piovra.DapperExtensions;
 
 public class Naming {
     public static string ConvertFromCamelToSnakeCase(string s, bool useAbbreviations = true) {
+        Requires.NotNull(s);
+        if (s.Length == 0) {
+            return s;
+        }
         var res = new StringBuilder();
         var n = s.Length;
         for (var i = 0; i < n; ++i) {

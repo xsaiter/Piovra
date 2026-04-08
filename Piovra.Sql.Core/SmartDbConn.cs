@@ -6,7 +6,7 @@ namespace Piovra.Sql.Core;
 public class SmartDbConn<C>(SmartDbConn<C>.Config cfg)
     : IDisposable where C : DbConnection, new() {
 
-    readonly Config _cfg = Requires.CheckNotNull(cfg, nameof(cfg));
+    readonly Config _cfg = Requires.AsNotNull(cfg, nameof(cfg));
     C? _conn;
 
     public SmartDbConn(string connString) : this(new Config(connString)) { }

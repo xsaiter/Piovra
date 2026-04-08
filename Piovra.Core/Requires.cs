@@ -4,22 +4,28 @@ using System.Runtime.CompilerServices;
 namespace Piovra;
 
 public static class Requires {
-    public static T CheckNotNull<T>(T paramValue, string paramName) where T : class =>
-        paramValue ?? throw new ArgumentNullException(paramName);
-
-    public static string NotNullOrEmpty(string paramValue, string paramName) =>
-        paramValue.NonEmpty() ? paramValue : throw new ArgumentNullException(paramName);
-
-    public static void ThrowIf(Func<bool> failCondition, string paramName) {
-        if (failCondition()) {
-            throw new ArgumentOutOfRangeException(paramName);
-        }
+    [return: NotNull]
+    public static T AsNotNull<T>([NotNull] T? value, [CallerArgumentExpression(nameof(value))] string name = "")
+        where T : class {
+        True(value is not null, $"{name} must not be null");
+        return value;
     }
 
-    public static void NotNull<T>([NotNull] T param,
-        string details = "", [CallerArgumentExpression(nameof(param))] string paramName = "") {
-        if (param is null) {
-            throw new Exception($"{paramName} must not be null, {nameof(details)}: {details}");
+    [return: NotNull]
+    public static string AsNotNullOrEmpty(string value, string name) {
+        True(value.NonEmpty(), $"{name} must not be null or empty");
+        return value;
+    }
+
+    public static void NotNull<T>([NotNull] T value,
+        string details = "", [CallerArgumentExpression(nameof(value))] string name = "") {
+
+        True(value is not null, $"{name} must not be null, {nameof(details)}: {details}");
+    }
+
+    public static void True([DoesNotReturnIf(false)] bool condition, string message = "Assertion failed") {
+        if (!condition) {
+            throw new Exception(message);
         }
     }
 }

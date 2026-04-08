@@ -4,7 +4,7 @@ public class BinaryHeap<T> where T : IComparable<T> {
     readonly List<T> _a;
 
     public BinaryHeap(int capacity = 1, bool nonIncreasing = true) {
-        Requires.ThrowIf(() => capacity < 1, nameof(capacity));
+        Requires.True(capacity >= 1, nameof(capacity));
         _a = CollectionUtils.AllocateList<T>(capacity + 1, () => default!);
         NonIncreasing = nonIncreasing;
         Size = 0;

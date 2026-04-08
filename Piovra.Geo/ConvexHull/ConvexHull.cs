@@ -1,9 +1,13 @@
 ﻿namespace Piovra.Geo;
 
 public class ConvexHull {
-    public List<Point> Points { get; } = [];
+    readonly List<Point> _points = [];
+
+    public IReadOnlyList<Point> Points => _points;
+    public bool IsEmpty => _points.Count == 0;
 
     public void AddPoint(Point point) {
-        Points.Add(point);
+        Requires.NotNull(point);
+        _points.Add(point);
     }
 }

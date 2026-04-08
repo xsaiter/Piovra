@@ -11,7 +11,7 @@ public class Vector(double[] a) {
         return v;
     }
 
-    public int N => a.Length;
+    public int N => _a.Length;
 
     public double this[int i] {
         get => _a[i];
