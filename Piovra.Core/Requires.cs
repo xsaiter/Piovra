@@ -7,20 +7,21 @@ namespace Piovra;
 public static class Requires {
     const string DEFAULT_NAME = "";
     const string DEFAULT_DETAILS = "";
+    const string DEFAULT_REQUIREMENTS = "must be true";
 
     public static void True([DoesNotReturnIf(false)] bool condition, string details = DEFAULT_DETAILS,
-        string name = DEFAULT_NAME) {
+        string name = DEFAULT_NAME, string requirements = DEFAULT_REQUIREMENTS) {
 
         if (!condition) {
             throw new ArgumentException(
-                message: PrettyMessage(details, "must be true"),
+                message: PrettyMessage(details, requirements),
                 paramName: name);
         }
     }
 
     [return: NotNull]
     public static T NotNull<T>([NotNull] T? value, string details = DEFAULT_DETAILS,
-       [CallerArgumentExpression(nameof(value))] string name = DEFAULT_NAME) where T : class {
+       [CallerArgumentExpression(nameof(value))] string name = DEFAULT_NAME) {
 
         if (value is null) {
             throw new ArgumentNullException(
