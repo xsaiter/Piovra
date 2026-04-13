@@ -8,7 +8,9 @@ public static class Requires {
     const string DEFAULT_NAME = "";
     const string DEFAULT_DETAILS = "";
 
-    public static void True([DoesNotReturnIf(false)] bool condition, string details = DEFAULT_DETAILS, string name = DEFAULT_NAME) {
+    public static void True([DoesNotReturnIf(false)] bool condition, string details = DEFAULT_DETAILS,
+        string name = DEFAULT_NAME) {
+
         if (!condition) {
             throw new ArgumentException(
                 message: PrettyMessage(details, "must be true"),
@@ -30,8 +32,8 @@ public static class Requires {
     }
 
     [return: NotNull]
-    public static string NotNullOrEmpty(string value,
-        string details = DEFAULT_DETAILS, [CallerArgumentExpression(nameof(value))] string name = DEFAULT_NAME) {
+    public static string NotNullOrEmpty([NotNull] string? value, string details = DEFAULT_DETAILS,
+        [CallerArgumentExpression(nameof(value))] string name = DEFAULT_NAME) {
 
         if (string.IsNullOrEmpty(value)) {
             throw new ArgumentNullException(
@@ -43,8 +45,8 @@ public static class Requires {
     }
 
     [return: NotNull]
-    public static string NotNullOrWhiteSpace(string value,
-        string details = DEFAULT_DETAILS, [CallerArgumentExpression(nameof(value))] string name = DEFAULT_NAME) {
+    public static string NotNullOrWhiteSpace([NotNull] string? value, string details = DEFAULT_DETAILS,
+        [CallerArgumentExpression(nameof(value))] string name = DEFAULT_NAME) {
 
         if (string.IsNullOrWhiteSpace(value)) {
             throw new ArgumentNullException(
@@ -129,7 +131,7 @@ public static class Requires {
             throw new ArgumentOutOfRangeException(
                 name,
                 actualValue: value,
-                message: PrettyMessage(details, $"must be in closed range [{min}..{max}]"));
+                message: PrettyMessage(details, $"must be in closed range [{min}, {max}]"));
         }
 
         return value;
@@ -144,7 +146,7 @@ public static class Requires {
             throw new ArgumentOutOfRangeException(
                 name,
                 actualValue: value,
-                message: PrettyMessage(details, $"must be in open range ({min}..{max})"));
+                message: PrettyMessage(details, $"must be in open range ({min}, {max})"));
         }
 
         return value;
@@ -159,7 +161,7 @@ public static class Requires {
             throw new ArgumentOutOfRangeException(
                 paramName: name,
                 actualValue: value,
-                message: PrettyMessage(details, $"must be in left-closed range [{min}..{max})"));
+                message: PrettyMessage(details, $"must be in left-closed range [{min}, {max})"));
         }
 
         return value;
@@ -174,7 +176,7 @@ public static class Requires {
             throw new ArgumentOutOfRangeException(
                 paramName: name,
                 actualValue: value,
-                message: PrettyMessage(details, $"must be in right-closed range ({min}..{max}]"));
+                message: PrettyMessage(details, $"must be in right-closed range ({min}, {max}]"));
         }
 
         return value;
