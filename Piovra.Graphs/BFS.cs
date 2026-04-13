@@ -1,7 +1,7 @@
 ﻿namespace Piovra.Graphs;
 
 public class BFS<V>(IGraph<V> g) where V : IEquatable<V> {
-    readonly IGraph<V> _g = Requires.AsNotNull(g, nameof(g));
+    readonly IGraph<V> _g = Requires.NotNull(g, nameof(g));
 
     public Result<V> Execute(V source) {
         var s = _g.NodeOf(source);

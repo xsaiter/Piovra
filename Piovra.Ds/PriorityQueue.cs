@@ -3,7 +3,7 @@
 public class PriorityQueue<T> where T : IComparable<T> {
     readonly BinaryHeap<T> _heap;
 
-    PriorityQueue(BinaryHeap<T> heap) => _heap = Requires.AsNotNull(heap, nameof(heap));
+    PriorityQueue(BinaryHeap<T> heap) => _heap = Requires.NotNull(heap, nameof(heap));
 
     public static PriorityQueue<T> Max(int capacity = INITIAL_CAPACITY) => new(new BinaryHeap<T>(capacity, true));
     public static PriorityQueue<T> Min(int capacity = INITIAL_CAPACITY) => new(new BinaryHeap<T>(capacity, false));

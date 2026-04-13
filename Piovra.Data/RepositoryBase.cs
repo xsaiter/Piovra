@@ -10,7 +10,7 @@ public class RepositoryBase<T, TIdentity> : IRepository<T, TIdentity>
     protected readonly UnitOfWork _unitOfWork;
 
     protected RepositoryBase(UnitOfWork unitOfWork) {
-        _unitOfWork = Requires.AsNotNull(unitOfWork, nameof(unitOfWork));
+        _unitOfWork = Requires.NotNull(unitOfWork, nameof(unitOfWork));
     }
 
     public Task<T?> GetByIdAsync(TIdentity id) =>
