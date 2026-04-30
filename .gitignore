@@ -3,4 +3,5 @@
 .vs/
 project.lock.json
 *.user
+.env
 artifacts/
