@@ -9,8 +9,10 @@ public static class Requires {
     const string DEFAULT_DETAILS = "";
     const string DEFAULT_REQUIREMENTS = "must be true";
 
-    public static void True([DoesNotReturnIf(false)] bool condition, string details = DEFAULT_DETAILS,
-        string name = DEFAULT_NAME, string requirements = DEFAULT_REQUIREMENTS) {
+    public static void True([DoesNotReturnIf(false)] bool condition,
+        string details = DEFAULT_DETAILS,
+        [CallerArgumentExpression(nameof(condition))] string name = DEFAULT_NAME,
+        string requirements = DEFAULT_REQUIREMENTS) {
 
         if (!condition) {
             throw new ArgumentException(
@@ -102,9 +104,9 @@ public static class Requires {
 
         if (value > T.Zero) {
             throw new ArgumentOutOfRangeException(
-                name,
+                paramName: name,
                 actualValue: value,
-                PrettyMessage(details, "must be non-positive (<= 0)"));
+                message: PrettyMessage(details, "must be non-positive (<= 0)"));
         }
 
         return value;
@@ -115,9 +117,9 @@ public static class Requires {
 
         if (value < T.Zero) {
             throw new ArgumentOutOfRangeException(
-                name,
+                paramName: name,
                 actualValue: value,
-                PrettyMessage(details, "must be non-negative (>= 0)"));
+                message: PrettyMessage(details, "must be non-negative (>= 0)"));
         }
 
         return value;
@@ -130,7 +132,7 @@ public static class Requires {
 
         if (value < min || value > max) {
             throw new ArgumentOutOfRangeException(
-                name,
+                paramName: name,
                 actualValue: value,
                 message: PrettyMessage(details, $"must be in closed range [{min}, {max}]"));
         }
@@ -145,7 +147,7 @@ public static class Requires {
 
         if (value <= min || value >= max) {
             throw new ArgumentOutOfRangeException(
-                name,
+                paramName: name,
                 actualValue: value,
                 message: PrettyMessage(details, $"must be in open range ({min}, {max})"));
         }
@@ -194,6 +196,8 @@ public static class Requires {
 
         return value;
     }
+
+    public static T In<T>(T value, params T[] values) => In(value, (IEnumerable<T>)values);
 
     public static void ValidRange<T>(T min, T max) where T : INumber<T> {
         if (min > max) {

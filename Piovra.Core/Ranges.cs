@@ -11,7 +11,5 @@ public record Range<T> where T : IComparable<T> {
     public T L { get; init; }
     public T R { get; init; }
 
-    public bool Contains(T value) {
-        return value.CompareTo(L) >= 0 && value.CompareTo(R) <= 0;
-    }
+    public bool Contains(T value) => value.CompareTo(L) >= 0 && value.CompareTo(R) <= 0;
 }

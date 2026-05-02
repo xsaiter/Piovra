@@ -16,8 +16,7 @@ public class SmartDbConn<C>(SmartDbConn<C>.Config cfg)
             CleanUp();
             _conn = await NewAsync(_cfg, cancellationToken);
         }
-        Requires.NotNull(_conn);
-        return _conn;
+        return Requires.NotNull(_conn);
     }
 
     public bool IsSuccess() => _conn?.State == ConnectionState.Open;
@@ -45,8 +44,8 @@ public class SmartDbConn<C>(SmartDbConn<C>.Config cfg)
                 ++attempts;
             }
         }
-        Requires.NotNull(conn);
-        return conn;
+
+        return Requires.NotNull(conn);
     }
 
     public static Task<C> NewAsync(string connString, CancellationToken cancellationToken = default)
